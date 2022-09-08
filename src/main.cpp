@@ -48,7 +48,7 @@ bool isAOperator(string word) {
     operators.push_back("*=");
     operators.push_back("/=");
     operators.push_back("%=");
-    operators.push_back("**="),
+    operators.push_back("**=");
     operators.push_back("&&=");
     operators.push_back("||=");
     operators.push_back("^");
@@ -69,7 +69,7 @@ bool isAOperator(string word) {
     operators.push_back("+@");
     operators.push_back("-@");
     operators.push_back("[]");
-    operators.push_back("[]="),
+    operators.push_back("[]=");
     operators.push_back("(");
     operators.push_back(")");
     operators.push_back("[");
@@ -85,26 +85,169 @@ bool isAOperator(string word) {
     return false;
 }
 
+vector<string> withdraw_spaces(vector<string> commands)
+{
+    vector<string> cmds;
+    for (string command : commands)
+    {
+        string word = "";
+        for (int i = 0; i < command.length(); i++)
+        {
+            if (!isspace(command[i]))
+            {
+                word.push_back(command[i]);
+            }
+        }
+        cmds.push_back(word);
+    }
+    return cmds;
+}
+
 vector<Token> verify_tokens(vector<string> commands) //commands: linhas do código
 {
-    cout << "Verify token" << endl;
+    //cout << "Verify token" << endl;
     vector<Token> tokens;
     for (string command: commands) {
-        string word;
+        string word = "";
+        string type = "";
         for (int letter = 0; letter < command.length(); letter++) {
             string currentLetter (1, command[letter]);
-            if (isAOperator(currentLetter)) {
-                cout << currentLetter << " is a operator" << endl;
-                // word = "";
+
+            // recognize number
+            if (isdigit(command[letter]))
+            {
+                if (type.compare("keyword") == 0)
+                {
+                    cout << "error keyword + digit" << endl;
+                    type = "";
+                    word = "";
+                }
+
+                if (type.compare("word") == 0 && letter == command.length() - 1)
+                {
+                    word += command[letter];
+                    cout << word << " is a identifier" << endl;
+                    type = "";
+                    word = "";
+                }
+                
+                //cout << "numero: " << command[letter] << endl;
+
+                if (type.compare("operator") == 0)
+                {
+                    cout << word << " is a operator" << endl;
+                    type = "";
+                    word = "";
+                }
+
+                if (type.compare("") == 0)
+                {
+                    type = "num";
+                }
+
+                if (type.compare("num") == 0 && letter == command.length() - 1) // ultima chamada, isso pq no fim do for eu tenho word +=, entao nao contemplaria o ultimo
+                {
+                    word += command[letter];
+                    cout << word << " is a num" << endl;
+                    type = "";
+                    word = "";
+                    break;
+                }
+            }
+            else if (isalpha(command[letter]))
+            {
+                // AJEITAR AS KEYWORDS, pensar tipo no if, to no 'f' agr ...
+                // eh um identificador se achar na lista e se nao tiver uma letra ou digito no proximo
+
+                if (type.compare("num") == 0)
+                {
+                    cout << "error digit + character" << endl;
+                    type = "";
+                    word = "";
+                }
+                else if (type.compare("operator") == 0)
+                {
+                    cout << word << " is a operator" << endl;
+                    type = "";
+                    word = "";
+                }
+                else if (type.compare("keyword") == 0)
+                {
+                    cout << "error keyword + character" << endl;
+                    type = "";
+                    word = "";
+                }
+
+                bool keyword = regex_match(word + currentLetter, keywords);
+                if (keyword) {
+                    type = "keyword";
+                }
+                if (letter == command.length() - 1 && keyword)
+                {
+                    word += currentLetter;
+                    Token keyword;
+                    keyword.content = word;
+                    keyword.type = "KEYWORD";
+                    tokens.push_back(keyword);
+                    cout << word << " is a keyword" << endl;
+                    type = "";
+                    word = "";
+                    break;
+                }
+
+                if (type.compare("") == 0)
+                {
+                    type = "word";
+                }
+                if (type.compare("word") == 0 && letter == command.length() - 1) // ultima chamada
+                {
+                    word += command[letter];
+                    cout << word << " is a identifier" << endl;
+                    type = "";
+                    word = "";
+                    break;
+                }
+                //type = "word";
+                //word = "";
+            }
+            else // ( ), operadores ...
+            {
+                if (type.compare("word") == 0)
+                {
+                    cout << word << " is a identifier" << endl;
+                    word = "";
+                    type = "";
+                }
+
+                else if (type.compare("keyword") == 0 && currentLetter.compare("(") == 0)
+                {
+                    cout << word << " is a keyword" << endl;
+                    word = "";
+                    type = "";
+                }
+
+                else if (type.compare("num") == 0)
+                {
+                    cout << word << " is a num" << endl;
+                    word = "";
+                    type = "";
+                }
+
+                if (type.compare("") == 0)
+                {
+                    type = "operator";
+                }
+                if (type.compare("operator") == 0 && letter == command.length() - 1)
+                {
+                    // se for realmente um operador
+                    word += command[letter];
+                    cout << word << " is a operator" << endl;
+                    type = "";
+                    word = "";
+                    break;
+                }
             }
             word += command[letter];
-            // if (regex_match(word, keywords)) {
-            //     Token keyword;
-            //     keyword.content = word;
-            //     keyword.type = "KEYWORD";
-            //     tokens.push_back(keyword)
-            //     cout << word << " is a keyword" << endl;
-            // }
         }
     }
     return tokens;
@@ -154,6 +297,8 @@ int main(int argc, char *argv[]) {
     string filename = argv[1];
     vector<string> script = readFile(filename);
     vector<string> commands = recognize(script);
+    // antes disso tirar todos os espacos a nao ser por aqueles que vem depois de palavras reservadas
+    commands = withdraw_spaces(commands);
     vector<Token> tokens = verify_tokens(commands);
     return 0;
 }
