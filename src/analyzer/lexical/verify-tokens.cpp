@@ -8,7 +8,7 @@
 
 #include "lexical-analyzer.h"
 
-#include "../../bnf/keywords.cpp"
+#include "../../bnf/keywords.h"
 
 using namespace std;
 

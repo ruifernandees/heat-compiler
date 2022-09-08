@@ -2,10 +2,9 @@
 #include <cstring>
 #include <vector>
 
-using namespace std;
+#pragma once
 
-#ifndef LEXICAL_ANALYZER_H
-#define LEXICAL_ANALYZER_H
+using namespace std;
 
 typedef struct aux {
     string content;
@@ -13,5 +12,3 @@ typedef struct aux {
 } Token;
 
 void lexicalAnalyzer(vector<string> script);
-
-#endif
