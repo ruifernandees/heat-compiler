@@ -129,6 +129,7 @@ vector<Token> verify_tokens(vector<string> commands) //commands: linhas do códi
                     cout << word << " is a identifier" << endl;
                     type = "";
                     word = "";
+                    break;
                 }
                 
                 //cout << "numero: " << command[letter] << endl;
