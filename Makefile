@@ -6,19 +6,16 @@ BNF_DIR = $(SOURCE_DIR)/bnf
 OUTDIR = ./dist
 CC = g++
 
-objects = rubyc.o lexical-analyzer.o
+objects = $(OUTDIR)/rubyc.o $(OUTDIR)/lexical-analyzer.o
 
 $(TARGET): $(objects)
 	$(CC) -o $(OUTDIR)/$(TARGET).out $(objects)
 
 rubyc.o: $(SOURCE_DIR)/rubyc.cpp $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.h
-	$(CC) -c $(SOURCE_DIR)/rubyc.cpp
+	$(CC) -c $(SOURCE_DIR)/rubyc.cpp -o $(OUTDIR)/rubyc.o
 
 lexical-analyzer.o: $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.cpp $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.h
-	$(CC) -c $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.cpp
-
-# keywords.o: $(BNF_DIR)/keywords.cpp $(BNF_DIR)/keywords.h
-# 	$(CC) -c $(BNF_DIR)/keywords.cpp
+	$(CC) -c $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.cpp -o $(OUTDIR)/lexical-analyzer.o
 
 clean:
 	rm *.o $(OUTDIR)/*
