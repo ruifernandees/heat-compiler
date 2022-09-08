@@ -3,6 +3,8 @@
 #include <vector>
 #include <cstring>
 
+#include "operators.h"
+
 using namespace std;
 
 vector<string> operators;

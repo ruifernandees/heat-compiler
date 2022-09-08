@@ -6,6 +6,8 @@
 #include <cstring>
 #include <regex>
 
+#include "lexical-analyzer.h"
+
 using namespace std;
 
 vector<string> recognize(vector<string> script) {

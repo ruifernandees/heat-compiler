@@ -4,7 +4,7 @@
 #include <cstring>
 
 #include "./utils/read-file.cpp"
-#include "./analyzer/lexical/main.cpp"
+#include "./analyzer/lexical/lexical-analyzer.h"
 #include "./analyzer/syntactic/main.cpp"
 #include "./analyzer/semantic/main.cpp"
 

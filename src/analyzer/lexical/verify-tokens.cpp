@@ -6,8 +6,9 @@
 #include <cstring>
 #include <regex>
 
+#include "lexical-analyzer.h"
+
 #include "../../bnf/keywords.cpp"
-#include "./types.cpp"
 
 using namespace std;
 
@@ -86,7 +87,8 @@ vector<Token> verify_tokens(vector<string> commands) //commands: linhas do códi
                     word = "";
                 }
 
-                bool keyword = regex_match(word + currentLetter, keywords);
+                // bool keyword = regex_match(word + currentLetter, keywords);
+                bool keyword = isAKeyword(word + currentLetter);
                 if (keyword) {
                     type = "keyword";
                 }

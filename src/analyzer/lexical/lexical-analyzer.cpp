@@ -4,8 +4,9 @@
 #include <cstring>
 #include <regex>
 
+#include "lexical-analyzer.h"
+
 #include "./recognize.cpp"
-#include "./types.cpp"
 #include "./verify-tokens.cpp"
 
 using namespace std;
