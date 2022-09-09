@@ -1,0 +1,102 @@
+{
+  "commitizen": {
+    "name": "cz_customize",
+    "customize": {
+      "message_template": "{{change_type}}: {{message}}{% if co_authored != 'empty' %}\n\nCo-authored-by: {{co_authored}}{% endif %}",
+      "example": "feature: this feature enable customize through config file",
+      "schema": "<type>: <body>",
+      "schema_pattern": "(feature|bug fix):(\\s.*)",
+      "bump_pattern": "^(break|new|fix|hotfix)",
+      "bump_map": {
+        "break": "MAJOR",
+        "new": "MINOR",
+        "fix": "PATCH",
+        "hotfix": "PATCH"
+      },
+      "change_type_order": [
+        "BREAKING CHANGE",
+        "FEAT",
+        "FIX",
+        "REFACTOR",
+        "STYLE"
+      ],
+      "info_path": "cz_customize_info.txt",
+      "info": "This is customized info",
+      "commit_parser": "^(?P<change_type>feature|bug fix):\\s(?P<message>.*)?",
+      "changelog_pattern": "^(feature|bug fix)?(!)?",
+      "change_type_map": {
+        "feature": "Feat",
+        "bug fix": "Fix"
+      },
+      "questions": [
+        {
+          "type": "list",
+          "name": "change_type",
+          "choices": [
+            {
+              "value": "FEAT",
+              "name": "FEAT: novas funcionalidades."
+            },
+            {
+              "value": "FIX",
+              "name": "FIX: ajuste de bugs."
+            },
+            {
+              "value": "STYLE",
+              "name": "STYLE: estilização."
+            },
+            {
+              "value": "REFACTOR",
+              "name": "REFACTOR: refatorações para melhor qualidade de código."
+            },
+            {
+              "value": "TEST",
+              "name": "TEST: Criação de testes automatizados."
+            },
+            {
+              "value": "OPS",
+              "name": "OPS: Mudanças nas configurações do projeto."
+            },
+            {
+              "value": "CHORE",
+              "name": "CHORE: Modificações que não se encaixam em nenhuma das categorias acima."
+            }
+          ],
+          "message": "Selecione o tipo do commit:"
+        },
+        {
+          "type": "input",
+          "name": "message",
+          "message": "Informe a mensagem do commit:"
+        },
+        {
+          "type": "list",
+          "name": "co_authored",
+          "choices": [
+            {
+              "value": "empty",
+              "name": "Sem co-autor."
+            },
+            {
+              "value": "Co-authored-by: heldaolima <orfeowrk@gmail.com>",
+              "name": "Hélder"
+            },
+            {
+              "value": "ruifernandees <dev.ruifernandes@gmail.com>",
+              "name": "Rui"
+            },
+            {
+              "value": "Co-authored-by: vmaiaaa <maia.viniciusho@gmail.com>",
+              "name": "Vinícius"
+            },
+            {
+              "value": "JonathanYuri <jonathanyuri2323@gmail.com>",
+              "name": "Yuri"
+            }
+          ],
+          "message": "Selecione o co-autor: "
+        }
+      ]
+    }
+  }
+}

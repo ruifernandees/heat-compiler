@@ -6,102 +6,11 @@
 #include <cstring>
 #include <regex>
 
-#define FILE_READING_ERROR "FILE_READING_ERROR"
+#include "lexical-analyzer.h"
+
+#include "../../bnf/keywords.h"
 
 using namespace std;
-
-
-typedef struct aux {
-    string content;
-    string type;    
-} Token;
-
-regex keywords ("do|end|undef|alias|if|then|else|elsif|case|while|for|in|begin|rescue|ensure|class|def|unless|until|return|yield|and|or|not|super|defined?|nil|self");
-
-// regex operators ("\\+|\\-|\\*|\\/|\\%|\\*\\|\\=\\=|\\!\\=|\\>|\\<|\\>\\=|\\<\\=|\\<\\=\\>|\\=\\=\\|\\&\\&|\\!|\\||\\|\\|\\=|\\+\\=|\\-\\=|\\*\\=|\\/\\=|\\%\\=|\\*\\*\\|\\&\\&\\=|\\|\\|\\=|\\^|\\&|\\~|\\<\\<|\\>\\|\\?\\:|\\^\\=|\\.\\.|\\.\\.\\.|\\<\\<\\=|\\>\\>\\=|\\=\\>|\\=\\~|\\!\\~|\\:\\:|\\+\\@|\\-\\@|\\[\\]|\\[\\]\\|\\(|\\)|\\[|\\]|\\{|\\}|\\.|\\,|\\?");
-
-
-
-bool isAOperator(string word) {
-    vector<string> operators;
-    operators.push_back("+");
-    operators.push_back("-");
-    operators.push_back("*");
-    operators.push_back("/");
-    operators.push_back("%");
-    operators.push_back("**"),
-    operators.push_back("==");
-    operators.push_back("!=");
-    operators.push_back(">");
-    operators.push_back("<");
-    operators.push_back(">=");
-    operators.push_back("<=");
-    operators.push_back("<=>");
-    operators.push_back("==="),
-    operators.push_back("&&");
-    operators.push_back("!");
-    operators.push_back("|");
-    operators.push_back("||"),
-    operators.push_back("=");
-    operators.push_back("+=");
-    operators.push_back("-=");
-    operators.push_back("*=");
-    operators.push_back("/=");
-    operators.push_back("%=");
-    operators.push_back("**=");
-    operators.push_back("&&=");
-    operators.push_back("||=");
-    operators.push_back("^");
-    operators.push_back("&");
-    operators.push_back("~");
-    operators.push_back("<<");
-    operators.push_back(">>"),
-    operators.push_back("?:");
-    operators.push_back("^=");
-    operators.push_back("..");
-    operators.push_back("...");
-    operators.push_back("<<=");
-    operators.push_back(">>=");
-    operators.push_back("=>");
-    operators.push_back("=~");
-    operators.push_back("!~");
-    operators.push_back("::");
-    operators.push_back("+@");
-    operators.push_back("-@");
-    operators.push_back("[]");
-    operators.push_back("[]=");
-    operators.push_back("(");
-    operators.push_back(")");
-    operators.push_back("[");
-    operators.push_back("]");
-    operators.push_back("{");
-    operators.push_back("}");
-    operators.push_back(".");
-    operators.push_back(",");
-    operators.push_back("?");
-    for (int i = 0; i < operators.size(); i++){
-        if (word.compare(operators[i]) == 0) return true;
-    }
-    return false;
-}
-
-vector<string> withdraw_spaces(vector<string> commands)
-{
-    vector<string> cmds;
-    for (string command : commands)
-    {
-        string word = "";
-        for (int i = 0; i < command.length(); i++)
-        {
-            if (!isspace(command[i]))
-            {
-                word.push_back(command[i]);
-            }
-        }
-        cmds.push_back(word);
-    }
-    return cmds;
-}
 
 vector<Token> verify_tokens(vector<string> commands) //commands: linhas do código
 {
@@ -112,7 +21,6 @@ vector<Token> verify_tokens(vector<string> commands) //commands: linhas do códi
         string type = "";
         for (int letter = 0; letter < command.length(); letter++) {
             string currentLetter (1, command[letter]);
-
             // recognize number
             if (isdigit(command[letter]))
             {
@@ -179,7 +87,8 @@ vector<Token> verify_tokens(vector<string> commands) //commands: linhas do códi
                     word = "";
                 }
 
-                bool keyword = regex_match(word + currentLetter, keywords);
+                // bool keyword = regex_match(word + currentLetter, keywords);
+                bool keyword = isAKeyword(word + currentLetter);
                 if (keyword) {
                     type = "keyword";
                 }
@@ -252,54 +161,4 @@ vector<Token> verify_tokens(vector<string> commands) //commands: linhas do códi
         }
     }
     return tokens;
-}
-
-vector<string> readFile(string filename) {
-    string line;
-    vector<string> lines;
-    ifstream fileToRead(filename);
-    if (fileToRead.is_open()) {
-        while (getline(fileToRead, line)) {
-            lines.push_back(line);
-        }
-        fileToRead.close();
-        return lines;
-    }
-    throw runtime_error("Could not read file");
-}
-
-vector<string> recognize(vector<string> script) {
-        vector<string> words;
-        for (int i = 0; i < script.size(); i++)
-        {
-            stringstream ss(script[i]);
-            char delim=';';
-            string tok;
-            while (getline(ss, tok, delim)) 
-            {
-                if (!tok.empty())
-                {
-                    words.push_back(tok);
-                }
-            }
-        }
-        
-        // for (const auto &w : words) {
-        //     cout << w << endl;
-        // }
-        return words;
-}
-
-int main(int argc, char *argv[]) {
-    if (argv[1] == NULL) {
-        cout << "Please provide a file name!" << endl;
-        return 1;
-    }
-    string filename = argv[1];
-    vector<string> script = readFile(filename);
-    vector<string> commands = recognize(script);
-    // antes disso tirar todos os espacos a nao ser por aqueles que vem depois de palavras reservadas
-    commands = withdraw_spaces(commands);
-    vector<Token> tokens = verify_tokens(commands);
-    return 0;
 }
