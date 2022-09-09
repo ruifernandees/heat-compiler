@@ -7,4 +7,4 @@
 
 using namespace std;
 
-bool isAKeyword(string word);
+bool isADelimiter(string word);
