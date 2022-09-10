@@ -20,22 +20,26 @@ using namespace std;
  * @param command 
  * @param pos 
  * 
- * State S1
+ * State S3
  */
-void handleAlphanumericThatCanBeAnIdentifierOrKeyword(string command, int *pos)
+void handleOperatorAndDelimiterAndThrowIfIsInvalid(string command, int *pos)
 {
     for (int i = *pos; i < command.length(); i++)
     {
-        if (!isalnum(command[i]))
+        if (isalnum(command[i]) != 0)
         {
             string word = restoreWord(command, i, *pos);
-            if (isAKeyword(word))
+            if (isAnOperator(word))
             {
-                cout << word << " is a keyword" << endl;
+                cout << word << " is a operator" << endl;
+            }
+            else if (isADelimiter(word))
+            {
+                cout << word << " is a delimiter" << endl;
             }
             else
             {
-                cout << word << " is a identifier" << endl;
+                cout << word << " unrecognized character" << endl;
             }
             *pos = i;
             return;
@@ -43,13 +47,17 @@ void handleAlphanumericThatCanBeAnIdentifierOrKeyword(string command, int *pos)
     }
 
     string word = restoreWord(command, command.length(), *pos);
-    if (isAKeyword(word))
+    if (isAnOperator(word))
     {
-        cout << word << " is a keyword" << endl;
+        cout << word << " is a operator" << endl;
+    }
+    else if (isADelimiter(word))
+    {
+        cout << word << " is a delimiter" << endl;
     }
     else
     {
-        cout << word << " is a identifier" << endl;
+        cout << word << " unrecognized character" << endl;
     }
     *pos = WAS_ENTIRE_COMMAND_VERIFIED;
 }

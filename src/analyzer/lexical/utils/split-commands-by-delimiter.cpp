@@ -6,8 +6,6 @@
 #include <cstring>
 #include <regex>
 
-#include "lexical-analyzer.h"
-
 using namespace std;
 
 vector<string> splitCommandsByDelimiter(vector<string> script, char delim) {

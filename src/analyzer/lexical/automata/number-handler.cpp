@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 #include <cstring>
-#include <regex>
 
 using namespace std;
 
@@ -12,6 +11,8 @@ using namespace std;
 #include "../../../bnf/types.h"
 
 #include "../utils/restore-word.cpp"
+
+#include "../types.h"
 
 /**
  * @brief 
@@ -30,19 +31,19 @@ void handleNumbersAndThrowIfThereIsALetter(string command, int *pos)
             if (isalpha(command[i]))
             {
                 cout << "error (number + character)" << endl;
-                *pos = -1; // parar de reconhecer a linha
-                return;
+                *pos = WAS_ENTIRE_COMMAND_VERIFIED;
+                throw runtime_error("Error: invalid identifier (number + character).");
             }
             else
             {
                 string number = restoreWord(command, i, *pos);
                 cout << number << " is a number" << endl;
                 *pos = i; // caractere especial continuar verificacao do comando
-                return;
             }
+            return;
         }
     }
     string number = restoreWord(command, command.length(), *pos);
     cout << number << " is a number" << endl;
-    *pos = -1;
+    *pos = WAS_ENTIRE_COMMAND_VERIFIED;
 }
