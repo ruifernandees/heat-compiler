@@ -19,10 +19,11 @@ using namespace std;
  * 
  * @param command 
  * @param pos 
+ * @return Token
  * 
  * State S2
  */
-void handleNumbersAndThrowIfThereIsALetter(string command, int *pos)
+Token handleNumbersAndThrowIfThereIsALetter(string command, int *pos)
 {
     for (int i = *pos; i < command.length(); i++)
     {
@@ -34,16 +35,16 @@ void handleNumbersAndThrowIfThereIsALetter(string command, int *pos)
                 *pos = WAS_ENTIRE_COMMAND_VERIFIED;
                 throw runtime_error("Error: invalid identifier (number + character).");
             }
-            else
-            {
-                string number = restoreWord(command, i, *pos);
-                cout << number << " is a number" << endl;
-                *pos = i; // caractere especial continuar verificacao do comando
-            }
-            return;
+            string number = restoreWord(command, i, *pos);
+            Token token = numberTokenObjectFactory(number);
+            cout << number << " is a number" << endl;
+            *pos = i; // caractere especial continuar verificacao do comando
+            return token;
         }
     }
     string number = restoreWord(command, command.length(), *pos);
+    Token token = numberTokenObjectFactory(number);
     cout << number << " is a number" << endl;
     *pos = WAS_ENTIRE_COMMAND_VERIFIED;
+    return token;
 }

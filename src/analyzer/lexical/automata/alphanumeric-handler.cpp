@@ -32,6 +32,7 @@ Token classifyWord(string command, int currentPosition, int initialPosition)
  * 
  * @param command 
  * @param pos 
+ * @return Token
  * 
  * State S1
  */

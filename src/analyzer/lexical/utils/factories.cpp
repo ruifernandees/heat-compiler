@@ -12,28 +12,35 @@ using namespace std;
 Token keywordTokenObjectFactory(string word) {
     Token newToken;
     newToken.content = word;
-    newToken.content = KEYWORD;
+    newToken.type = KEYWORD;
+    return newToken;
+}
+
+Token numberTokenObjectFactory(string word) {
+    Token newToken;
+    newToken.content = word;
+    newToken.type = NUMBER;
     return newToken;
 }
 
 Token identifierTokenObjectFactory(string word) {
     Token newToken;
     newToken.content = word;
-    newToken.content = IDENTIFIER;
+    newToken.type = IDENTIFIER;
     return newToken;
 }
 
 Token delimiterTokenObjectFactory(string word) {
     Token newToken;
     newToken.content = word;
-    newToken.content = DELIMITER;
+    newToken.type = DELIMITER;
     return newToken;
 }
 
 Token operatorsTokenObjectFactory(string word) {
     Token newToken;
     newToken.content = word;
-    newToken.content = OPERATOR;
+    newToken.type = OPERATOR;
     return newToken;
 }
 
@@ -46,7 +53,7 @@ Token identifierOrKeywordOrDigitObjectFactory(string word)
         return newToken;
     }
     if (isValidNumber(word)) {
-        newToken.type = DIGIT;
+        newToken.type = NUMBER;
         return newToken;
     }
     if (isdigit(word[0])) {

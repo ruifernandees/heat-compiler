@@ -2,7 +2,7 @@
 #define IDENTIFIER "IDENTIFIER"
 #define OPERATOR "OPERATOR"
 #define DELIMITER "DELIMITER"
-#define DIGIT "DIGIT"
+#define NUMBER "NUMBER"
 
 #pragma once
 
