@@ -19,15 +19,15 @@ Token classifyWordIntoOperatorOrDelimiter(string command, int currentPosition, i
     string word = restoreWord(command, currentPosition, initialPosition);
     if (isAnOperator(word))
     {
-        cout << word << " is a operator" << endl;
+        // cout << word << " is a operator" << endl;
         return operatorsTokenObjectFactory(word);
     }
     if (isADelimiter(word))
     {
-        cout << word << " is a delimiter" << endl;
+        // cout << word << " is a delimiter" << endl;
         return delimiterTokenObjectFactory(word);
     }
-    cout << word << " unrecognized character" << endl;
+    // cout << word << " unrecognized character" << endl;
     throw runtime_error("Error: unrecognized character - " + word);
 }
 

@@ -13,19 +13,19 @@ using namespace std;
  * 
  * @param command 
  * @param characterStopped 
+ * @return Token
+ * 
+ * State s0
  */
-void handleCurrentCommandVerification(string command, int *characterStopped)
+Token handleCurrentCommandVerification(string command, int *characterStopped)
 {
     if (isalpha(command[*characterStopped]))
     {
-        handleAlphanumericThatCanBeAnIdentifierOrKeyword(command, characterStopped);
+        return handleAlphanumericThatCanBeAnIdentifierOrKeyword(command, characterStopped);
     }
-    else if (isdigit(command[*characterStopped]))
+    if (isdigit(command[*characterStopped]))
     {
-        handleNumbersAndThrowIfThereIsALetter(command, characterStopped);
+        return handleNumbersAndThrowIfThereIsALetter(command, characterStopped);
     }
-    else
-    {
-        handleOperatorAndDelimiterAndThrowIfIsInvalid(command, characterStopped);
-    }
+    return handleOperatorAndDelimiterAndThrowIfIsInvalid(command, characterStopped);
 }

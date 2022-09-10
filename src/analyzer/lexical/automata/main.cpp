@@ -21,8 +21,9 @@ using namespace std;
  * @param commands - Linhas de código
  * @return vector<Token> 
  */
-vector<Token> verify_tokens(vector<string> commands)
+vector<Token> lexicalAnalyzerAutomata(vector<string> commands)
 {
+    vector<Token> allTokens;
     for (string command : commands)
     {
         bool isAnEmptyLine = command.length() == 0;
@@ -30,7 +31,9 @@ vector<Token> verify_tokens(vector<string> commands)
         int character_stopped = 0;
         while (character_stopped != -1)
         {
-            handleCurrentCommandVerification(command, &character_stopped);
+            Token token = handleCurrentCommandVerification(command, &character_stopped);
+            allTokens.push_back(token);
         }
     }
+    return allTokens;
 }

@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "../../bnf/types.h"
+
 using namespace std;
 
-void lexicalAnalyzer(vector<string> script);
+vector<Token> lexicalAnalyzer(vector<string> script);

@@ -20,10 +20,10 @@ Token classifyWordIntoKeywordOrIdentifier(string command, int currentPosition, i
     string word = restoreWord(command, currentPosition, initialPosition);
     if (isAKeyword(word))
     {
-        cout << word << " is a keyword" << endl;
+        // cout << word << " is a keyword" << endl;
         return keywordTokenObjectFactory(word);
     }
-    cout << word << " is a identifier" << endl;
+    // cout << word << " is a identifier" << endl;
     return identifierTokenObjectFactory(word);
 }
 
