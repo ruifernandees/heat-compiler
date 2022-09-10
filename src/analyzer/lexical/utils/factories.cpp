@@ -1,13 +1,11 @@
 #include <string>
 #include <cstring>
 
-#include "lexical-analyzer.h"
-
-#include "../../bnf/keywords.h"
-#include "../../bnf/operators.h"
-#include "../../bnf/delimiters.h"
-#include "../../bnf/types.h"
-#include "../../utils/string-is-a-number.cpp"
+#include "../../../bnf/keywords.h"
+#include "../../../bnf/operators.h"
+#include "../../../bnf/delimiters.h"
+#include "../../../bnf/types.h"
+#include "../../../utils/string-is-a-number.cpp"
 
 using namespace std;
 
@@ -15,6 +13,13 @@ Token keywordTokenObjectFactory(string word) {
     Token newToken;
     newToken.content = word;
     newToken.content = KEYWORD;
+    return newToken;
+}
+
+Token identifierTokenObjectFactory(string word) {
+    Token newToken;
+    newToken.content = word;
+    newToken.content = IDENTIFIER;
     return newToken;
 }
 

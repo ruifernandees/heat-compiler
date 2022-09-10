@@ -1,4 +1,3 @@
-#include <iostream>
 #include <string>
 #include <vector>
 #include <cstring>
@@ -13,7 +12,6 @@ vector<string> withdraw_spaces(vector<string> commands)
     {
         regex spaces("\\s{2,}");
         string commandWithTrim = regex_replace(command, spaces, " ");
-        cout << commandWithTrim << endl;
         cmds.push_back(commandWithTrim);
     }
     return cmds;
