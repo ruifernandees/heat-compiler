@@ -15,7 +15,7 @@ using namespace std;
 
 #include "../types.h"
 
-Token classifyWord(string command, int currentPosition, int initialPosition)
+Token classifyWordIntoKeywordOrIdentifier(string command, int currentPosition, int initialPosition)
 {
     string word = restoreWord(command, currentPosition, initialPosition);
     if (isAKeyword(word))
@@ -42,12 +42,12 @@ Token handleAlphanumericThatCanBeAnIdentifierOrKeyword(string command, int *pos)
     {
         if (!isalnum(command[i]))
         {
-            Token token = classifyWord(command, i, *pos);
+            Token token = classifyWordIntoKeywordOrIdentifier(command, i, *pos);
             *pos = i;
             return token;
         }
     }
-    Token token = classifyWord(command, command.length(), *pos);
+    Token token = classifyWordIntoKeywordOrIdentifier(command, command.length(), *pos);
     *pos = WAS_ENTIRE_COMMAND_VERIFIED;
     return token;
 }

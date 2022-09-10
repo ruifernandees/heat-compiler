@@ -14,50 +14,44 @@ using namespace std;
 
 #include "../types.h"
 
+Token classifyWordIntoOperatorOrDelimiter(string command, int currentPosition, int initialPosition)
+{
+    string word = restoreWord(command, currentPosition, initialPosition);
+    if (isAnOperator(word))
+    {
+        cout << word << " is a operator" << endl;
+        return operatorsTokenObjectFactory(word);
+    }
+    if (isADelimiter(word))
+    {
+        cout << word << " is a delimiter" << endl;
+        return delimiterTokenObjectFactory(word);
+    }
+    cout << word << " unrecognized character" << endl;
+    throw runtime_error("Error: unrecognized character - " + word);
+}
+
 /**
  * @brief 
  * 
  * @param command 
  * @param pos 
+ * @return Token
  * 
  * State S3
  */
-void handleOperatorAndDelimiterAndThrowIfIsInvalid(string command, int *pos)
+Token handleOperatorAndDelimiterAndThrowIfIsInvalid(string command, int *pos)
 {
     for (int i = *pos; i < command.length(); i++)
     {
         if (isalnum(command[i]) != 0)
         {
-            string word = restoreWord(command, i, *pos);
-            if (isAnOperator(word))
-            {
-                cout << word << " is a operator" << endl;
-            }
-            else if (isADelimiter(word))
-            {
-                cout << word << " is a delimiter" << endl;
-            }
-            else
-            {
-                cout << word << " unrecognized character" << endl;
-            }
+            Token token = classifyWordIntoOperatorOrDelimiter(command, i, *pos);
             *pos = i;
-            return;
+            return token;
         }
     }
-
-    string word = restoreWord(command, command.length(), *pos);
-    if (isAnOperator(word))
-    {
-        cout << word << " is a operator" << endl;
-    }
-    else if (isADelimiter(word))
-    {
-        cout << word << " is a delimiter" << endl;
-    }
-    else
-    {
-        cout << word << " unrecognized character" << endl;
-    }
+    Token token = classifyWordIntoOperatorOrDelimiter(command, command.length(), *pos);
     *pos = WAS_ENTIRE_COMMAND_VERIFIED;
+    return token;
 }
