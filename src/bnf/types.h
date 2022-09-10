@@ -4,6 +4,8 @@
 #define DELIMITER "DELIMITER"
 #define NUMBER "NUMBER"
 
+#define ONE_LINE_COMMENT '#'
+
 #pragma once
 
 using namespace std;
