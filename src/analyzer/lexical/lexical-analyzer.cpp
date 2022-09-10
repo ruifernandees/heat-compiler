@@ -23,6 +23,13 @@ vector<string> withdraw_spaces(vector<string> commands)
             {
                 word.push_back(command[i]);
             }
+            else
+            {
+                if (i > 0 && !isspace(word[word.length() - 1])) // deixar 1 espaco só
+                {
+                    word.push_back(command[i]);
+                }
+            }
         }
         cmds.push_back(word);
     }
