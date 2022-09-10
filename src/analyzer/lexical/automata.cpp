@@ -16,41 +16,7 @@ using namespace std;
 #include "factories.cpp"
 
 #include "./automata/alphanumeric-handler.cpp"
-
-void s2(string command, int *pos)
-{
-    for (int i = *pos; i < command.length(); i++)
-    {
-        if (!isdigit(command[i]))
-        {
-            if (isalpha(command[i]))
-            {
-                cout << "error (number + character)" << endl;
-                *pos = -1; // parar de reconhecer a linha
-                return;
-            }
-            else
-            {
-                string token;
-                for (int y = *pos; y < i; y++)
-                {
-                    token.push_back(command[y]);
-                }
-                cout << token << " is a number" << endl;
-                *pos = i; // caractere especial continuar verificacao do comando
-                return;
-            }
-        }
-    }
-
-    string token;
-    for (int y = *pos; y < command.length(); y++)
-    {
-        token.push_back(command[y]);
-    }
-    cout << token << " is a number" << endl;
-    *pos = -1;
-}
+#include "./automata/number-handler.cpp"
 
 void s3(string command, int *pos)
 {
@@ -108,7 +74,7 @@ void s0(string command, int *character_stopped)
     }
     else if (isdigit(command[*character_stopped]))
     {
-        s2(command, character_stopped);
+        handleNumbersAndThrowIfThereIsALetter(command, character_stopped);
     }
     else
     {

@@ -1,6 +1,4 @@
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include <string>
 #include <vector>
 #include <cstring>
@@ -13,16 +11,16 @@ using namespace std;
 #include "../../../bnf/delimiters.h"
 #include "../../../bnf/types.h"
 
-string restoreWord(string command, int currentPosition, int initialPosition)
-{
-    string word;
-    for (int y = initialPosition; y < currentPosition; y++)
-    {
-        word.push_back(command[y]);
-    }
-    return word;
-}
+#include "../utils/restore-word.cpp"
 
+/**
+ * @brief 
+ * 
+ * @param command 
+ * @param pos 
+ * 
+ * State S1
+ */
 void handleAlphanumericThatCanBeAnIdentifierOrKeyword(string command, int *pos)
 {
     for (int i = *pos; i < command.length(); i++)

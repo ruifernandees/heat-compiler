@@ -17,7 +17,7 @@ vector<string> withdraw_spaces(vector<string> commands)
     for (string command : commands)
     {
         regex spaces("\\s{2,}");
-        string commandWithTrim = regex_replace(command, spaces, "\\s");
+        string commandWithTrim = regex_replace(command, spaces, " ");
         cout << commandWithTrim << endl;
         cmds.push_back(commandWithTrim);
     }
