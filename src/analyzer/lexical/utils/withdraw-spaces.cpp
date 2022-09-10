@@ -3,6 +3,8 @@
 #include <cstring>
 #include <regex>
 
+#pragma once
+
 using namespace std;
 
 vector<string> withdraw_spaces(vector<string> commands)

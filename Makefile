@@ -1,4 +1,5 @@
 TARGET = main
+TEST_TARGET = test
 
 SOURCE_DIR = ./src
 LEXICAL_ANALYZER_DIR = $(SOURCE_DIR)/analyzer/lexical
@@ -7,9 +8,16 @@ OUTDIR = ./dist
 CC = g++
 
 objects = $(OUTDIR)/rubyc.o $(OUTDIR)/lexical-analyzer.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o
+test_objects = $(OUTDIR)/test.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o
 
 $(TARGET): $(objects)
 	$(CC) -o $(OUTDIR)/$(TARGET).out $(objects)
+
+$(TEST_TARGET): $(test_objects)
+	$(CC) -o $(OUTDIR)/$(TEST_TARGET).out $(test_objects)
+
+$(OUTDIR)/test.o: $(LEXICAL_ANALYZER_DIR)/tests/lexical-analyzer.spec.cpp $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.h
+	$(CC) -c $(LEXICAL_ANALYZER_DIR)/tests/lexical-analyzer.spec.cpp -o $(OUTDIR)/test.o
 
 $(OUTDIR)/rubyc.o: $(SOURCE_DIR)/rubyc.cpp $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.h
 	$(CC) -c $(SOURCE_DIR)/rubyc.cpp -o $(OUTDIR)/rubyc.o

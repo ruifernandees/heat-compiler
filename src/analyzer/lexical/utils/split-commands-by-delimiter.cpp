@@ -6,6 +6,8 @@
 #include <cstring>
 #include <regex>
 
+#pragma once
+
 using namespace std;
 
 vector<string> splitCommandsByDelimiter(vector<string> script, char delim) {

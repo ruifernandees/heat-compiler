@@ -7,6 +7,8 @@
 #include "../../../bnf/types.h"
 #include "../../../utils/string-is-a-number.cpp"
 
+#pragma once
+
 using namespace std;
 
 Token keywordTokenObjectFactory(string word) {

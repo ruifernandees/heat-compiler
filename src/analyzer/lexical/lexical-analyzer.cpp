@@ -1,4 +1,3 @@
-#include <iostream>
 #include <string>
 #include <vector>
 #include <cstring>
@@ -9,6 +8,8 @@
 #include "./automata/main.cpp"
 #include "./utils/withdraw-spaces.cpp"
 #include "./utils/split-commands-by-delimiter.cpp"
+
+#pragma once
 
 using namespace std;
 

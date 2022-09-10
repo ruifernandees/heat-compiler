@@ -5,6 +5,8 @@
 #include <vector>
 #include <cstring>
 
+#pragma once
+
 using namespace std;
 
 vector<string> readFile(string filename) {
