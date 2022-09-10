@@ -15,47 +15,7 @@ using namespace std;
 
 #include "factories.cpp"
 
-void s1(string command, int *pos)
-{
-    for (int i = *pos; i < command.length(); i++)
-    {
-        if (!isalnum(command[i]))
-        {
-            string word;
-            for (int y = *pos; y < i; y++)
-            {
-                word.push_back(command[y]);
-            }
-
-            if (isAKeyword(word))
-            {
-                cout << word << " is a keyword" << endl;
-            }
-            else
-            {
-                cout << word << " is a identifier" << endl;
-            }
-            *pos = i;
-            return;
-        }
-    }
-
-    string word;
-    for (int y = *pos; y < command.length(); y++)
-    {
-        word.push_back(command[y]);
-    }
-    if (isAKeyword(word))
-    {
-        cout << word << " is a keyword" << endl;
-    }
-    else
-    {
-        cout << word << " is a identifier" << endl;
-    }
-    // passou pela string toda
-    *pos = -1;
-}
+#include "./automata/alphanumeric-handler.cpp"
 
 void s2(string command, int *pos)
 {
@@ -144,7 +104,7 @@ void s0(string command, int *character_stopped)
 {
     if (isalpha(command[*character_stopped]))
     {
-        s1(command, character_stopped);
+        handleAlphanumericThatCanBeAnIdentifierOrKeyword(command, character_stopped);
     }
     else if (isdigit(command[*character_stopped]))
     {

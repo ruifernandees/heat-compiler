@@ -1,8 +1,8 @@
-3 puts 1; hello = 2
+3  puts         1; hello   = 2
 
 %=if
     
-if ( 3 > 2 )
+if 3>2
 
 end
 

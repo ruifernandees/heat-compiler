@@ -16,27 +16,19 @@ vector<string> withdraw_spaces(vector<string> commands)
     vector<string> cmds;
     for (string command : commands)
     {
-        string word = "";
-        for (int i = 0; i < command.length(); i++)
-        {
-            if (!isspace(command[i]))
-            {
-                word.push_back(command[i]);
-            }
-        }
-        cmds.push_back(word);
+        regex spaces("\\s{2,}");
+        string commandWithTrim = regex_replace(command, spaces, "\\s");
+        cout << commandWithTrim << endl;
+        cmds.push_back(commandWithTrim);
     }
     return cmds;
 }
 
 void lexicalAnalyzer(vector<string> script) {
     vector<string> commands = splitCommandsByDelimiter(script, ';');
+    cout << "👽" << endl;
     commands = withdraw_spaces(commands); // deixar apenas um espaco (trim)
+    cout << "🙈" << endl;
     commands = splitCommandsByDelimiter(commands, ' ');
-    // antes disso tirar todos os espacos a nao ser por aqueles que vem depois de palavras reservadas
-    // commands = withdraw_spaces(commands);
-    // for (auto command : commands) {
-        
-    // }
     vector<Token> tokens = verify_tokens(commands);
 }
