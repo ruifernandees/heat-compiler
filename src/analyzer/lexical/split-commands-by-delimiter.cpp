@@ -10,12 +10,11 @@
 
 using namespace std;
 
-vector<string> splitCommandsByDelimiter(vector<string> script) {
+vector<string> splitCommandsByDelimiter(vector<string> script, char delim) {
     vector<string> words;
     for (int i = 0; i < script.size(); i++)
     {
         stringstream ss(script[i]);
-        char delim=';';
         string tok;
         while (getline(ss, tok, delim)) 
         {

@@ -30,7 +30,9 @@ vector<string> withdraw_spaces(vector<string> commands)
 }
 
 void lexicalAnalyzer(vector<string> script) {
-    vector<string> commands = splitCommandsByDelimiter(script);
+    vector<string> commands = splitCommandsByDelimiter(script, ';');
+    commands = withdraw_spaces(commands); // deixar apenas um espaco (trim)
+    commands = splitCommandsByDelimiter(commands, ' ');
     // antes disso tirar todos os espacos a nao ser por aqueles que vem depois de palavras reservadas
     // commands = withdraw_spaces(commands);
     // for (auto command : commands) {
