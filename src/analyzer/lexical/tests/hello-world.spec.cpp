@@ -22,7 +22,7 @@ vector<Token> expectedVectorFactory() {
     allTokens.push_back(operatorsTokenObjectFactory(">"));
     allTokens.push_back(numberTokenObjectFactory("2"));
     allTokens.push_back(keywordTokenObjectFactory("end"));
-    allTokens.push_back(identifierTokenObjectFactory("puts1"));
+    allTokens.push_back(identifierTokenObjectFactory("puts_1"));
     allTokens.push_back(operatorsTokenObjectFactory("="));
     allTokens.push_back(numberTokenObjectFactory("1"));
     return allTokens;

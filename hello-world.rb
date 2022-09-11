@@ -1,4 +1,4 @@
-puts 1
+puts_u = 1
 
 =begin
 3  puts         1; hello   = 2

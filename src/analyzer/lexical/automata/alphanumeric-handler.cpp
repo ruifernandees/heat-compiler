@@ -40,7 +40,7 @@ Token handleAlphanumericThatCanBeAnIdentifierOrKeyword(string command, int *pos)
 {
     for (int i = *pos; i < command.length(); i++)
     {
-        if (!isalnum(command[i]))
+        if (!isalnum(command[i]) && !(command[i] == '_'))
         {
             Token token = classifyWordIntoKeywordOrIdentifier(command, i, *pos);
             *pos = i;

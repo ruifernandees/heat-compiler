@@ -44,7 +44,7 @@ Token handleOperatorAndDelimiterAndThrowIfIsInvalid(string command, int *pos)
 {
     for (int i = *pos; i < command.length(); i++)
     {
-        if (isalnum(command[i]) != 0)
+        if (isalnum(command[i]))
         {
             Token token = classifyWordIntoOperatorOrDelimiter(command, i, *pos);
             *pos = i;
