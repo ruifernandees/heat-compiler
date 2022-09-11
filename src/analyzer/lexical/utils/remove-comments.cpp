@@ -20,7 +20,6 @@ vector<string> removeComments(vector<string> text)
         for (int i = 0; i < line.length(); i++)
         {
             if (line[i] == '=') {
-                cout << "IGUAL CHAR" << endl;
                 string beginString = "";
                 string endString = "";
                 for (int k = i; k < i + MULTIPLE_LINE_COMMENT_BEGIN.size(); k++) {
@@ -32,12 +31,10 @@ vector<string> removeComments(vector<string> text)
                     endString.push_back(line[l]);
                 }
                 if (beginString.compare(MULTIPLE_LINE_COMMENT_BEGIN) == 0) {
-                    cout << "BEGIN STRING" << endl;
                     hasBeginCommentStatement = true;
                     i += MULTIPLE_LINE_COMMENT_BEGIN.size();
                 }
                 if (endString.compare(MULTIPLE_LINE_COMMENT_END) == 0) {
-                    cout << "END STRING" << endl;
                     hasBeginCommentStatement = false;
                     i += MULTIPLE_LINE_COMMENT_END.size();
                 }
@@ -46,7 +43,6 @@ vector<string> removeComments(vector<string> text)
             if (line[i] == ONE_LINE_COMMENT) break;
             newLine.push_back(line[i]);
         }
-        cout << newLine << endl;
         cmds.push_back(newLine);
     }
     if (hasBeginCommentStatement) {

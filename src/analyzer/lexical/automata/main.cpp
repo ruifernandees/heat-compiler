@@ -29,7 +29,7 @@ vector<Token> lexicalAnalyzerAutomata(vector<string> commands)
         bool isAnEmptyLine = command.length() == 0;
         if (isAnEmptyLine) continue;
         int character_stopped = 0;
-        while (character_stopped != -1)
+        while (character_stopped != WAS_ENTIRE_COMMAND_VERIFIED)
         {
             Token token = handleCurrentCommandVerification(command, &character_stopped);
             allTokens.push_back(token);
