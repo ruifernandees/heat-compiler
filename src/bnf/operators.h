@@ -8,3 +8,5 @@
 using namespace std;
 
 bool isAnOperator(string word);
+
+int greatestOperatorLength();
