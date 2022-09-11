@@ -2,6 +2,7 @@
 #include <vector>
 #include <cstring>
 #include <regex>
+#include <iostream>
 
 #include "../../../bnf/types.h"
 
@@ -22,23 +23,23 @@ vector<string> removeComments(vector<string> text)
                 cout << "IGUAL CHAR" << endl;
                 string beginString = "";
                 string endString = "";
-                for (int k = i; k < MULTIPLE_LINE_COMMENT_BEGIN.size(); k++) {
+                for (int k = i; k < i + MULTIPLE_LINE_COMMENT_BEGIN.size(); k++) {
                     if (k >= line.length()) break;
                     beginString.push_back(line[k]);
                 }
-                for (int l = i; l < MULTIPLE_LINE_COMMENT_END.size(); l++) {
+                for (int l = i; l < i + MULTIPLE_LINE_COMMENT_END.size(); l++) {
                     if (l >= line.length()) break;
                     endString.push_back(line[l]);
                 }
                 if (beginString.compare(MULTIPLE_LINE_COMMENT_BEGIN) == 0) {
                     cout << "BEGIN STRING" << endl;
                     hasBeginCommentStatement = true;
-                    // i += MULTIPLE_LINE_COMMENT_BEGIN.size() - 1;
+                    i += MULTIPLE_LINE_COMMENT_BEGIN.size();
                 }
                 if (endString.compare(MULTIPLE_LINE_COMMENT_END) == 0) {
                     cout << "END STRING" << endl;
                     hasBeginCommentStatement = false;
-                    // i += MULTIPLE_LINE_COMMENT_END.size() - 1;
+                    i += MULTIPLE_LINE_COMMENT_END.size();
                 }
             }
             if (hasBeginCommentStatement) break;
