@@ -32,7 +32,7 @@ Token handleCurrentCommandVerification(string command, int *characterStopped)
         return handleNumbersAndThrowIfThereIsALetter(command, characterStopped);
     }
     if (isAnOperator(currentCharacter)) {
-        cout << "is an operator " << command[*characterStopped] << endl;
+        // cout << "is an operator " << command[*characterStopped] << endl;
         return s4(command, characterStopped);
     }
     if (isADelimiter(currentCharacter)) {

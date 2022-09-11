@@ -2,14 +2,19 @@ age +=-1
 
 when 1...@size
 
-until iter.nil?
+until iter.nil?; # TRATAR nil? como identificador
 
-
+  
 insert(iter, Node.new(val))
 
 remove(@head)
 
 age = nil
+
+def []=(key,val)
+
+end
+
 
 =begin
 MIT License

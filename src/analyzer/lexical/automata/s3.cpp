@@ -24,31 +24,30 @@ Token s3(string command, int *pos) {
     for (int i = *pos; i < *pos + greatestOperatorLength(); i++) {
         if (i >= command.length()) break;
         word.push_back(command[i]);
-        // string word = restoreWord(command, i+1, *pos);
-        // if (isAnOperator(word)) {
-        //     *pos 
-        //     s4(command, )
-        // }
+    }
+    if (word.length() == 1) {
+        *pos = WAS_ENTIRE_COMMAND_VERIFIED;
+        // cout << "🙈" << word << endl;
+        // cout << "🍷" << endl;
+        return delimiterTokenObjectFactory(word);
+    }
+    if (isalnum(word[1])) {
+        *pos += 1;
+        string delimiterInWord (1, word[0]);
+        // cout << "🙈" << delimiterInWord << " <=> " << word << endl;
+        // cout << "🍷" << endl;
+        return delimiterTokenObjectFactory(delimiterInWord);
     }
     string originalWord = word;
-    cout << "Verifying delimiter in " << word << endl;
-    for (int i = *pos + originalWord.length(); i > *pos; i--) {
-        if (isAnOperator(word)) {
-            cout << "Is an operator " << word << endl;
-            if (i == command.length() - 1) {
-                *pos = WAS_ENTIRE_COMMAND_VERIFIED;
-            } else {
-                *pos = i;
-            }
+    for (int i = *pos + originalWord.length() - 1; i > *pos; i--) {
+        if (isAnOperator(word))  {
+            *pos += word.length();
             return operatorsTokenObjectFactory(word);
         }
+        // // cout << "POP " << wor
         word.pop_back();
     }
-    string currentCommand (1, command[*pos]);
-    cout << "Final word " << currentCommand << ",  " << *pos << endl;
-    *pos++;
-    cout << "Command " << command << endl;
-    if (*pos == command.length()  -1 ) *pos = WAS_ENTIRE_COMMAND_VERIFIED;
-    cout << "POS " << *pos << endl;
-    return delimiterTokenObjectFactory(currentCommand);
+    *pos += 1;
+    // cout << "FINAL WORD" << word << endl;
+    return delimiterTokenObjectFactory(word);
 }

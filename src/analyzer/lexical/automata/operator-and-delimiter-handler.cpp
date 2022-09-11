@@ -18,7 +18,7 @@ using namespace std;
 Token classifyWordIntoOperatorOrDelimiter(string command, int currentPosition, int initialPosition)
 {
     string word = restoreWord(command, currentPosition, initialPosition);
-    cout << "S3 classifying ["  << word << "]" << endl;
+    // cout << "S3 classifying ["  << word << "]" << endl;
 
     if (isAnOperator(word))
     {
