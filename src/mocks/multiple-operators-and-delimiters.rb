@@ -4,6 +4,7 @@ when 1...@size
 
 until iter.nil?; # TRATAR nil? como identificador
 
+isAdult = age > 18 ? 1 : 0
   
 insert(iter, Node.new(val))
 

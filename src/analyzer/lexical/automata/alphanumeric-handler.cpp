@@ -8,6 +8,7 @@ using namespace std;
 #include "../../../bnf/keywords.h"
 #include "../../../bnf/operators.h"
 #include "../../../bnf/delimiters.h"
+#include "../../../bnf/identifiers.h"
 #include "../../../bnf/types.h"
 
 #include "../utils/restore-word.cpp"
@@ -15,10 +16,9 @@ using namespace std;
 
 #include "../types.h"
 
-Token classifyWordIntoKeywordOrIdentifier(string command, int currentPosition, int initialPosition)
+Token classifyWordIntoKeywordOrIdentifier(string command, int currentPosition, int *initialPosition)
 {
-    string word = restoreWord(command, currentPosition, initialPosition);
-    // cout << "S1 classifying ["  << word << "]" << endl;
+    string word = restoreWord(command, currentPosition, *initialPosition);
     if (isAKeyword(word))
     {
         return keywordTokenObjectFactory(word);
@@ -41,12 +41,22 @@ Token handleAlphanumericThatCanBeAnIdentifierOrKeyword(string command, int *pos)
     {
         if (!isalnum(command[i]) && !(command[i] == '_'))
         {
-            Token token = classifyWordIntoKeywordOrIdentifier(command, i, *pos);
+            string word = restoreWord(command, i, *pos);
             *pos = i;
-            return token;
+            if (isAnIdentifierEndCharacter(command[i])) {
+                word += command[i];
+                if (i + 1 < command.length()) {
+                    *pos += 1;
+                } else {
+                    *pos = WAS_ENTIRE_COMMAND_VERIFIED;
+                }
+            } else if (isAKeyword(word)) {
+                return keywordTokenObjectFactory(word);
+            }
+            return identifierTokenObjectFactory(word);
         }
     }
-    Token token = classifyWordIntoKeywordOrIdentifier(command, command.length(), *pos);
+    Token token = classifyWordIntoKeywordOrIdentifier(command, command.length(), pos);
     *pos = WAS_ENTIRE_COMMAND_VERIFIED;
     return token;
 }

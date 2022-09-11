@@ -1,13 +1,14 @@
-puts_u = 1
+a = true
 
-=begin
-3  puts         1; hello   = 2
+class A
+  def if?
+    return "YURI"
+  end
+end 
 
-%=if
-    
-if 3>2
+instance = A.new
+name = instance.if?
 
-end
-
-puts1 = 1
-=end asdasd
+# b= "TRUE" : "FALSE"
+# puts b
+puts name

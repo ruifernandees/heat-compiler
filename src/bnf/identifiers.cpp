@@ -3,13 +3,29 @@
 #include <cstring>
 #include <regex>
 
-#include "keywords.h"
+#include "identifiers.h"
 #include "types.h"
 
 using namespace std;
 
-regex keywords ("do|end|undef|alias|if|then|else|elsif|case|while|for|in|begin|rescue|ensure|class|def|unless|until|return|yield|and|or|not|super|defined?|nil|self");
+vector<char> identifierEndCharacters;
 
-bool acceptIdentifier(string word) {
-  return !!regex_match(word, keywords);
+/**
+ * @brief 
+ * 
+ * Com esses caracteres, o identificador é um nome de um método de uma classe
+ */
+void initializeEndCharactersVector() {
+    identifierEndCharacters.push_back('?');
+    identifierEndCharacters.push_back('!');
+}
+
+bool isAnIdentifierEndCharacter(char endCharacter) {
+    if (identifierEndCharacters.size() == 0) {
+        initializeEndCharactersVector();
+    }
+    for (int i = 0; i < identifierEndCharacters.size(); i++){
+        if (identifierEndCharacters[i] == endCharacter) return true;
+    }
+    return false;
 }

@@ -7,8 +7,8 @@ BNF_DIR = $(SOURCE_DIR)/bnf
 OUTDIR = ./dist
 CC = g++
 
-objects = $(OUTDIR)/rubyc.o $(OUTDIR)/lexical-analyzer.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o
-test_objects = $(OUTDIR)/test.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o
+objects = $(OUTDIR)/rubyc.o $(OUTDIR)/lexical-analyzer.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o $(OUTDIR)/identifiers.o
+test_objects = $(OUTDIR)/test.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o $(OUTDIR)/identifiers.o
 
 $(TARGET): $(objects)
 	$(CC) -o $(OUTDIR)/$(TARGET).out $(objects)
@@ -33,6 +33,9 @@ $(OUTDIR)/operators.o: $(BNF_DIR)/operators.cpp $(BNF_DIR)/operators.h
 
 $(OUTDIR)/delimiters.o: $(BNF_DIR)/delimiters.cpp $(BNF_DIR)/delimiters.h
 	$(CC) -c $(BNF_DIR)/delimiters.cpp -o $(OUTDIR)/delimiters.o
+
+$(OUTDIR)/identifiers.o: $(BNF_DIR)/identifiers.cpp $(BNF_DIR)/identifiers.h
+	$(CC) -c $(BNF_DIR)/identifiers.cpp -o $(OUTDIR)/identifiers.o
 
 clean:
 	rm *.o $(OUTDIR)/**

@@ -21,9 +21,17 @@ vector<Token> expectedVectorMultipleOperatorsFactory() {
     allTokens.push_back(keywordTokenObjectFactory("until"));
     allTokens.push_back(identifierTokenObjectFactory("iter"));
     allTokens.push_back(operatorsTokenObjectFactory("."));
-    allTokens.push_back(keywordTokenObjectFactory("nil")); // TTT
-    allTokens.push_back(operatorsTokenObjectFactory("?")); // TTT
+    allTokens.push_back(identifierTokenObjectFactory("nil?"));
     allTokens.push_back(delimiterTokenObjectFactory(";"));
+    allTokens.push_back(identifierTokenObjectFactory("isAdult"));
+    allTokens.push_back(operatorsTokenObjectFactory("="));
+    allTokens.push_back(identifierTokenObjectFactory("age"));
+    allTokens.push_back(operatorsTokenObjectFactory(">"));
+    allTokens.push_back(numberTokenObjectFactory("18"));
+    allTokens.push_back(operatorsTokenObjectFactory("?"));
+    allTokens.push_back(numberTokenObjectFactory("1"));
+    allTokens.push_back(operatorsTokenObjectFactory(":"));
+    allTokens.push_back(numberTokenObjectFactory("0"));
     allTokens.push_back(identifierTokenObjectFactory("insert"));
     allTokens.push_back(delimiterTokenObjectFactory("("));
     allTokens.push_back(identifierTokenObjectFactory("iter"));
