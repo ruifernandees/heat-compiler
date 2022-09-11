@@ -19,6 +19,7 @@ Token classifyWordIntoOperatorOrDelimiter(string command, int currentPosition, i
 {
     string word = restoreWord(command, currentPosition, initialPosition);
     // cout << "S3 classifying ["  << word << "]" << endl;
+
     if (isAnOperator(word))
     {
         return operatorsTokenObjectFactory(word);
@@ -27,6 +28,10 @@ Token classifyWordIntoOperatorOrDelimiter(string command, int currentPosition, i
     {
         return delimiterTokenObjectFactory(word);
     }
+
+    // quebrar para ver se acha uns operadores ai
+    // +[]=
+
     throw runtime_error("Error: unrecognized character [" + word + "]");
 }
 
