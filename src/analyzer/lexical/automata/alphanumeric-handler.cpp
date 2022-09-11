@@ -18,12 +18,11 @@ using namespace std;
 Token classifyWordIntoKeywordOrIdentifier(string command, int currentPosition, int initialPosition)
 {
     string word = restoreWord(command, currentPosition, initialPosition);
+    // cout << "S1 classifying ["  << word << "]" << endl;
     if (isAKeyword(word))
     {
-        // cout << word << " is a keyword" << endl;
         return keywordTokenObjectFactory(word);
     }
-    // cout << word << " is a identifier" << endl;
     return identifierTokenObjectFactory(word);
 }
 

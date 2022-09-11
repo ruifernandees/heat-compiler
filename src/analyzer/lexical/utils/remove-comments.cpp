@@ -22,7 +22,8 @@ vector<string> removeComments(vector<string> text)
     bool hasBeginCommentStatement = false;
     for (string line : text)
     {
-        string newLine;
+        regex onlySpaces("^\\s+$");
+        string newLine = "";
         for (int i = 0; i < line.length(); i++)
         {
             if (line[i] == '=') {
@@ -41,14 +42,21 @@ vector<string> removeComments(vector<string> text)
                     i += MULTIPLE_LINE_COMMENT_BEGIN.size();
                 }
                 if (endString.compare(MULTIPLE_LINE_COMMENT_END) == 0) {
-                    hasBeginCommentStatement = false;
-                    i += MULTIPLE_LINE_COMMENT_END.size();
+                    bool itsOnlyEnd = i + MULTIPLE_LINE_COMMENT_END.length() == line.length();
+                    if (itsOnlyEnd)
+                    {
+                        hasBeginCommentStatement = false;
+                        i += MULTIPLE_LINE_COMMENT_END.size();
+                        break;
+                    }
                 }
             }
             if (hasBeginCommentStatement) break;
             if (line[i] == ONE_LINE_COMMENT) break;
             newLine.push_back(line[i]);
         }
+        if (newLine.length() == 0) continue;
+        if (regex_match(newLine, onlySpaces)) continue;
         cmds.push_back(newLine);
     }
     if (hasBeginCommentStatement) {

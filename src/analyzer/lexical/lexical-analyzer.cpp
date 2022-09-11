@@ -16,11 +16,6 @@ using namespace std;
 
 vector<Token> lexicalAnalyzer(vector<string> script) {
     vector<string> commands = removeComments(script);
-    // cout << "👻" << endl;
-    // for (string command: commands) {
-    //     cout << command << endl;
-    // }
-    // cout << "👻" << endl;
     commands = withdraw_spaces(commands);
     commands = splitCommandsByDelimiter(commands, ' ');
     return lexicalAnalyzerAutomata(commands);
