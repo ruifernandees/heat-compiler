@@ -12,6 +12,7 @@ vector<Token> expectedVectorFactory() {
     allTokens.push_back(numberTokenObjectFactory("3"));
     allTokens.push_back(identifierTokenObjectFactory("puts"));
     allTokens.push_back(numberTokenObjectFactory("1"));
+    allTokens.push_back(delimiterTokenObjectFactory(";"));
     allTokens.push_back(identifierTokenObjectFactory("hello"));
     allTokens.push_back(operatorsTokenObjectFactory("="));
     allTokens.push_back(numberTokenObjectFactory("2"));

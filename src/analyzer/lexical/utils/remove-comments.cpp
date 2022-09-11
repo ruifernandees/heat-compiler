@@ -10,6 +10,12 @@
 
 using namespace std;
 
+/**
+ * @brief 
+ * 
+ * @param text 
+ * @return vector<string> 
+ */
 vector<string> removeComments(vector<string> text)
 {
     vector<string> cmds;

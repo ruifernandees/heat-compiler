@@ -21,7 +21,6 @@ vector<Token> lexicalAnalyzer(vector<string> script) {
     //     cout << command << endl;
     // }
     // cout << "👻" << endl;
-    commands = splitCommandsByDelimiter(commands, ';');
     commands = withdraw_spaces(commands);
     commands = splitCommandsByDelimiter(commands, ' ');
     return lexicalAnalyzerAutomata(commands);

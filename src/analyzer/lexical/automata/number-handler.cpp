@@ -11,6 +11,7 @@ using namespace std;
 #include "../../../bnf/types.h"
 
 #include "../utils/restore-word.cpp"
+#include "../utils/factories.cpp"
 
 #include "../types.h"
 
