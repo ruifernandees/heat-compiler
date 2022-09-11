@@ -11,6 +11,7 @@ using namespace std;
 #include "../../../bnf/types.h"
 
 #include "../utils/restore-word.cpp"
+#include "../utils/factories.cpp"
 
 #include "../types.h"
 
@@ -31,20 +32,17 @@ Token handleNumbersAndThrowIfThereIsALetter(string command, int *pos)
         {
             if (isalpha(command[i]))
             {
-                // cout << "error (number + character)" << endl;
                 *pos = WAS_ENTIRE_COMMAND_VERIFIED;
                 throw runtime_error("Error: invalid identifier (number + character).");
             }
             string number = restoreWord(command, i, *pos);
             Token token = numberTokenObjectFactory(number);
-            // cout << number << " is a number" << endl;
             *pos = i; // caractere especial continuar verificacao do comando
             return token;
         }
     }
     string number = restoreWord(command, command.length(), *pos);
     Token token = numberTokenObjectFactory(number);
-    // cout << number << " is a number" << endl;
     *pos = WAS_ENTIRE_COMMAND_VERIFIED;
     return token;
 }

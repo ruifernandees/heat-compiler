@@ -11,24 +11,23 @@ using namespace std;
 #include "../../../bnf/types.h"
 
 #include "../utils/restore-word.cpp"
+#include "../utils/factories.cpp"
 
 #include "../types.h"
 
 Token classifyWordIntoOperatorOrDelimiter(string command, int currentPosition, int initialPosition)
 {
     string word = restoreWord(command, currentPosition, initialPosition);
+    // cout << "S3 classifying ["  << word << "]" << endl;
     if (isAnOperator(word))
     {
-        // cout << word << " is a operator" << endl;
         return operatorsTokenObjectFactory(word);
     }
     if (isADelimiter(word))
     {
-        // cout << word << " is a delimiter" << endl;
         return delimiterTokenObjectFactory(word);
     }
-    // cout << word << " unrecognized character" << endl;
-    throw runtime_error("Error: unrecognized character - " + word);
+    throw runtime_error("Error: unrecognized character [" + word + "]");
 }
 
 /**
@@ -44,7 +43,7 @@ Token handleOperatorAndDelimiterAndThrowIfIsInvalid(string command, int *pos)
 {
     for (int i = *pos; i < command.length(); i++)
     {
-        if (isalnum(command[i]) != 0)
+        if (isalnum(command[i]))
         {
             Token token = classifyWordIntoOperatorOrDelimiter(command, i, *pos);
             *pos = i;
