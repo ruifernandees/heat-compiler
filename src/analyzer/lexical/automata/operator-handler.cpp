@@ -15,22 +15,26 @@ using namespace std;
 
 #include "../types.h"
 
-// +=a
-
-Token s4(string command, int *pos) {
+/**
+ * @brief 
+ * 
+ * @param command 
+ * @param pos 
+ * @return Token 
+ * 
+ * State S4
+ */
+Token handleOperators(string command, int *pos) {
     for (int i = *pos; i < command.length(); i++)
     {
         string word = restoreWord(command, i+1, *pos);
-        // // cout << "Current word: " << word << endl;
         if (!isAnOperator(word)) {
             word = restoreWord(command, i, *pos);
-            // cout << "Restored word: " << word << endl;
             *pos = i;
             return operatorsTokenObjectFactory(word);
         }
     }
     string word = restoreWord(command, command.length(), *pos);
-    // cout << "Restored word: " << word << endl;
     *pos = WAS_ENTIRE_COMMAND_VERIFIED;
     return operatorsTokenObjectFactory(word);
 }

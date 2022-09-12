@@ -15,11 +15,17 @@ using namespace std;
 
 #include "../types.h"
 
-// +=
 
-// []=
-
-Token s3(string command, int *pos) {
+/**
+ * @brief 
+ * 
+ * @param command 
+ * @param pos 
+ * @return Token 
+ * 
+ * State S3
+ */
+Token handleDelimitersThatCanBeOperatorOrDelimiter(string command, int *pos) {
     string word;
     for (int i = *pos; i < *pos + greatestOperatorLength(); i++) {
         if (i >= command.length()) break;
@@ -27,15 +33,11 @@ Token s3(string command, int *pos) {
     }
     if (word.length() == 1) {
         *pos = WAS_ENTIRE_COMMAND_VERIFIED;
-        // cout << "🙈" << word << endl;
-        // cout << "🍷" << endl;
         return delimiterTokenObjectFactory(word);
     }
     if (isalnum(word[1])) {
         *pos += 1;
         string delimiterInWord (1, word[0]);
-        // cout << "🙈" << delimiterInWord << " <=> " << word << endl;
-        // cout << "🍷" << endl;
         return delimiterTokenObjectFactory(delimiterInWord);
     }
     string originalWord = word;
@@ -44,10 +46,8 @@ Token s3(string command, int *pos) {
             *pos += word.length();
             return operatorsTokenObjectFactory(word);
         }
-        // // cout << "POP " << wor
         word.pop_back();
     }
     *pos += 1;
-    // cout << "FINAL WORD" << word << endl;
     return delimiterTokenObjectFactory(word);
 }

@@ -26,13 +26,11 @@ vector<Token> lexicalAnalyzerAutomata(vector<string> commands)
     vector<Token> allTokens;
     for (string command : commands)
     {
-        // cout << command << endl;
         bool isAnEmptyLine = command.length() == 0;
         if (isAnEmptyLine) continue;
         int character_stopped = 0;
         while (character_stopped != WAS_ENTIRE_COMMAND_VERIFIED)
         {
-            // cout << "CHAR STOPPED " << character_stopped << " // " << command[character_stopped] << endl;
             Token token = handleCurrentCommandVerification(command, &character_stopped);
             allTokens.push_back(token);
         }
