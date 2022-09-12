@@ -7,7 +7,7 @@ BNF_DIR = $(SOURCE_DIR)/bnf
 OUTDIR = ./dist
 CC = g++
 
-objects = $(OUTDIR)/rubyc.o $(OUTDIR)/lexical-analyzer.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o $(OUTDIR)/identifiers.o
+objects = $(OUTDIR)/heat.o $(OUTDIR)/lexical-analyzer.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o $(OUTDIR)/identifiers.o
 test_objects = $(OUTDIR)/test.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o $(OUTDIR)/identifiers.o
 
 $(TARGET): $(objects)
@@ -19,8 +19,8 @@ $(TEST_TARGET): $(test_objects)
 $(OUTDIR)/test.o: $(LEXICAL_ANALYZER_DIR)/tests/lexical-analyzer.spec.cpp $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.h
 	$(CC) -c $(LEXICAL_ANALYZER_DIR)/tests/lexical-analyzer.spec.cpp -o $(OUTDIR)/test.o
 
-$(OUTDIR)/rubyc.o: $(SOURCE_DIR)/rubyc.cpp $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.h
-	$(CC) -c $(SOURCE_DIR)/rubyc.cpp -o $(OUTDIR)/rubyc.o
+$(OUTDIR)/heat.o: $(SOURCE_DIR)/heat.cpp $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.h
+	$(CC) -c $(SOURCE_DIR)/heat.cpp -o $(OUTDIR)/heat.o
 
 $(OUTDIR)/lexical-analyzer.o: $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.cpp $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.h $(BNF_DIR)/keywords.h
 	$(CC) -c $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.cpp -o $(OUTDIR)/lexical-analyzer.o
