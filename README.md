@@ -16,7 +16,7 @@ A BNF da linguagem Ruby (modificada) utilizada pelo Heat pode ser acessada [clic
 
 ## 🚀 Como rodar
 A execução pode ser feita de duas formas.
-### Manualmente
+#### Manualmente
 ```sh
 # Limpar cache
 make clean
@@ -29,7 +29,7 @@ make main
 ```
 
 
-### Via Shell Script
+#### Via Shell Script
 ```sh
 ./compile.sh
 ./run.sh ./src/mocks/hello-world.rb
@@ -37,14 +37,14 @@ make main
 
 ## 🧪 Testes automatizados
 O projeto possui testes automatizados, que podem ser rodados de duas formas.
-### Manualmente
+#### Manualmente
 ```sh
 make clean
 make test
 ./dist/test.out
 ```
 
-### Via Shell Script
+#### Via Shell Script
 ```sh
 ./test.sh
 ```
