@@ -8,6 +8,12 @@ Heat é um compilador para a linguagem Ruby, feito em C++, como projeto da disci
 - Rui Fernandes
 - Vinícius Maia
 
+## ⚙️ Autômato
+Foi criado um diagrama próximo a um autômato finito determinístico, que pode ser acessado [clicando aqui.](https://drive.google.com/file/d/1EMTIUh7hOaKoeuM9uYVHJXXXKT9gV56Y/view?usp=sharing)
+
+## 📜 BNF
+A BNF da linguagem Ruby (modificada) utilizada pelo Heat pode ser acessada [clicando aqui.](https://docs.google.com/document/d/1Y4f-NTmy9mC73_5wLWOZwTmeYvXB-PxQUfYysfg6S0c/edit?usp=sharing)
+
 ## 🚀 Como rodar
 A execução pode ser feita de duas formas.
 ### Manualmente
