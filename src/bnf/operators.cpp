@@ -15,11 +15,8 @@ void initializeOperatorsVector() {
     operators.push_back("**=");
     operators.push_back("&&=");
     operators.push_back("||=");
-    operators.push_back("<=>");
     operators.push_back("==="),
     operators.push_back("...");
-    operators.push_back("<<=");
-    operators.push_back(">>=");
     operators.push_back("[]=");
 
     // 2 positions
@@ -33,7 +30,6 @@ void initializeOperatorsVector() {
     operators.push_back(">=");
     operators.push_back("<=");
     operators.push_back("=>");
-    operators.push_back("=~");
     operators.push_back("!~");
     operators.push_back("::");
     operators.push_back("&&");
@@ -42,10 +38,7 @@ void initializeOperatorsVector() {
     operators.push_back("-=");
     operators.push_back("*=");
     operators.push_back("/=");
-    operators.push_back("<<");
-    operators.push_back(">>"),
     operators.push_back("?:");
-    operators.push_back("^=");
     operators.push_back("..");
     operators.push_back("%=");
 
@@ -62,11 +55,8 @@ void initializeOperatorsVector() {
     operators.push_back("*");
     operators.push_back("/");
     operators.push_back("%");
-    operators.push_back("^");
     operators.push_back("&");
-    operators.push_back("~");
     operators.push_back("!");
-    operators.push_back("|");
     operators.push_back("=");
 }
 

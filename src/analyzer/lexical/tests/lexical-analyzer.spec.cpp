@@ -9,7 +9,6 @@
 
 #include "./hello-world.spec.cpp"
 #include "./unrecognized-character.spec.cpp"
-#include "./doubly-linked-list.spec.cpp"
 #include "./multiple-operators-and-delimiters.spec.cpp"
 
 regex HELLO_WORLD_SUITE("./src/mocks/hello-world.rb");
@@ -32,9 +31,6 @@ int main(int argc, char *argv[]) {
     } else if (regex_match(filename, UNRECOGNIZED_CHARACTER_SUITE)) {
         bool result = shouldThrowIfThereIsAUnrecognizedCharacter(script);
         cout << (result ? "[PASSED ✅]" : "[FAILED ❌]") << " unrecognized character test" << endl;
-    } else if (regex_match(filename, DOUBLY_LINKED_LIST)) {
-        bool result = shouldRecognizeDoublyLinkedListCorrectly(script);
-        cout << (result ? "[PASSED ✅]" : "[FAILED ❌]") << " Doubly linked list test" << endl;
     } else if (regex_match(filename, MULTIPLE_OPERATORS_AND_DELIMITERS)) {
         bool result = shouldRecognizeMultipleOperatorsAndDelimitersCorrectly(script);
         cout << (result ? "[PASSED ✅]" : "[FAILED ❌]") << " Multiple operators test" << endl;

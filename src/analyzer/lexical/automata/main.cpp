@@ -18,7 +18,7 @@ using namespace std;
 /**
  * @brief 
  * 
- * @param commands - Linhas de código
+ * @param commands 
  * @return vector<Token> 
  */
 vector<Token> lexicalAnalyzerAutomata(vector<string> commands)

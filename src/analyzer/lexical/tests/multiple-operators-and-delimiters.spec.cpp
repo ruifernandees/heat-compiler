@@ -18,7 +18,6 @@ vector<Token> expectedVectorMultipleOperatorsFactory() {
     allTokens.push_back(operatorsTokenObjectFactory("..."));
     allTokens.push_back(operatorsTokenObjectFactory("@"));
     allTokens.push_back(identifierTokenObjectFactory("size"));
-    allTokens.push_back(keywordTokenObjectFactory("until"));
     allTokens.push_back(identifierTokenObjectFactory("iter"));
     allTokens.push_back(operatorsTokenObjectFactory("."));
     allTokens.push_back(identifierTokenObjectFactory("nil?"));

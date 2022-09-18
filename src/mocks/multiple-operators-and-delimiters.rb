@@ -2,7 +2,7 @@ age +=-1
 
 when 1...@size
 
-until iter.nil?; # TRATAR nil? como identificador
+iter.nil?; # TRATAR nil? como identificador
 
 isAdult = age > 18 ? 1 : 0
   
@@ -15,7 +15,6 @@ age = nil
 def []=(key,val)
 
 end
-
 
 =begin
 MIT License
