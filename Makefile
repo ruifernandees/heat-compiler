@@ -3,6 +3,7 @@ TEST_TARGET = test
 
 SOURCE_DIR = ./src
 LEXICAL_ANALYZER_DIR = $(SOURCE_DIR)/analyzer/lexical
+SYNTACTIC_ANALYZER_DIR = $(SOURCE_DIR)/analyzer/syntactic
 BNF_DIR = $(SOURCE_DIR)/bnf
 OUTDIR = ./dist
 CC = g++
@@ -24,6 +25,9 @@ $(OUTDIR)/heat.o: $(SOURCE_DIR)/heat.cpp $(LEXICAL_ANALYZER_DIR)/lexical-analyze
 
 $(OUTDIR)/lexical-analyzer.o: $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.cpp $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.h $(BNF_DIR)/keywords.h
 	$(CC) -c $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.cpp -o $(OUTDIR)/lexical-analyzer.o
+
+$(OUTDIR)/syntactic-analyzer.o: $(SYNTACTIC_ANALYZER_DIR)/syntactic-analyzer.cpp $(SYNTACTIC_ANALYZER_DIR)/syntactic-analyzer.h $(BNF_DIR)/keywords.h
+	$(CC) -c $(SYNTACTIC_ANALYZER_DIR)/syntactic-analyzer.cpp -o $(OUTDIR)/syntactic-analyzer.o
 
 $(OUTDIR)/keywords.o: $(BNF_DIR)/keywords.cpp $(BNF_DIR)/keywords.h
 	$(CC) -c $(BNF_DIR)/keywords.cpp -o $(OUTDIR)/keywords.o
