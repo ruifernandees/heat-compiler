@@ -8,7 +8,7 @@
 
 using namespace std;
 
-regex keywords ("do|end|when|if|then|else|elsif|case|while|for|in|begin|rescue|ensure|class|def|return|and|or|not|super|nil|self|private|public|protected");
+regex keywords ("do|end|when|if|then|else|elsif|case|while|for|in|begin|rescue|ensure|class|def|return|super|nil|self|private|public|protected");
 
 bool isAKeyword(string word) {
   return !!regex_match(word, keywords);
