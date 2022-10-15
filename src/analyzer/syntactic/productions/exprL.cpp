@@ -19,8 +19,8 @@ bool exprL(vector<Token> tokens, int* currentToken)
         return false;
     }
     eat(currentToken);
+
     expr(tokens, currentToken);
-    eat(currentToken);
     exprL(tokens, currentToken);
     
     //possibilidade 2
@@ -28,9 +28,7 @@ bool exprL(vector<Token> tokens, int* currentToken)
         return false;
     }
     eat(currentToken);
-    expr(tokens, currentToken);
-    eat(currentToken);
-    exprL(tokens, currentToken);
-
     
+    expr(tokens, currentToken);
+    exprL(tokens, currentToken);
 }

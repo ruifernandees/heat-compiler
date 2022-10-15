@@ -16,9 +16,6 @@ bool arg(vector<Token> tokens, int* currentToken)
 {
     // possibilidade 1
     lhs(tokens, currentToken);
-    eat(currentToken);
-
-
 
     if (tokens[*currentToken].content.compare("=") != 0) {
         return false;
@@ -27,19 +24,15 @@ bool arg(vector<Token> tokens, int* currentToken)
     
     // possibilidade 2
     lhs(tokens, currentToken);
-    eat(currentToken);
 
     op_asgn(tokens, currentToken);
-    eat(currentToken);
 
     arg(tokens, currentToken);
-    eat(currentToken);
     
     argL(tokens, currentToken);
 
     // possibilidade 3
     primary(tokens, currentToken);
-    eat(currentToken);
 
     argL(tokens, currentToken);
     
@@ -50,7 +43,6 @@ bool arg(vector<Token> tokens, int* currentToken)
     eat(currentToken);
 
     arg(tokens, currentToken);
-    eat(currentToken);
 
     argL(tokens, currentToken);
 
@@ -61,7 +53,6 @@ bool arg(vector<Token> tokens, int* currentToken)
     eat(currentToken);
 
     arg(tokens, currentToken);
-    eat(currentToken);
     
     argL(tokens, currentToken);
 }

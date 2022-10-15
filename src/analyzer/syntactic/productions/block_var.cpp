@@ -16,7 +16,6 @@ bool block_var(vector<Token> tokens, int* currentToken)
 {
     // possibilidade 1
     lhs(tokens, currentToken);
-    eat(currentToken);
 
     // possibilidade 2
     mlhs(tokens, currentToken);

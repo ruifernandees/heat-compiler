@@ -16,7 +16,6 @@ using namespace std;
 bool when_args(vector<Token> tokens, int* currentToken) {
     // 1 possibilidade
     args(tokens, currentToken);
-    eat(currentToken);
     if (tokens[*currentToken].content.compare(",") != 0) {
         return false;
     }

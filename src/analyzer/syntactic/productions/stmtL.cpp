@@ -20,10 +20,8 @@ bool stmtL(vector<Token> tokens, int* currentToken)
     }
     eat(currentToken);
     expr(tokens, currentToken);
-    eat(currentToken);
 
     stmtL(tokens, currentToken);
-    eat(currentToken);
     
     // 2 possibilidade
     if (tokens[*currentToken].content.compare("while") != 0)
@@ -32,7 +30,6 @@ bool stmtL(vector<Token> tokens, int* currentToken)
     }
     eat(currentToken);
     expr(tokens, currentToken);
-    eat(currentToken);
     
     stmtL(tokens, currentToken);
 

@@ -52,8 +52,6 @@ bool argL(vector<Token> tokens, int* currentToken)
     if (!isAnArgLOperator(tokens[*currentToken])) return false;
     eat(currentToken);
     arg(tokens, currentToken);
-    eat(currentToken);
     argL(tokens, currentToken);
-    eat(currentToken);
     return true;
 }

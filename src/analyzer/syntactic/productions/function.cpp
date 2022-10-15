@@ -15,11 +15,20 @@ using namespace std;
 bool function(vector<Token> tokens, int* currentToken)
 {
     // possibilidade 1 tem os colchetes 
-    // operation(tokens, currentToken);
+    operation(tokens, currentToken);
+    if (tokens[*currentToken].content.compare("(") != 0) {
+        return false;
+    }
+    eat(currentToken);
+
+    call_args(tokens, currentToken);
+    if (tokens[*currentToken].content.compare(")") != 0) {
+        return false;
+    }
+    eat(currentToken);
 
     // possibilidade 2
     primary(tokens, currentToken);
-    eat(currentToken);
     if (tokens[*currentToken].content.compare(".") != 0) {
         return false;
     }
@@ -31,7 +40,6 @@ bool function(vector<Token> tokens, int* currentToken)
     }
     eat(currentToken);
     call_args(tokens, currentToken); 
-    eat(currentToken);
     
     if (tokens[*currentToken].content.compare(")") != 0) {
         return false;
@@ -40,7 +48,6 @@ bool function(vector<Token> tokens, int* currentToken)
     
     // possibilidade 3
     primary(tokens, currentToken);
-    eat(currentToken);
     if (tokens[*currentToken].content.compare("::") != 0) {
         return false;
     }
@@ -51,7 +58,6 @@ bool function(vector<Token> tokens, int* currentToken)
     }
     eat(currentToken);
     call_args(tokens, currentToken); 
-    eat(currentToken);
     
     if (tokens[*currentToken].content.compare(")") != 0) {
         return false;
@@ -65,7 +71,6 @@ bool function(vector<Token> tokens, int* currentToken)
     }
     eat(currentToken);
     operation(tokens, currentToken);
-    eat(currentToken);
 
     // possibilidade 5
     primary(tokens, currentToken);
@@ -74,7 +79,6 @@ bool function(vector<Token> tokens, int* currentToken)
     }
     eat(currentToken);
     operation(tokens, currentToken);
-    eat(currentToken);
 
     // possibilidade 6
     if (tokens[*currentToken].content.compare("super") != 0) {

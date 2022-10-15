@@ -16,13 +16,10 @@ using namespace std;
 
 bool compstmt(vector<Token> tokens, int* currentToken) {
     stmt(tokens, currentToken);
-    eat(currentToken);
 
     // existe ou nao
     term(tokens, currentToken);
-    *currentToken = *currentToken + 1;
     expr(tokens, currentToken);
-    *currentToken = *currentToken + 1;
     
     term(tokens, currentToken);
 }

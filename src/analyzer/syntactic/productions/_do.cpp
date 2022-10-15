@@ -16,7 +16,6 @@ bool _do(vector<Token> tokens, int* currentToken)
 {
     // possibilidade 1
     term(tokens, currentToken);
-    eat(currentToken);
 
     // possibilidade 2
     if (tokens[*currentToken].content.compare("do") != 0) {
@@ -26,7 +25,6 @@ bool _do(vector<Token> tokens, int* currentToken)
 
     // possibilidade 3
     term(tokens, currentToken);
-    eat(currentToken);
 
     if (tokens[*currentToken].content.compare("do") != 0) {
         return false;

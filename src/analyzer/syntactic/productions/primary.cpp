@@ -33,13 +33,10 @@ bool primary(vector<Token> tokens, int* currentToken)
     
     // possibilidade 2
     literal(tokens, currentToken);
-    eat(currentToken);
     primaryL(tokens, currentToken);
-    eat(currentToken);
 
     // possibilidade 3
     variable(tokens, currentToken);
-    eat(currentToken);
     primaryL(tokens, currentToken);
 
     // possibilidade 4
@@ -47,7 +44,6 @@ bool primary(vector<Token> tokens, int* currentToken)
         return false;
     eat(currentToken);
     primaryL(tokens, currentToken);
-    eat(currentToken);
 
     // possibilidade 5
     if (tokens[*currentToken].content.compare("["))
@@ -63,7 +59,6 @@ bool primary(vector<Token> tokens, int* currentToken)
         return false;
     eat(currentToken);
     primaryL(tokens, currentToken);
-    eat(currentToken);
 
     // possibilidade 6
     if (tokens[*currentToken].content.compare("{"))
@@ -79,7 +74,6 @@ bool primary(vector<Token> tokens, int* currentToken)
         return false;
     eat(currentToken);
     primaryL(tokens, currentToken);
-    eat(currentToken);
 
     // possibilidade 7
     if (tokens[*currentToken].content.compare("{"))
@@ -95,7 +89,6 @@ bool primary(vector<Token> tokens, int* currentToken)
         return false;
     eat(currentToken);
     primaryL(tokens, currentToken);
-    eat(currentToken);
 
     // possibilidade 8
     if (tokens[*currentToken].content.compare("return"))
@@ -106,8 +99,7 @@ bool primary(vector<Token> tokens, int* currentToken)
         return false;
     eat(currentToken);
 
-    call_args();
-    eat(currentToken);
+    call_args(tokens, currentToken);
 
     if (tokens[*currentToken].content.compare(")"))
         return false;
@@ -116,9 +108,7 @@ bool primary(vector<Token> tokens, int* currentToken)
 
     // possibilidade 9
     function(tokens, currentToken);
-    eat(currentToken);
     primaryL(tokens, currentToken);
-    eat(currentToken);
 
     // possibilidade 10
     function(tokens, currentToken);
@@ -134,7 +124,6 @@ bool primary(vector<Token> tokens, int* currentToken)
         return false;
     eat(currentToken);
     compstmt(tokens, currentToken);
-    eat(currentToken);
     if (tokens[*currentToken].content.compare("}"))
         return false;
     eat(currentToken);
@@ -179,7 +168,6 @@ bool primary(vector<Token> tokens, int* currentToken)
         return false;
     eat(currentToken);
     compstmt(tokens, currentToken);
-    eat(currentToken);
     if (tokens[*currentToken].content.compare("end"))
         return false;
     eat(currentToken);
@@ -190,16 +178,12 @@ bool primary(vector<Token> tokens, int* currentToken)
         return false;
     eat(currentToken);
     block_var(tokens, currentToken);
-    eat(currentToken);
     if (tokens[*currentToken].content.compare("in"))
         return false;
     eat(currentToken);
     expr(tokens, currentToken);
-    eat(currentToken);
     _do(tokens, currentToken);
-    eat(currentToken);
     compstmt(tokens, currentToken);
-    eat(currentToken);
     if (tokens[*currentToken].content.compare("end"))
         return false;
     eat(currentToken);
