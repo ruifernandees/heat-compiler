@@ -4,11 +4,8 @@
 #include <cstring>
 #include <regex>
 
-#include "syntactic-analyzer.h"
+#include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
-#include "./stmt.cpp"
-#include "./term.cpp"
-#include "./expr.cpp"
 
 #pragma once
 

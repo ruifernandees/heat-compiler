@@ -14,17 +14,19 @@ using namespace std;
 
 
 bool argdecl(vector<Token> tokens, int* currentToken) {
+    
     // possibilidade 1
-    if (tokens[*currentToken].content.compare("("))
-        return false;
-    eat(currentToken);
-    arglist(tokens, currentToken);
-
-    if (tokens[*currentToken].content.compare(")"))
-        return false;
-    eat(currentToken);
+    if (tokens[*currentToken].content.compare("(") == 0) {
+        eat(currentToken);
+        if (arglist(tokens, currentToken)) {
+            if (tokens[*currentToken].content.compare(")") == 0) {
+                eat(currentToken);
+                return true;
+            }
+        }
+    }
 
     // possibilidade 2
-    arglist(tokens, currentToken);
-    term(tokens, currentToken);
+    if (arglist(tokens, currentToken))
+        return term(tokens, currentToken);
 }
