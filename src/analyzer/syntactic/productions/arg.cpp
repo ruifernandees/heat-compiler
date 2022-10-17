@@ -19,7 +19,11 @@ bool arg(vector<Token> tokens, int* currentToken)
     if (lhs(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare("=") == 0) {
             eat(currentToken);
-            return true;
+            if (arg(tokens, currentToken)) {
+                if (argL(tokens, currentToken)) {
+                    return true;
+                }
+            }
         }
     }
 
@@ -35,7 +39,6 @@ bool arg(vector<Token> tokens, int* currentToken)
             }
         }
     }
-    
 
     *currentToken = pastToken;
 

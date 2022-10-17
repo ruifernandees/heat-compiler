@@ -12,7 +12,7 @@
 using namespace std;
 
 bool argdecl(vector<Token> tokens, int* currentToken) {
-    int pastToken = *currentToken;    
+    int pastToken = *currentToken;
 
     // possibilidade 1
     if (tokens[*currentToken].content.compare("(") == 0) {

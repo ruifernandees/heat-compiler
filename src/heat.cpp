@@ -20,9 +20,13 @@ int main(int argc, char *argv[]) {
     vector<string> script = readFile(filename);
     vector<Token> tokens = lexicalAnalyzer(script);
     for (Token token : tokens) {
-        cout << "< " << token.content << ", " << token.type << " >" << endl;
+        if (token.content.compare("\n") == 0) {
+            cout << "< " << "LB" << ", " << token.type << " >" << endl;
+        } else {
+            cout << "< " << token.content << ", " << token.type << " >" << endl;
+        }
     }
-    syntacticAnalyzer(tokens);
+    //syntacticAnalyzer(tokens);
     semanticAnalyzer();
     return 0;
 }
