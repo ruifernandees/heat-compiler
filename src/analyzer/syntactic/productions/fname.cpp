@@ -4,124 +4,64 @@
 #include <cstring>
 #include <regex>
 
-#include "syntactic-analyzer.h"
+#include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
-#include "./expr.cpp"
 
 #pragma once
 
 using namespace std;
 
-bool symbol(vector<Token> tokens, int* currentToken)
+vector<string> fnameOperators;
+
+void initializefnameOperatorsVector() {
+    fnameOperators.push_back("..");
+    fnameOperators.push_back("==");
+    fnameOperators.push_back("..");
+    fnameOperators.push_back("==");
+    fnameOperators.push_back("===");
+    fnameOperators.push_back(">");
+    fnameOperators.push_back(">=");
+    fnameOperators.push_back("<");
+    fnameOperators.push_back("<=");
+    fnameOperators.push_back("+");
+    fnameOperators.push_back("-");
+    fnameOperators.push_back("*");
+    fnameOperators.push_back("/");
+    fnameOperators.push_back("%");
+    fnameOperators.push_back("+@");
+    fnameOperators.push_back("-@");
+    fnameOperators.push_back("[]");
+    fnameOperators.push_back("[]=");
+    fnameOperators.push_back("@");
+    fnameOperators.push_back("@@");
+}
+
+bool isAnfnameOperator(string operato) {
+    if (fnameOperators.size() == 0) { 
+        initializefnameOperatorsVector();
+    }
+    for (int i = 0; i < fnameOperators.size(); i++){
+        if (operato.compare(fnameOperators[i]) == 0) return true;
+    }
+    return false;
+}
+
+bool fname(vector<Token> tokens, int* currentToken)
 {
+    int pastToken = *currentToken;
+
     // possibilidade 1
-    identifier(tokens, currentToken);
+    if (identifier(tokens, currentToken)) {return true;}
 
-    // possibilidade 2
-    if (tokens[*currentToken].content.compare("..") != 0) {
-        return false;
-    }
-    eat(currentToken);
+    *currentToken = pastToken;
 
-    // possibilidade 3
-    if (tokens[*currentToken].content.compare("==") != 0) {
-        return false;
+    // outras possibilidades
+    if (isAnfnameOperator(tokens[*currentToken].content)) {
+        eat(currentToken);
+        return true;
     }
-    eat(currentToken);
 
-    // possibilidade 4
-    if (tokens[*currentToken].content.compare("===") != 0) {
-        return false;
-    }
-    eat(currentToken);
+    *currentToken = pastToken;
 
-    // possibilidade 5
-    if (tokens[*currentToken].content.compare(">") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    // possibilidade 6
-    if (tokens[*currentToken].content.compare(">=") != 0) {
-        return false;
-    }
-    eat(currentToken);
-    
-    // possibilidade 7
-    if (tokens[*currentToken].content.compare("<") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    // possibilidade 8
-    if (tokens[*currentToken].content.compare("<=") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    // possibilidade 9
-    if (tokens[*currentToken].content.compare("+") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    // possibilidade 10
-    if (tokens[*currentToken].content.compare("-") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    // possibilidade 11
-    if (tokens[*currentToken].content.compare("*") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    // possibilidade 12
-    if (tokens[*currentToken].content.compare("/") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    // possibilidade 13
-    if (tokens[*currentToken].content.compare("%") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    // possibilidade 14
-    if (tokens[*currentToken].content.compare("+@") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    // possibilidade 15
-    if (tokens[*currentToken].content.compare("-@") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    // possibilidade 16
-    if (tokens[*currentToken].content.compare("[]") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    // possibilidade 17
-    if (tokens[*currentToken].content.compare("[]=") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    // possibilidade 18
-    if (tokens[*currentToken].content.compare("@") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    // possibilidade 19
-    if (tokens[*currentToken].content.compare("@@") != 0) {
-        return false;
-    }
-    eat(currentToken);
+    return false;
 }

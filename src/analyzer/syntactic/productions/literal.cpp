@@ -4,9 +4,8 @@
 #include <cstring>
 #include <regex>
 
-#include "syntactic-analyzer.h"
+#include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
-#include "./expr.cpp"
 
 #pragma once
 
@@ -14,13 +13,20 @@ using namespace std;
 
 bool literal(vector<Token> tokens, int* currentToken)
 {
+    int pastToken = *currentToken;
+
     // possibilidade 1
-    if (tokens[currentToken].type != NUMBER)
+    if (tokens[*currentToken].type.compare(NUMBER) == 0)
     {
         return false;
     }
-    eat(currentToken);
+    
+    *currentToken = pastToken;
 
     // possibilidade 2
-    symbol(tokens, currentToken);
+    if (symbol(tokens, currentToken)) {return true;}
+
+    *currentToken = pastToken;
+
+    return false;
 }

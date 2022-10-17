@@ -13,16 +13,22 @@ using namespace std;
 
 bool _do(vector<Token> tokens, int* currentToken)
 {
+    int pastToken = *currentToken;
+
     // possibilidade 1
     if (term(tokens, currentToken)) {
         return true;
     }
+
+    pastToken = *currentToken;
 
     // possibilidade 2
     if (tokens[*currentToken].content.compare("do") == 0) {
         eat(currentToken);
         return true;
     }
+
+    pastToken = *currentToken;
 
     // possibilidade 3
     if (term(tokens, currentToken)) {
@@ -32,4 +38,7 @@ bool _do(vector<Token> tokens, int* currentToken)
         }
     }
 
+    pastToken = *currentToken;
+
+    return false;
 }

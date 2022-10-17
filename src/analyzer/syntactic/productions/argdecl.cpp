@@ -4,17 +4,16 @@
 #include <cstring>
 #include <regex>
 
-#include "syntactic-analyzer.h"
+#include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
-#include "./stmt.cpp"
 
 #pragma once
 
 using namespace std;
 
-
 bool argdecl(vector<Token> tokens, int* currentToken) {
-    
+    int pastToken = *currentToken;    
+
     // possibilidade 1
     if (tokens[*currentToken].content.compare("(") == 0) {
         eat(currentToken);
@@ -26,7 +25,14 @@ bool argdecl(vector<Token> tokens, int* currentToken) {
         }
     }
 
+    *currentToken = pastToken;
+
     // possibilidade 2
     if (arglist(tokens, currentToken))
-        return term(tokens, currentToken);
+        if (term(tokens, currentToken))
+            return true;
+
+    *currentToken = pastToken;
+
+    return false;
 }

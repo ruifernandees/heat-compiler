@@ -1,0 +1,5 @@
+- ARGS contém um (arg)*
+- ASSOC contém um (=>)*
+- ASSOCS contém um (,)*
+- COMPSTMT contém um 'existe ou não'
+- MLHS contém um 'pode ser vazio'

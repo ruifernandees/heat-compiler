@@ -4,18 +4,21 @@
 #include <cstring>
 #include <regex>
 
-#include "syntactic-analyzer.h"
+#include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
-#include "./stmt.cpp"
 
 #pragma once
 
 using namespace std;
 
 
-bool assocs(vector<Token> tokens, int* currentToken) {
+bool assoc(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
     // possibilidade 1
-    arg(tokens, currentToken);
+    if (arg(tokens, currentToken)) {
+        return true;
+    }
 
     // varios ou vazio
     if (tokens[*currentToken].content.compare("=>"))

@@ -4,41 +4,43 @@
 #include <cstring>
 #include <regex>
 
-#include "syntactic-analyzer.h"
+#include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
-#include "./expr.cpp"
 
 #pragma once
 
 using namespace std;
 
+vector<string> op_asgnOperators;
+
+void initializeop_asgnOperatorsVector() {
+    op_asgnOperators.push_back("..");
+    op_asgnOperators.push_back("+=");
+    op_asgnOperators.push_back("-=");
+    op_asgnOperators.push_back("*=");
+    op_asgnOperators.push_back("/=");
+    op_asgnOperators.push_back("%=");
+}
+
+bool isAnop_asgnOperator(string operato) {
+    if (op_asgnOperators.size() == 0) { 
+        initializeop_asgnOperatorsVector();
+    }
+    for (int i = 0; i < op_asgnOperators.size(); i++){
+        if (operato.compare(op_asgnOperators[i]) == 0) return true;
+    }
+    return false;
+}
+
 bool op_asgn(vector<Token> tokens, int* currentToken)
 {
-    // possibilidade 1
-    if (tokens[*currentToken].content.compare("+=") != 0) {
-        return false;
+    int pastToken = *currentToken;
+    if (isAnop_asgnOperator(tokens[*currentToken].content)){
+        eat(currentToken);
+        return true;
     }
-    eat(currentToken);
 
-    // possibilidade 2
-    if (tokens[*currentToken].content.compare("-=") != 0) {
-        return false;
-    }
-    eat(currentToken);
+    *currentToken = pastToken;
 
-    // possibilidade 3
-    if (tokens[*currentToken].content.compare("*=") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    if (tokens[*currentToken].content.compare("/=") != 0) {
-        return false;
-    }
-    eat(currentToken);
-
-    if (tokens[*currentToken].content.compare("%=") != 0) {
-        return false;
-    }
-    eat(currentToken);
+    return false;
 }

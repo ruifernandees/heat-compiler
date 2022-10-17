@@ -12,12 +12,13 @@
 using namespace std;
 
 bool compstmt(vector<Token> tokens, int* currentToken) {
-    stmt(tokens, currentToken);
+    if (stmt(tokens, currentToken)) {
+        // existe ou nao
+        term(tokens, currentToken);
+        expr(tokens, currentToken);
+        
+        term(tokens, currentToken);
+    }
 
-    // existe ou nao
-    term(tokens, currentToken);
-    expr(tokens, currentToken);
-    
-    term(tokens, currentToken);
 }
 

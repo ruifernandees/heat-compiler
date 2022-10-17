@@ -4,29 +4,43 @@
 #include <cstring>
 #include <regex>
 
-#include "syntactic-analyzer.h"
+#include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
-#include "./stmt.cpp"
 
 #pragma once
 
 using namespace std;
 
-
 bool primaryL(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
     // possibilidade 1
-    if (tokens[*currentToken].content.compare("::"))
-        return false;
-    eat(currentToken);
-    identifier(tokens, currentToken);
-    primaryL(tokens, currentToken);
+    if (tokens[*currentToken].content.compare("::")) {
+        eat(currentToken);
+        if (identifier(tokens, currentToken)) {
+            if (primaryL(tokens, currentToken)) {
+                return true;
+            }
+        }
+    }
+
+    *currentToken = pastToken;
 
     // possibilidade 2
-    if (tokens[*currentToken].content.compare("["))
-        return false;
-    eat(currentToken);
-    args(tokens, currentToken);
-    if (tokens[*currentToken].content.compare("]"))
-        return false;
-    primaryL(tokens, currentToken);
+    if (tokens[*currentToken].content.compare("[")) {
+        eat(currentToken);
+        if (args(tokens, currentToken)) {
+            if (tokens[*currentToken].content.compare("]")) {
+                if (primaryL(tokens, currentToken)) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    *currentToken = pastToken;
+
+    // 3 possibidade (vazio)
+
+    return true;
 }

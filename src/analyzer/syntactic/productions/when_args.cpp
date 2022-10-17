@@ -4,7 +4,7 @@
 #include <cstring>
 #include <regex>
 
-#include "syntactic-analyzer.h"
+#include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
 #include "./stmt.cpp"
 
@@ -14,23 +14,32 @@ using namespace std;
 
 
 bool when_args(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
     // 1 possibilidade
-    args(tokens, currentToken);
-    if (tokens[*currentToken].content.compare(",") != 0) {
-        return false;
+    if (args(tokens, currentToken)) {
+        if (tokens[*currentToken].content.compare(",") == 0) {
+            eat(currentToken);
+            if (tokens[*currentToken].content.compare("*") == 0) {
+                eat(currentToken);
+                if (arg(tokens, currentToken)) {
+                    return true;
+                }
+            }
+        }
     }
-    eat(currentToken);
-    if (tokens[*currentToken].content.compare("*") != 0) {
-        return false;
-    }
-    eat(currentToken);
-    arg(tokens, currentToken);
+
+    *currentToken = pastToken;
 
     // 2 possibilidade
-    if (tokens[*currentToken].content.compare("*") != 0) {
-        return false;
+    if (tokens[*currentToken].content.compare("*") == 0) {
+        eat(currentToken);
+        if (arg(tokens, currentToken)) {
+            return true;
+        }
     }
-    eat(currentToken);
 
-    arg(tokens, currentToken);
+    *currentToken = pastToken;
+
+    return false;
 }

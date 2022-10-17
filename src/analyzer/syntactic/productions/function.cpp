@@ -4,96 +4,116 @@
 #include <cstring>
 #include <regex>
 
-#include "syntactic-analyzer.h"
+#include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
-#include "./expr.cpp"
 
 #pragma once
 
 using namespace std;
 
-bool function(vector<Token> tokens, int* currentToken)
+bool Function(vector<Token> tokens, int* currentToken)
 {
-    // possibilidade 1 tem os colchetes 
-    operation(tokens, currentToken);
-    if (tokens[*currentToken].content.compare("(") != 0) {
-        return false;
-    }
-    eat(currentToken);
+    int pastToken = *currentToken;
 
-    call_args(tokens, currentToken);
-    if (tokens[*currentToken].content.compare(")") != 0) {
-        return false;
+    // possibilidade 1
+    if (operation(tokens, currentToken)) {
+        if (tokens[*currentToken].content.compare("(") == 0) {
+            eat(currentToken);
+            if (call_args(tokens, currentToken)) {
+                if (tokens[*currentToken].content.compare(")") == 0) {
+                    eat(currentToken);
+                    return true;
+                }
+            }
+        }
     }
-    eat(currentToken);
+
+    *currentToken = pastToken;
 
     // possibilidade 2
-    primary(tokens, currentToken);
-    if (tokens[*currentToken].content.compare(".") != 0) {
-        return false;
+    if (primary(tokens, currentToken)) {
+        if (tokens[*currentToken].content.compare(".") == 0) {
+            eat(currentToken);
+            if (operation(tokens, currentToken)) {
+                if (tokens[*currentToken].content.compare("(") == 0) {
+                    eat(currentToken);
+                    if (call_args(tokens, currentToken)) {
+                        if (tokens[*currentToken].content.compare(")") != 0) {
+                            eat(currentToken);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
     }
-    eat(currentToken);
-    
-    operation(tokens, currentToken);
-    if (tokens[*currentToken].content.compare("(") != 0) {
-        return false;
-    }
-    eat(currentToken);
-    call_args(tokens, currentToken); 
-    
-    if (tokens[*currentToken].content.compare(")") != 0) {
-        return false;
-    }
-    eat(currentToken);
+
+    *currentToken = pastToken;
     
     // possibilidade 3
-    primary(tokens, currentToken);
-    if (tokens[*currentToken].content.compare("::") != 0) {
-        return false;
+    if (primary(tokens, currentToken)) {
+        if (tokens[*currentToken].content.compare("::") == 0) {
+            eat(currentToken);
+            if (operation(tokens, currentToken)) {
+                if (tokens[*currentToken].content.compare("(") == 0) {
+                    eat(currentToken);
+                    if (call_args(tokens, currentToken)) {
+                        if (tokens[*currentToken].content.compare(")") == 0) {
+                            eat(currentToken);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
     }
-    eat(currentToken);
-    operation(tokens, currentToken);
-    if (tokens[*currentToken].content.compare("(") != 0) {
-        return false;
-    }
-    eat(currentToken);
-    call_args(tokens, currentToken); 
-    
-    if (tokens[*currentToken].content.compare(")") != 0) {
-        return false;
-    }
-    eat(currentToken);
+
+    *currentToken = pastToken;
     
     // possibilidade 4
-    primary(tokens, currentToken);
-    if (tokens[*currentToken].content.compare(".") != 0) {
-        return false;
+    if (primary(tokens, currentToken)) {
+        if (tokens[*currentToken].content.compare(".") == 0) {
+            eat(currentToken);
+            if (operation(tokens, currentToken)) {
+                return true;
+            }
+        }    
     }
-    eat(currentToken);
-    operation(tokens, currentToken);
+    
+    *currentToken = pastToken;
 
     // possibilidade 5
-    primary(tokens, currentToken);
-    if (tokens[*currentToken].content.compare("::") != 0) {
-        return false;
+    if (primary(tokens, currentToken)) {
+        if (tokens[*currentToken].content.compare("::") == 0) {
+            eat(currentToken);
+            if (operation(tokens, currentToken)) {
+                return true;
+            }    
+        }
     }
-    eat(currentToken);
-    operation(tokens, currentToken);
+
+    *currentToken = pastToken;
 
     // possibilidade 6
-    if (tokens[*currentToken].content.compare("super") != 0) {
-        return false;
-    }
-    eat(currentToken);
-    
-    if (tokens[*currentToken].content.compare("(") != 0) {
-        return false;
-    }
-    eat(currentToken);
-    
-    // possibilidade 7
-    if (tokens[*currentToken].content.compare("super") != 0) {
-        return false;
+    if (tokens[*currentToken].content.compare("super") == 0) {
+        eat(currentToken);
+        if (tokens[*currentToken].content.compare("(") == 0) {
+            eat(currentToken);
+            if (call_args(tokens, currentToken)) {
+                if (tokens[*currentToken].content.compare(")")) {
+                    return true;
+                }
+            }
+        }
     }
 
+    *currentToken = pastToken;
+    
+    // possibilidade 7
+    if (tokens[*currentToken].content.compare("super") == 0) {
+        eat(currentToken);
+        return true;
+    }
+
+    return false;
 }

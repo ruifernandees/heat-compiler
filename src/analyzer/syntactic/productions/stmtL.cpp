@@ -4,7 +4,7 @@
 #include <cstring>
 #include <regex>
 
-#include "syntactic-analyzer.h"
+#include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
 
 #pragma once
@@ -13,25 +13,32 @@ using namespace std;
 
 bool stmtL(vector<Token> tokens, int* currentToken)
 {
-    // 1 possibilidade
-    if (tokens[*currentToken].content.compare("if") != 0)
-    {
-        return false;
-    }
-    eat(currentToken);
-    expr(tokens, currentToken);
+    int pastToken = *currentToken;
 
-    stmtL(tokens, currentToken);
+    // 1 possibilidade
+    if (tokens[*currentToken].content.compare("if") == 0) {
+        eat(currentToken);
+        if (expr(tokens, currentToken)) {
+            if (stmtL(tokens, currentToken)) {
+                return true;
+            }
+        }
+    }
+
+    *currentToken = pastToken;
     
     // 2 possibilidade
-    if (tokens[*currentToken].content.compare("while") != 0)
-    {
-        return false;
+    if (tokens[*currentToken].content.compare("while") == 0) {
+        eat(currentToken);
+        if (expr(tokens, currentToken)) {
+            if (stmtL(tokens, currentToken)) {
+                return true;
+            }
+        }
     }
-    eat(currentToken);
-    expr(tokens, currentToken);
-    
-    stmtL(tokens, currentToken);
+
+    *currentToken = pastToken;
 
     // 3 possibidade (vazio)
+    return true;
 }

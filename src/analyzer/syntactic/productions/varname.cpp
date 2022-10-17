@@ -4,9 +4,8 @@
 #include <cstring>
 #include <regex>
 
-#include "syntactic-analyzer.h"
+#include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
-#include "./stmt.cpp"
 
 #pragma once
 
@@ -14,15 +13,31 @@ using namespace std;
 
 
 bool varname(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
     // possibilidade 1
-    global(tokens, currentToken);
+    if (global(tokens, currentToken)) {
+        return true;
+    }
+
+    *currentToken = pastToken;
 
     // possibilidade 2
-    if (tokens[*currentToken].content.compare("@"))
-        return false;
-    eat(currentToken);
-    identifier(tokens, currentToken);
+    if (tokens[*currentToken].content.compare("@") == 0) {
+        eat(currentToken);
+        if (identifier(tokens, currentToken)) {
+            return true;
+        }
+    }
+
+    *currentToken = pastToken;
 
     // possibilidade 3
-    identifier(tokens, currentToken);
+    if (identifier(tokens, currentToken)) {
+        return true;
+    }
+
+    *currentToken = pastToken;
+
+    return false;
 }
