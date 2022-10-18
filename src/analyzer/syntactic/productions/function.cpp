@@ -97,6 +97,7 @@ bool Function(vector<Token> tokens, int* currentToken)
             eat(currentToken);
             if (call_args(tokens, currentToken)) {
                 if (tokens[*currentToken].content.compare(")")) {
+                    eat(currentToken);
                     return true;
                 }
             }

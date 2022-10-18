@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
             cout << "< " << token.content << ", " << token.type << " >" << endl;
         }
     }
-    //syntacticAnalyzer(tokens);
+    syntacticAnalyzer(tokens);
     semanticAnalyzer();
     return 0;
 }

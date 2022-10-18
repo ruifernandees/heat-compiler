@@ -257,10 +257,13 @@ bool primary(vector<Token> tokens, int* currentToken)
                 */
 
                 if (tokens[*currentToken].content.compare("else") == 0) {
+                    eat(currentToken);
                     if (compstmt(tokens, currentToken)) {
                         if (tokens[*currentToken].content.compare("ensure") == 0) {
+                            eat(currentToken);
                             if (compstmt(tokens, currentToken)) {
                                 if (tokens[*currentToken].content.compare("end") == 0) {
+                                    eat(currentToken);
                                     if (primaryL(tokens, currentToken)) {
                                         return true;
                                     }

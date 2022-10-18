@@ -19,33 +19,12 @@ bool call_args(vector<Token> tokens, int* currentToken) {
     if (args(tokens, currentToken)) {
         int pstToken = *currentToken;
 
-        // possibilidade 2
-        if (tokens[*currentToken].content.compare(",") == 0) {
-            eat(currentToken);
-            if (assocs(tokens, currentToken)){
-                if (tokens[*currentToken].content.compare(",") == 0) {
-                    eat(currentToken);
-                    if (tokens[*currentToken].content.compare("*") == 0) {
-                        eat(currentToken);
-                        if (arg(tokens, currentToken)) {
-                            if (tokens[*currentToken].content.compare(",") == 0) {
-                                eat(currentToken);
-                                if (tokens[*currentToken].content.compare("&") == 0) {
-                                    eat(currentToken);
-                                    if (arg(tokens, currentToken)) {
-                                        return true;
-                                    }
-                                }       
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        tentarLer1(tokens, currentToken);
+        tentarLer2(tokens, currentToken);
+        tentarLer3(tokens, currentToken);
 
-        *currentToken = pstToken;
+        // possibilidade 1 (se der tudo errado as tentativas)
 
-        // possibilidade 1
         return true;
     }
 
@@ -53,23 +32,10 @@ bool call_args(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 3
     if (assocs(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare(",") == 0) {
-            eat(currentToken);
-            if (tokens[*currentToken].content.compare("*") == 0) {
-                eat(currentToken);
-                if (arg(tokens, currentToken)) {
-                    if (tokens[*currentToken].content.compare(",") == 0) {
-                        eat(currentToken);
-                        if (tokens[*currentToken].content.compare("&") == 0) {
-                            eat(currentToken);
-                            if (arg(tokens, currentToken)) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        tentarLer2(tokens, currentToken);
+        tentarLer3(tokens, currentToken);
+
+        return true;
     }
 
     *currentToken = pastToken;
@@ -78,15 +44,7 @@ bool call_args(vector<Token> tokens, int* currentToken) {
     if (tokens[*currentToken].content.compare("*") == 0) {
         eat(currentToken);
         if (arg(tokens, currentToken)) {
-            if (tokens[*currentToken].content.compare(",") == 0) {
-                eat(currentToken);
-                if (tokens[*currentToken].content.compare("&") == 0) {
-                    eat(currentToken);
-                    if (arg(tokens, currentToken)) {
-                        return true;
-                    }
-                }
-            }
+            tentarLer3(tokens, currentToken);
         }
     }
 
@@ -110,4 +68,55 @@ bool call_args(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     return false;
+}
+
+void tentarLer1(vector<Token> tokens, int *currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare(",") == 0) {
+        eat(currentToken);
+        if (assocs(tokens, currentToken)){
+            return;
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarLer2(vector<Token> tokens, int *currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare(",") == 0) {
+        eat(currentToken);
+        if (tokens[*currentToken].content.compare("*") == 0) {
+            eat(currentToken);
+            if (arg(tokens, currentToken)) {
+                return;
+            }
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarLer3(vector<Token> tokens, int *currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare(",") == 0) {
+        eat(currentToken);
+        if (tokens[*currentToken].content.compare("&") == 0) {
+            eat(currentToken);
+            if (arg(tokens, currentToken)) {
+                return;
+            }
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
 }

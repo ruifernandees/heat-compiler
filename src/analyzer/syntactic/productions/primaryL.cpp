@@ -31,6 +31,7 @@ bool primaryL(vector<Token> tokens, int* currentToken) {
         eat(currentToken);
         if (args(tokens, currentToken)) {
             if (tokens[*currentToken].content.compare("]")) {
+                eat(currentToken);
                 if (primaryL(tokens, currentToken)) {
                     return true;
                 }
