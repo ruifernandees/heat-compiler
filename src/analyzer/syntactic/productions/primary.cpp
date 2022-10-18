@@ -53,8 +53,10 @@ bool primary(vector<Token> tokens, int* currentToken)
     // possibilidade 4
     if (tokens[*currentToken].content.compare("::") == 0) {
         eat(currentToken);
-        if (primaryL(tokens, currentToken)) {
-            return true;
+        if (identifier(tokens, currentToken)) {
+            if (primaryL(tokens, currentToken)) {
+                return true;
+            }
         }
     }
 
@@ -172,32 +174,23 @@ bool primary(vector<Token> tokens, int* currentToken)
         eat(currentToken);
         if (expr(tokens, currentToken)) {
             if (then(tokens, currentToken)) {
-                int pstToken = *currentToken;
-
                 if (compstmt(tokens, currentToken)) {
-                    if (tokens[*currentToken].content.compare("elsif") == 0) {
-                        if (expr(tokens, currentToken)) {
-                            if (then(tokens, currentToken)) {
-                                if (compstmt(tokens, currentToken)) {
+                    while (funcaoComAsterisco(tokens, currentToken)) {}
+
+                    if (tokens[*currentToken].content.compare("else") == 0) {
+                        eat(currentToken);
+                        if (compstmt(tokens, currentToken)) {
+                            if (tokens[*currentToken].content.compare("end") == 0) {
+                                eat(currentToken);                        
+                                if (primaryL(tokens, currentToken)) {
                                     return true;
                                 }
                             }
                         }
                     }
-                    return true; //pode não ter o elseif
-                }
 
-                *currentToken = pstToken;
-                if (tokens[*currentToken].content.compare("else") == 0) {
-                    eat(currentToken);
-                    if (compstmt(tokens, currentToken)) {
-                        if (tokens[*currentToken].content.compare("end") == 0) {
-                            eat(currentToken);                        
-                            if (primaryL(tokens, currentToken)) {
-                                return true;
-                            }
-                        }
-                    }
+                    //se o colchete significar que pode existir ou nao: return true;
+                    return true;
                 }
             }
         }
@@ -263,7 +256,19 @@ bool primary(vector<Token> tokens, int* currentToken)
                 * issue: restaurar o current token quando o while quebrar
                 */
 
-
+                if (tokens[*currentToken].content.compare("else") == 0) {
+                    if (compstmt(tokens, currentToken)) {
+                        if (tokens[*currentToken].content.compare("ensure") == 0) {
+                            if (compstmt(tokens, currentToken)) {
+                                if (tokens[*currentToken].content.compare("end") == 0) {
+                                    if (primaryL(tokens, currentToken)) {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -277,23 +282,17 @@ bool primary(vector<Token> tokens, int* currentToken)
         eat(currentToken);
         if (identifier(tokens, currentToken)) {
             if (tokens[*currentToken].content.compare("<") == 0) {
+                eat(currentToken);
                 if (identifier(tokens, currentToken)) {
                     if (compstmt(tokens, currentToken)) {
                         if (tokens[*currentToken].content.compare("end") == 0) {
+                            eat(currentToken);
                             if (primaryL(tokens, currentToken)) {
                                 return true;
                             }
                         } 
                     }
                 }
-            } else if (compstmt(tokens, currentToken)) {
-                if (compstmt(tokens, currentToken)) {
-                    if (tokens[*currentToken].content.compare("end") == 0) {
-                        if (primaryL(tokens, currentToken)) {
-                            return true;
-                        }
-                    }
-                }                
             }
         }
     }
@@ -302,9 +301,11 @@ bool primary(vector<Token> tokens, int* currentToken)
     
     // possibilidade 15 
     if (tokens[*currentToken].content.compare("module") == 0) {
+        eat(currentToken);
         if (identifier(tokens, currentToken)) {
             if (compstmt(tokens, currentToken)) {
                 if (tokens[*currentToken].content.compare("end") == 0) {
+                    eat(currentToken);
                     if (primaryL(tokens, currentToken)) {
                         return true;
                     }
@@ -317,10 +318,12 @@ bool primary(vector<Token> tokens, int* currentToken)
 
     // possibilidade 16 aleluia
     if (tokens[*currentToken].content.compare("def") == 0) {
+        eat(currentToken);
         if (fname(tokens, currentToken)) {
             if (argdecl(tokens, currentToken)) {
                 if (compstmt(tokens, currentToken)) {
                     if (tokens[*currentToken].content.compare("end") == 0) {
+                        eat(currentToken);
                         if (primaryL(tokens, currentToken)) {
                             return true;
                         }
@@ -339,8 +342,28 @@ bool funcaoComMais(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("rescue") == 0) {
+        eat(currentToken);
         if (args(tokens, currentToken)) {
             if (_do(tokens, currentToken)) {
+                if (compstmt(tokens, currentToken)) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    *currentToken = pastToken;
+
+    return false;
+}
+
+bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("elsif") == 0) {
+        eat(currentToken);
+        if (expr(tokens, currentToken)) {
+            if (then(tokens, currentToken)) {
                 if (compstmt(tokens, currentToken)) {
                     return true;
                 }
