@@ -30,11 +30,14 @@ bool Function(vector<Token> tokens, int* currentToken)
 
     *currentToken = pastToken;
 
-    // possibilidade 2
+    // possibilidade 2 e 4
     if (primary(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare(".") == 0) {
             eat(currentToken);
             if (operation(tokens, currentToken)) {
+                int pstToken = *currentToken;
+
+                // possibilidade 2
                 if (tokens[*currentToken].content.compare("(") == 0) {
                     eat(currentToken);
                     if (call_args(tokens, currentToken)) {
@@ -44,17 +47,25 @@ bool Function(vector<Token> tokens, int* currentToken)
                         }
                     }
                 }
+
+                *currentToken = pstToken;
+
+                // possibilidade 4
+                return true;
             }
         }
     }
 
     *currentToken = pastToken;
     
-    // possibilidade 3
+    // possibilidade 3 e 5
     if (primary(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare("::") == 0) {
             eat(currentToken);
             if (operation(tokens, currentToken)) {
+                int pstToken = *currentToken;
+
+                // possibilidade 3
                 if (tokens[*currentToken].content.compare("(") == 0) {
                     eat(currentToken);
                     if (call_args(tokens, currentToken)) {
@@ -64,39 +75,24 @@ bool Function(vector<Token> tokens, int* currentToken)
                         }
                     }
                 }
+
+                *currentToken = pstToken;
+
+                // possibilidade 5
+                return true;
             }
         }
     }
 
     *currentToken = pastToken;
-    
-    // possibilidade 4
-    if (primary(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare(".") == 0) {
-            eat(currentToken);
-            if (operation(tokens, currentToken)) {
-                return true;
-            }
-        }    
-    }
-    
-    *currentToken = pastToken;
 
-    // possibilidade 5
-    if (primary(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare("::") == 0) {
-            eat(currentToken);
-            if (operation(tokens, currentToken)) {
-                return true;
-            }    
-        }
-    }
-
-    *currentToken = pastToken;
-
-    // possibilidade 6
+    // possibilidade 6 e 7
     if (tokens[*currentToken].content.compare("super") == 0) {
         eat(currentToken);
+
+        int pstToken = *currentToken;
+
+        // possibilidade 6
         if (tokens[*currentToken].content.compare("(") == 0) {
             eat(currentToken);
             if (call_args(tokens, currentToken)) {
@@ -105,15 +101,14 @@ bool Function(vector<Token> tokens, int* currentToken)
                 }
             }
         }
+
+        *currentToken = pstToken;
+
+        // possibilidade 7
+        return true;
     }
 
     *currentToken = pastToken;
     
-    // possibilidade 7
-    if (tokens[*currentToken].content.compare("super") == 0) {
-        eat(currentToken);
-        return true;
-    }
-
     return false;
 }

@@ -16,15 +16,8 @@ bool term(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
     // possibilidade 1
-    if (tokens[*currentToken].content.compare(";") == 0) {
-        eat(currentToken);
-        return true;
-    }
-
-    *currentToken = pastToken;
-
-    // possibilidade 2
-    if (tokens[*currentToken].content.compare("\n") == 0) {
+    if (tokens[*currentToken].content.compare(";") == 0 ||
+        tokens[*currentToken].content.compare("\n") == 0) {
         eat(currentToken);
         return true;
     }

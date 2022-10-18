@@ -14,7 +14,6 @@ using namespace std;
 vector<string> op_asgnOperators;
 
 void initializeop_asgnOperatorsVector() {
-    op_asgnOperators.push_back("..");
     op_asgnOperators.push_back("+=");
     op_asgnOperators.push_back("-=");
     op_asgnOperators.push_back("*=");

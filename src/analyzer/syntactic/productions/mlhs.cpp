@@ -20,18 +20,13 @@ bool mlhs(vector<Token> tokens, int* currentToken) {
         if (tokens[*currentToken].content.compare(",") == 0) {
             eat(currentToken);
             if (mlhs_item(tokens, currentToken)) {
-                if (tokens[*currentToken].content.compare(",") == 0) {
+                while(funcaoComAsterisco(tokens, currentToken)) {}
+
+                if (tokens[*currentToken].content.compare("*") == 0) {
                     eat(currentToken);
-                    // pode ser vazio VV
-                    if (mlhs_item(tokens, currentToken)) {
-                        if (tokens[*currentToken].content.compare("*") == 0) {
-                            eat(currentToken);
-                            if (lhs(tokens, currentToken)) {
-                                return true;
-                            }
-                        }
+                    if (lhs(tokens, currentToken)) {
+                        return true;
                     }
-                    return true; //porque pode ser vazio
                 }
             }
         }
@@ -43,6 +38,21 @@ bool mlhs(vector<Token> tokens, int* currentToken) {
     if (tokens[*currentToken].content.compare("*") == 0) {
         eat(currentToken);
         if (lhs(tokens, currentToken)) {
+            return true;
+        }
+    }
+
+    *currentToken = pastToken;
+
+    return false;
+}
+
+bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare(",") == 0) {
+        eat(currentToken);
+        if (mlhs_item(tokens, currentToken)) {
             return true;
         }
     }

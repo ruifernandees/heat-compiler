@@ -39,31 +39,14 @@ bool stmt(vector<Token> tokens, int* currentToken) {
 
     *currentToken = pastToken;
 
-    // 2 possibilidade
-    if (tokens[*currentToken].content.compare("begin") == 0) {
+    // 2 e 3 possibilidade
+    if (tokens[*currentToken].content.compare("begin") == 0 ||
+        tokens[*currentToken].content.compare("end") == 0) {
         eat(currentToken);
         if (tokens[*currentToken].content.compare("{") == 0) {
             eat(currentToken);
             if (compstmt(tokens, currentToken)) {
                 if (tokens[*currentToken].content.compare("}") == 0) {
-                    eat(currentToken);
-                    if (stmtL(tokens, currentToken)) {
-                        return true;
-                    }
-                }
-            }
-        }
-    }
-
-    *currentToken = pastToken;
-    
-    // 3 possibilidade
-    if (tokens[*currentToken].content.compare("end") == 0) {
-        eat(currentToken);
-        if (tokens[*currentToken].content.compare("{") == 0) {
-            eat(currentToken);
-            if (compstmt(tokens, currentToken)) {
-                if (tokens[*currentToken].content.compare("}") == 0){
                     eat(currentToken);
                     if (stmtL(tokens, currentToken)) {
                         return true;

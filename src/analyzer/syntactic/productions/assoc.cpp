@@ -17,13 +17,15 @@ bool assoc(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 1
     if (arg(tokens, currentToken)) {
-        return true;
+        if (tokens[*currentToken].content.compare("=>")) {
+            eat(currentToken);
+            if (arg(tokens, currentToken)) {
+                return true;
+            }
+        }
     }
 
-    // varios ou vazio
-    if (tokens[*currentToken].content.compare("=>"))
-        return false;
-    eat(currentToken);
+    *currentToken = pastToken;
 
-    arg(tokens, currentToken);
+    return false;
 }

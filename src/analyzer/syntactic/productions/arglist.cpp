@@ -17,35 +17,29 @@ bool arglist(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 1
     if (identifier(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare(",") == 0) {
+        // varios ou vazio
+        while (funcaoComAsterisco(tokens, currentToken)) {}
+
+        if (tokens[*currentToken].content.compare(",")) {
             eat(currentToken);
-            return true;
+            if (tokens[*currentToken].content.compare("*")) {
+                eat(currentToken);
+                if (identifier(tokens, currentToken)) {
+                    if (tokens[*currentToken].content.compare(",")) {
+                        eat(currentToken);
+                        if (tokens[*currentToken].content.compare("&")) {
+                            eat(currentToken);
+                            if (identifier(tokens, currentToken)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
     *currentToken = pastToken;
-
-    // varios ou vazio
-    identifier(tokens, currentToken);
-
-    if (tokens[*currentToken].content.compare(","))
-        return false;
-    eat(currentToken);
-    if (tokens[*currentToken].content.compare("*"))
-        return false;
-    eat(currentToken);
-
-    identifier(tokens, currentToken);
-
-    if (tokens[*currentToken].content.compare(","))
-        return false;
-    eat(currentToken);
-
-    if (tokens[*currentToken].content.compare("&"))
-        return false;
-    eat(currentToken);
-
-    identifier(tokens, currentToken);
 
     // possibilidade 2
     if (tokens[*currentToken].content.compare("*") == 0) {
@@ -68,6 +62,21 @@ bool arglist(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 3
     if (tokens[*currentToken].content.compare("&") == 0) {
+        eat(currentToken);
+        if (identifier(tokens, currentToken)) {
+            return true;
+        }
+    }
+
+    *currentToken = pastToken;
+
+    return false;
+}
+
+bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare(",")) {
         eat(currentToken);
         if (identifier(tokens, currentToken)) {
             return true;

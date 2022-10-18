@@ -16,7 +16,6 @@ bool command(vector<Token> tokens, int* currentToken)
     // possibilidade 1
     if (operation(tokens, currentToken)) {
         if (call_args(tokens, currentToken)) {return true;}
-
     }
 
     // possibilidade 2

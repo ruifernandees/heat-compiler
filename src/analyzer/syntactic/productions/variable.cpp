@@ -22,16 +22,9 @@ bool variable(vector<Token> tokens, int* currentToken)
 
     *currentToken = pastToken;
 
-    // possibilidade 2
-    if (tokens[*currentToken].content.compare("nil") == 0) {
-        eat(currentToken);
-        return true;
-    }
-
-    *currentToken = pastToken;
-
-    // possibilidade 3
-    if (tokens[*currentToken].content.compare("self") == 0) {
+    // possibilidade 2 e 3
+    if (tokens[*currentToken].content.compare("nil") == 0 ||
+        tokens[*currentToken].content.compare("self") == 0) {
         eat(currentToken);
         return true;
     }

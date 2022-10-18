@@ -15,8 +15,19 @@ using namespace std;
 bool then(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
-    // 1 possibilidade
+    // 1 e 3 possibilidade
     if (term(tokens, currentToken)) {
+        int pstToken = *currentToken;
+
+        // 3 possibilidade
+        if (tokens[*currentToken].content.compare("then") != 0) {
+            eat(currentToken);
+            return true;
+        }
+
+        *currentToken = pstToken;
+
+        // 1 possibilidade
         return true;
     }
 
@@ -26,16 +37,6 @@ bool then(vector<Token> tokens, int* currentToken) {
     if (tokens[*currentToken].content.compare("then") == 0) {
         eat(currentToken);
         return true;
-    }
-
-    *currentToken = pastToken;
-
-    // 3 possibilidade
-    if (term(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare("then") != 0) {
-            eat(currentToken);
-            return true;
-        }
     }
 
     *currentToken = pastToken;

@@ -16,15 +16,24 @@ bool args(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
     if (arg(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare(",") == 0) {
-            eat(currentToken);
-            return true;
-        }
-
+        while (funcaoComAsterisco(tokens, currentToken)) {}
+        return true;
     }
 
-    // pode ser vazio
-    arg(tokens, currentToken);
+    *currentToken = pastToken;
+
+    return false;
+}
+
+bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare(",") == 0) {
+        eat(currentToken);
+        if (arg(tokens, currentToken)) {
+            return true;
+        }
+    }
 
     *currentToken = pastToken;
 

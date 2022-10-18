@@ -16,10 +16,7 @@ bool literal(vector<Token> tokens, int* currentToken)
     int pastToken = *currentToken;
 
     // possibilidade 1
-    if (tokens[*currentToken].type.compare(NUMBER) == 0)
-    {
-        return false;
-    }
+    if (tokens[*currentToken].type.compare(NUMBER) == 0) {return true;}
     
     *currentToken = pastToken;
 

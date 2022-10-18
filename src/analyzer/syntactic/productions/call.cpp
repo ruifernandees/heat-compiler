@@ -25,15 +25,5 @@ bool call(vector<Token> tokens, int* currentToken)
 
     *currentToken = pastToken;
 
-    //3 possibilidade
-    if (arg(tokens, currentToken)) {return true;}
-
-    *currentToken = pastToken;
-    
-    //4 possibilidade
-    if (primary(tokens, currentToken)) {return true;}
-
-    *currentToken = pastToken;
-
     return false;
 }

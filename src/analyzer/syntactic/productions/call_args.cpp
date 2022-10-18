@@ -15,13 +15,11 @@ using namespace std;
 bool call_args(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
-    // possibilidade 1
-    if (args(tokens, currentToken)) {return true;}
-
-    *currentToken = pastToken;
-
-    // possibilidade 2
+    // possibilidade 1 e 2
     if (args(tokens, currentToken)) {
+        int pstToken = *currentToken;
+
+        // possibilidade 2
         if (tokens[*currentToken].content.compare(",") == 0) {
             eat(currentToken);
             if (assocs(tokens, currentToken)){
@@ -44,6 +42,11 @@ bool call_args(vector<Token> tokens, int* currentToken) {
                 }
             }
         }
+
+        *currentToken = pstToken;
+
+        // possibilidade 1
+        return true;
     }
 
     *currentToken = pastToken;

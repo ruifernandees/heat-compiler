@@ -288,7 +288,7 @@ bool primary(vector<Token> tokens, int* currentToken)
                 }
             } else if (compstmt(tokens, currentToken)) {
                 if (compstmt(tokens, currentToken)) {
-                    if (tokens[*currentToken].content.compare("end" == 0)) {
+                    if (tokens[*currentToken].content.compare("end") == 0) {
                         if (primaryL(tokens, currentToken)) {
                             return true;
                         }
@@ -301,7 +301,7 @@ bool primary(vector<Token> tokens, int* currentToken)
     *currentToken = pastToken;
     
     // possibilidade 15 
-    if (tokens[*currentToken].content.compare(tokens) == 0) {
+    if (tokens[*currentToken].content.compare("module") == 0) {
         if (identifier(tokens, currentToken)) {
             if (compstmt(tokens, currentToken)) {
                 if (tokens[*currentToken].content.compare("end") == 0) {
@@ -336,6 +336,8 @@ bool primary(vector<Token> tokens, int* currentToken)
 }
 
 bool funcaoComMais(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
     if (tokens[*currentToken].content.compare("rescue") == 0) {
         if (args(tokens, currentToken)) {
             if (_do(tokens, currentToken)) {
@@ -345,5 +347,8 @@ bool funcaoComMais(vector<Token> tokens, int* currentToken) {
             }
         }
     }
+
+    *currentToken = pastToken;
+
     return false;
 }

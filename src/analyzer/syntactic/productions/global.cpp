@@ -25,10 +25,13 @@ bool global(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     // possibilidade 2
-    if (tokens[*currentToken].content.compare("-") == 0) {
+    if (tokens[*currentToken].content.compare("$") == 0) {
         eat(currentToken);
-        if (identifier(tokens, currentToken)) {
-            return true;
+        if (tokens[*currentToken].content.compare("-") == 0) {
+            eat(currentToken);
+            if (identifier(tokens, currentToken)) {
+                return true;
+            }
         }
     }
 
