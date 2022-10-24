@@ -4,10 +4,11 @@
 #include <cstring>
 #include <regex>
 
+#pragma once
+
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
 
-#pragma once
 
 using namespace std;
 

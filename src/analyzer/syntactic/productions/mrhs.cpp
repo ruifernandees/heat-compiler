@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+// include "./index.cpp"
 
 #pragma once
 
@@ -17,7 +18,7 @@ bool mrhs(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 1
     if (args(tokens, currentToken)) {
-        tentarLer1(tokens, currentToken);
+        tentarMRHSLer1(tokens, currentToken);
         return true;
     }
 
@@ -36,7 +37,7 @@ bool mrhs(vector<Token> tokens, int* currentToken) {
     return false;
 }
 
-void tentarLer1(vector<Token> tokens, int* currentToken)
+void tentarMRHSLer1(vector<Token> tokens, int* currentToken)
 {
     int pstToken = *currentToken;
 

@@ -8,7 +8,7 @@ BNF_DIR = $(SOURCE_DIR)/bnf
 OUTDIR = ./dist
 CC = g++
 
-objects = $(OUTDIR)/heat.o $(OUTDIR)/lexical-analyzer.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o $(OUTDIR)/identifiers.o
+objects = $(OUTDIR)/heat.o $(OUTDIR)/lexical-analyzer.o $(OUTDIR)/syntactic-analyzer.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o $(OUTDIR)/identifiers.o
 test_objects = $(OUTDIR)/test.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o $(OUTDIR)/identifiers.o
 
 $(TARGET): $(objects)

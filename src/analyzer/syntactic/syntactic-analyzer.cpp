@@ -6,6 +6,8 @@
 
 #include "syntactic-analyzer.h"
 
+#include "./productions/index.cpp"
+
 using namespace std;
 
 void syntacticAnalyzer(vector<Token> tokens) {

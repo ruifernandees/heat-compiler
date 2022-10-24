@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+// include "./index.cpp"
 
 #pragma once
 
@@ -20,8 +21,8 @@ bool arglist(vector<Token> tokens, int* currentToken) {
         // varios ou vazio
         while (funcaoComAsterisco(tokens, currentToken)) {}
 
-        tentarLer1(tokens, currentToken);
-        tentarLer3(tokens, currentToken);
+        tentarArglistLer1(tokens, currentToken);
+        tentarArglistLer3(tokens, currentToken);
 
         return true;
     }
@@ -32,7 +33,7 @@ bool arglist(vector<Token> tokens, int* currentToken) {
     if (tokens[*currentToken].content.compare("*") == 0) {
         eat(currentToken);
         if (identifier(tokens, currentToken)) {
-            tentarLer4(tokens, currentToken);
+            tentarArglistLer4(tokens, currentToken);
             return true;
         }
     }
@@ -40,7 +41,7 @@ bool arglist(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     // possibilidade 3
-    tentarLer5(tokens, currentToken);
+    tentarArglistLer5(tokens, currentToken);
 
     // pode gerar vazio tbm (graças a regra 3)
     return true;
@@ -61,14 +62,14 @@ bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
     return false;
 }
 
-void tentarLer1(vector<Token> tokens, int *currentToken)
+void tentarArglistLer1(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
     if (tokens[*currentToken].content.compare(",")) {
         eat(currentToken);
         if (tokens[*currentToken].content.compare("*")) {
             eat(currentToken);
-            tentarLer2(tokens, currentToken);
+            tentarArglistLer2(tokens, currentToken);
             return;
         }
     }
@@ -78,7 +79,7 @@ void tentarLer1(vector<Token> tokens, int *currentToken)
     return;
 }
 
-void tentarLer2(vector<Token> tokens, int *currentToken)
+void tentarArglistLer2(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
     if (identifier(tokens, currentToken)) {
@@ -89,7 +90,7 @@ void tentarLer2(vector<Token> tokens, int *currentToken)
     return;
 }
 
-void tentarLer3(vector<Token> tokens, int *currentToken)
+void tentarArglistLer3(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
 
@@ -107,7 +108,7 @@ void tentarLer3(vector<Token> tokens, int *currentToken)
     return;
 }
 
-void tentarLer4(vector<Token> tokens, int *currentToken)
+void tentarArglistLer4(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
 
@@ -125,7 +126,7 @@ void tentarLer4(vector<Token> tokens, int *currentToken)
     return;
 }
 
-void tentarLer5(vector<Token> tokens, int *currentToken)
+void tentarArglistLer5(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
 

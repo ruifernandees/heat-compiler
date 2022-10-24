@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+// include "./index.cpp"
 
 #pragma once
 
@@ -20,8 +21,8 @@ bool mlhs(vector<Token> tokens, int* currentToken) {
         if (tokens[*currentToken].content.compare(",") == 0) {
             eat(currentToken);
 
-            tentarLer1(tokens, currentToken);
-            tentarLer2(tokens, currentToken);
+            tentarMLHSLer1(tokens, currentToken);
+            tentarMLHSLer2(tokens, currentToken);
             return true;
         }
     }
@@ -56,7 +57,7 @@ bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
     return false;
 }
 
-void tentarLer1(vector<Token> tokens, int* currentToken)
+void tentarMLHSLer1(vector<Token> tokens, int* currentToken)
 {
     int pstToken = *currentToken;
 
@@ -69,13 +70,13 @@ void tentarLer1(vector<Token> tokens, int* currentToken)
     return;
 }
 
-void tentarLer2(vector<Token> tokens, int* currentToken)
+void tentarMLHSLer2(vector<Token> tokens, int* currentToken)
 {
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("*") == 0) {
         eat(currentToken);
-        tentarLer3(tokens, currentToken);
+        tentarMLHSLer3(tokens, currentToken);
         return;
     }
 
@@ -83,7 +84,7 @@ void tentarLer2(vector<Token> tokens, int* currentToken)
     return;
 }
 
-void tentarLer3(vector<Token> tokens, int* currentToken)
+void tentarMLHSLer3(vector<Token> tokens, int* currentToken)
 {
     int pstToken = *currentToken;
 

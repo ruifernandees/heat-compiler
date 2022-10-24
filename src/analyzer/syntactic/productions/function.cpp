@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+// include "./index.cpp"
 
 #pragma once
 
@@ -17,7 +18,7 @@ bool Function(vector<Token> tokens, int* currentToken)
 
     // possibilidade 1
     if (operation(tokens, currentToken)) {
-        tentarLer1(tokens, currentToken);
+        tentarFunctionLer1(tokens, currentToken);
         return true;
     }
 
@@ -33,7 +34,7 @@ bool Function(vector<Token> tokens, int* currentToken)
                 // possibilidade 2
                 if (tokens[*currentToken].content.compare("(") == 0) {
                     eat(currentToken);
-                    tentarLer2(tokens, currentToken);
+                    tentarFunctionLer2(tokens, currentToken);
                     if (tokens[*currentToken].content.compare(")") == 0) {
                         eat(currentToken);
                         return true;
@@ -60,7 +61,7 @@ bool Function(vector<Token> tokens, int* currentToken)
                 // possibilidade 3
                 if (tokens[*currentToken].content.compare("(") == 0) {
                     eat(currentToken);
-                    tentarLer2(tokens, currentToken);
+                    tentarFunctionLer2(tokens, currentToken);
                     if (tokens[*currentToken].content.compare(")") == 0) {
                         eat(currentToken);
                         return true;
@@ -86,7 +87,7 @@ bool Function(vector<Token> tokens, int* currentToken)
         // possibilidade 6
         if (tokens[*currentToken].content.compare("(") == 0) {
             eat(currentToken);
-            tentarLer2(tokens, currentToken);
+            tentarFunctionLer2(tokens, currentToken);
             if (tokens[*currentToken].content.compare(")") == 0) {
                 eat(currentToken);
                 return true;
@@ -104,14 +105,14 @@ bool Function(vector<Token> tokens, int* currentToken)
     return false;
 }
 
-void tentarLer1(vector<Token> tokens, int* currentToken)
+void tentarFunctionLer1(vector<Token> tokens, int* currentToken)
 {
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("(") == 0) {
             eat(currentToken);
 
-            tentarLer2(tokens, currentToken);
+            tentarFunctionLer2(tokens, currentToken);
             if (tokens[*currentToken].content.compare(")") == 0) {
                 eat(currentToken);
                 return;
@@ -122,7 +123,7 @@ void tentarLer1(vector<Token> tokens, int* currentToken)
     return;
 }
 
-void tentarLer2(vector<Token> tokens, int* currentToken)
+void tentarFunctionLer2(vector<Token> tokens, int* currentToken)
 {
     int pstToken = *currentToken;
 

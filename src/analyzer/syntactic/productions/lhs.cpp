@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+// include "./index.cpp"
 
 #pragma once
 
@@ -24,7 +25,7 @@ bool lhs(vector<Token> tokens, int* currentToken) {
         if (tokens[*currentToken].content.compare("[") == 0) {
             eat(currentToken);
 
-            tentarLer1(tokens, currentToken);
+            tentarLHSLer1(tokens, currentToken);
             
             if (tokens[*currentToken].content.compare("]")) {
                 eat(currentToken);
@@ -50,7 +51,7 @@ bool lhs(vector<Token> tokens, int* currentToken) {
     return false;
 }
 
-void tentarLer1(vector<Token> tokens, int* currentToken)
+void tentarLHSLer1(vector<Token> tokens, int* currentToken)
 {
     int pstToken = *currentToken;
 

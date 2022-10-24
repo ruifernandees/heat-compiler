@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+// include "./index.cpp"
 
 #pragma once
 
@@ -16,7 +17,7 @@ bool compstmt(vector<Token> tokens, int* currentToken) {
         while(funcaoComAsterisco(tokens, currentToken)) {}
 
         // existe ou nao
-        tentarLer1(tokens, currentToken);
+        tentarCompstmtLer1(tokens, currentToken);
         return true;
     }
 
@@ -36,7 +37,7 @@ bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
     return false;
 }
 
-void tentarLer1(vector<Token> tokens, int* currentToken)
+void tentarCompstmtLer1(vector<Token> tokens, int* currentToken)
 {
     int pstToken = *currentToken;
 

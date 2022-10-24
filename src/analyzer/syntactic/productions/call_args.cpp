@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+// include "./index.cpp"
 
 #pragma once
 
@@ -19,9 +20,9 @@ bool call_args(vector<Token> tokens, int* currentToken) {
     if (args(tokens, currentToken)) {
         int pstToken = *currentToken;
 
-        tentarLer1(tokens, currentToken);
-        tentarLer2(tokens, currentToken);
-        tentarLer3(tokens, currentToken);
+        tentarCallArgsLer1(tokens, currentToken);
+        tentarCallArgsLer2(tokens, currentToken);
+        tentarCallArgsLer3(tokens, currentToken);
 
         // possibilidade 1 (se der tudo errado as tentativas)
 
@@ -32,8 +33,8 @@ bool call_args(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 3
     if (assocs(tokens, currentToken)) {
-        tentarLer2(tokens, currentToken);
-        tentarLer3(tokens, currentToken);
+        tentarCallArgsLer2(tokens, currentToken);
+        tentarCallArgsLer3(tokens, currentToken);
 
         return true;
     }
@@ -44,7 +45,7 @@ bool call_args(vector<Token> tokens, int* currentToken) {
     if (tokens[*currentToken].content.compare("*") == 0) {
         eat(currentToken);
         if (arg(tokens, currentToken)) {
-            tentarLer3(tokens, currentToken);
+            tentarCallArgsLer3(tokens, currentToken);
         }
     }
 
@@ -70,7 +71,7 @@ bool call_args(vector<Token> tokens, int* currentToken) {
     return false;
 }
 
-void tentarLer1(vector<Token> tokens, int *currentToken)
+void tentarCallArgsLer1(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
 
@@ -85,7 +86,7 @@ void tentarLer1(vector<Token> tokens, int *currentToken)
     return;
 }
 
-void tentarLer2(vector<Token> tokens, int *currentToken)
+void tentarCallArgsLer2(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
 
@@ -103,7 +104,7 @@ void tentarLer2(vector<Token> tokens, int *currentToken)
     return;
 }
 
-void tentarLer3(vector<Token> tokens, int *currentToken)
+void tentarCallArgsLer3(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
 
