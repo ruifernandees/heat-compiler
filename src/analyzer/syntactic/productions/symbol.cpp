@@ -24,11 +24,14 @@ bool symbol(vector<Token> tokens, int* currentToken)
         if (fname(tokens, currentToken)) {
             return true;
         }
+        *currentToken = pastToken;
 
         // possibilidade 2
         if (varname(tokens, currentToken)) {
             return true;
         }
+        *currentToken = pastToken;
+
     }
 
     *currentToken = pastToken;

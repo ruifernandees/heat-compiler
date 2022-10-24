@@ -7,6 +7,7 @@ SYNTACTIC_ANALYZER_DIR = $(SOURCE_DIR)/analyzer/syntactic
 BNF_DIR = $(SOURCE_DIR)/bnf
 OUTDIR = ./dist
 CC = g++
+DEBUG_FLAGS = -g
 
 objects = $(OUTDIR)/heat.o $(OUTDIR)/lexical-analyzer.o $(OUTDIR)/syntactic-analyzer.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o $(OUTDIR)/identifiers.o
 test_objects = $(OUTDIR)/test.o $(OUTDIR)/keywords.o $(OUTDIR)/operators.o $(OUTDIR)/delimiters.o $(OUTDIR)/identifiers.o
@@ -27,7 +28,7 @@ $(OUTDIR)/lexical-analyzer.o: $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.cpp $(LEX
 	$(CC) -c $(LEXICAL_ANALYZER_DIR)/lexical-analyzer.cpp -o $(OUTDIR)/lexical-analyzer.o
 
 $(OUTDIR)/syntactic-analyzer.o: $(SYNTACTIC_ANALYZER_DIR)/syntactic-analyzer.cpp $(SYNTACTIC_ANALYZER_DIR)/syntactic-analyzer.h $(BNF_DIR)/keywords.h
-	$(CC) -c $(SYNTACTIC_ANALYZER_DIR)/syntactic-analyzer.cpp -o $(OUTDIR)/syntactic-analyzer.o
+	$(CC) -c $(SYNTACTIC_ANALYZER_DIR)/syntactic-analyzer.cpp $(DEBUG_FLAGS) -o $(OUTDIR)/syntactic-analyzer.o
 
 $(OUTDIR)/keywords.o: $(BNF_DIR)/keywords.cpp $(BNF_DIR)/keywords.h
 	$(CC) -c $(BNF_DIR)/keywords.cpp -o $(OUTDIR)/keywords.o
