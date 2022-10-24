@@ -12,18 +12,7 @@
 
 using namespace std;
 
-bool compstmt(vector<Token> tokens, int* currentToken) {
-    if (stmt(tokens, currentToken)) {
-        while(funcaoComAsterisco(tokens, currentToken)) {}
-
-        // existe ou nao
-        tentarCompstmtLer1(tokens, currentToken);
-        return true;
-    }
-
-}
-
-bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
+bool funcaoCompstmtComAsterisco(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
     if (term(tokens, currentToken)) {
@@ -37,6 +26,7 @@ bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
     return false;
 }
 
+
 void tentarCompstmtLer1(vector<Token> tokens, int* currentToken)
 {
     int pstToken = *currentToken;
@@ -48,3 +38,15 @@ void tentarCompstmtLer1(vector<Token> tokens, int* currentToken)
     *currentToken = pstToken;
     return;
 }
+
+bool compstmt(vector<Token> tokens, int* currentToken) {
+    if (stmt(tokens, currentToken)) {
+        while(funcaoCompstmtComAsterisco(tokens, currentToken)) {}
+
+        // existe ou nao
+        tentarCompstmtLer1(tokens, currentToken);
+        return true;
+    }
+
+}
+

@@ -12,6 +12,19 @@
 
 using namespace std;
 
+
+void tentarPrimaryLLer1(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (args(tokens, currentToken)) {
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
 bool primaryL(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
@@ -31,7 +44,7 @@ bool primaryL(vector<Token> tokens, int* currentToken) {
     if (tokens[*currentToken].content.compare("[")) {
         eat(currentToken);
 
-        tentarLer1(tokens, currentToken);
+        tentarPrimaryLLer1(tokens, currentToken);
 
         if (tokens[*currentToken].content.compare("]")) {
             eat(currentToken);
@@ -46,16 +59,4 @@ bool primaryL(vector<Token> tokens, int* currentToken) {
     // 3 possibidade (vazio)
 
     return true;
-}
-
-void tentarLer1(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (args(tokens, currentToken)) {
-        return;
-    }
-
-    *currentToken = pstToken;
-    return;
 }

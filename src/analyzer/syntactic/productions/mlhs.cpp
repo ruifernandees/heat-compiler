@@ -13,6 +13,63 @@
 using namespace std;
 
 
+bool funcaoMLHSComAsterisco(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare(",") == 0) {
+        eat(currentToken);
+        if (mlhs_item(tokens, currentToken)) {
+            return true;
+        }
+    }
+
+    *currentToken = pastToken;
+
+    return false;
+}
+
+
+void tentarMLHSLer1(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (mlhs_item(tokens, currentToken)) {
+        while(funcaoMLHSComAsterisco(tokens, currentToken)) {}
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+
+void tentarMLHSLer3(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (lhs(tokens, currentToken)) {
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarMLHSLer2(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("*") == 0) {
+        eat(currentToken);
+        tentarMLHSLer3(tokens, currentToken);
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+
 bool mlhs(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
@@ -40,58 +97,4 @@ bool mlhs(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     return false;
-}
-
-bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
-    int pastToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
-        if (mlhs_item(tokens, currentToken)) {
-            return true;
-        }
-    }
-
-    *currentToken = pastToken;
-
-    return false;
-}
-
-void tentarMLHSLer1(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (mlhs_item(tokens, currentToken)) {
-        while(funcaoComAsterisco(tokens, currentToken)) {}
-        return;
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarMLHSLer2(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare("*") == 0) {
-        eat(currentToken);
-        tentarMLHSLer3(tokens, currentToken);
-        return;
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarMLHSLer3(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (lhs(tokens, currentToken)) {
-        return;
-    }
-
-    *currentToken = pstToken;
-    return;
 }

@@ -12,6 +12,38 @@
 
 using namespace std;
 
+void tentarFunctionLer2(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (call_args(tokens, currentToken)) {
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+
+void tentarFunctionLer1(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("(") == 0) {
+            eat(currentToken);
+
+            tentarFunctionLer2(tokens, currentToken);
+            if (tokens[*currentToken].content.compare(")") == 0) {
+                eat(currentToken);
+                return;
+            }
+        }
+
+    *currentToken = pstToken;
+    return;
+}
+
+
 bool Function(vector<Token> tokens, int* currentToken)
 {
     int pastToken = *currentToken;
@@ -103,34 +135,4 @@ bool Function(vector<Token> tokens, int* currentToken)
     *currentToken = pastToken;
     
     return false;
-}
-
-void tentarFunctionLer1(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare("(") == 0) {
-            eat(currentToken);
-
-            tentarFunctionLer2(tokens, currentToken);
-            if (tokens[*currentToken].content.compare(")") == 0) {
-                eat(currentToken);
-                return;
-            }
-        }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarFunctionLer2(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (call_args(tokens, currentToken)) {
-        return;
-    }
-
-    *currentToken = pstToken;
-    return;
 }

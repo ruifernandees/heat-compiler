@@ -13,21 +13,7 @@
 using namespace std;
 
 
-bool assocs(vector<Token> tokens, int* currentToken) {
-    int pastToken = *currentToken;
-
-    // possibilidade 1
-    if (assoc(tokens, currentToken)) {
-        // varios ou vazio
-        while(funcaoComAsterisco(tokens, currentToken)) {}
-        return true;
-    }
-    
-    *currentToken = pastToken;
-    return false;
-}
-
-bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
+bool funcaoAssocsComAsterisco(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
     if (tokens[*currentToken].content.compare(",")) {
@@ -39,5 +25,19 @@ bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
 
     *currentToken = pastToken;
 
+    return false;
+}
+
+bool assocs(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
+    // possibilidade 1
+    if (assoc(tokens, currentToken)) {
+        // varios ou vazio
+        while(funcaoAssocsComAsterisco(tokens, currentToken)) {}
+        return true;
+    }
+    
+    *currentToken = pastToken;
     return false;
 }

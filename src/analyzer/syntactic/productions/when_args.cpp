@@ -13,13 +13,30 @@
 
 using namespace std;
 
+void tentarWhenArgsLer1(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare(",") == 0) {
+        eat(currentToken);
+        if (tokens[*currentToken].content.compare("*") == 0) {
+            eat(currentToken);
+            if (arg(tokens, currentToken)) {
+                return;
+            }
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
+}
 
 bool when_args(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
     // 1 possibilidade
     if (args(tokens, currentToken)) {
-        tentarLer1(tokens, currentToken);
+        tentarWhenArgsLer1(tokens, currentToken);
         return true;
     }
 
@@ -38,20 +55,3 @@ bool when_args(vector<Token> tokens, int* currentToken) {
     return false;
 }
 
-void tentarLer1(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
-        if (tokens[*currentToken].content.compare("*") == 0) {
-            eat(currentToken);
-            if (arg(tokens, currentToken)) {
-                return;
-            }
-        }
-    }
-
-    *currentToken = pstToken;
-    return;
-}

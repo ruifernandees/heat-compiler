@@ -13,41 +13,7 @@
 using namespace std;
 
 
-bool arglist(vector<Token> tokens, int* currentToken) {
-    int pastToken = *currentToken;
-
-    // possibilidade 1
-    if (identifier(tokens, currentToken)) {
-        // varios ou vazio
-        while (funcaoComAsterisco(tokens, currentToken)) {}
-
-        tentarArglistLer1(tokens, currentToken);
-        tentarArglistLer3(tokens, currentToken);
-
-        return true;
-    }
-
-    *currentToken = pastToken;
-
-    // possibilidade 2
-    if (tokens[*currentToken].content.compare("*") == 0) {
-        eat(currentToken);
-        if (identifier(tokens, currentToken)) {
-            tentarArglistLer4(tokens, currentToken);
-            return true;
-        }
-    }
-
-    *currentToken = pastToken;
-
-    // possibilidade 3
-    tentarArglistLer5(tokens, currentToken);
-
-    // pode gerar vazio tbm (graças a regra 3)
-    return true;
-}
-
-bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
+bool funcaoArglistComAsterisco(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
     if (tokens[*currentToken].content.compare(",")) {
@@ -61,6 +27,18 @@ bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
 
     return false;
 }
+
+void tentarArglistLer2(vector<Token> tokens, int *currentToken)
+{
+    int pstToken = *currentToken;
+    if (identifier(tokens, currentToken)) {
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
 
 void tentarArglistLer1(vector<Token> tokens, int *currentToken)
 {
@@ -79,16 +57,6 @@ void tentarArglistLer1(vector<Token> tokens, int *currentToken)
     return;
 }
 
-void tentarArglistLer2(vector<Token> tokens, int *currentToken)
-{
-    int pstToken = *currentToken;
-    if (identifier(tokens, currentToken)) {
-        return;
-    }
-
-    *currentToken = pstToken;
-    return;
-}
 
 void tentarArglistLer3(vector<Token> tokens, int *currentToken)
 {
@@ -139,4 +107,38 @@ void tentarArglistLer5(vector<Token> tokens, int *currentToken)
 
     *currentToken = pstToken;
     return;
+}
+
+bool arglist(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
+    // possibilidade 1
+    if (identifier(tokens, currentToken)) {
+        // varios ou vazio
+        while (funcaoArglistComAsterisco(tokens, currentToken)) {}
+
+        tentarArglistLer1(tokens, currentToken);
+        tentarArglistLer3(tokens, currentToken);
+
+        return true;
+    }
+
+    *currentToken = pastToken;
+
+    // possibilidade 2
+    if (tokens[*currentToken].content.compare("*") == 0) {
+        eat(currentToken);
+        if (identifier(tokens, currentToken)) {
+            tentarArglistLer4(tokens, currentToken);
+            return true;
+        }
+    }
+
+    *currentToken = pastToken;
+
+    // possibilidade 3
+    tentarArglistLer5(tokens, currentToken);
+
+    // pode gerar vazio tbm (graças a regra 3)
+    return true;
 }

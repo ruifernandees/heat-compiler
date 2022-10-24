@@ -14,6 +14,200 @@ using namespace std;
 
 
 
+bool funcaoPrimaryComAsterisco(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("elsif") == 0) {
+        eat(currentToken);
+        if (expr(tokens, currentToken)) {
+            if (then(tokens, currentToken)) {
+                if (compstmt(tokens, currentToken)) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    *currentToken = pastToken;
+
+    return false;
+}
+
+void tentarPrimaryLer2(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare(",") == 0) {
+        eat(currentToken);
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+void tentarPrimaryLer1(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (args(tokens, currentToken)) {
+        tentarPrimaryLer2(tokens, currentToken);
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+
+void tentarPrimaryLer3(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (assocs(tokens, currentToken)) {
+        tentarPrimaryLer2(tokens, currentToken);
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarPrimaryLer5(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (call_args(tokens, currentToken)) {
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarPrimaryLer4(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("(")) {
+        eat(currentToken);
+        tentarPrimaryLer5(tokens, currentToken);
+        if (tokens[*currentToken].content.compare(")") == 0) {
+            eat(currentToken);
+            return;
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarPrimaryLer7(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (block_var(tokens, currentToken)) {
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+void tentarPrimaryLer6(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("|") == 0) {
+        eat(currentToken);
+        tentarPrimaryLer7(tokens, currentToken);
+        if (tokens[*currentToken].content.compare("|") == 0) {
+            eat(currentToken);
+            return;
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+
+void tentarPrimaryLer8(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("else") == 0) {
+        eat(currentToken);
+        if (compstmt(tokens, currentToken)) {
+            return;
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarPrimaryLer9(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (args(tokens, currentToken)) {
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+
+bool funcaoComMais(vector<Token> tokens, int* currentToken) {
+    int pastToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("rescue") == 0) {
+        eat(currentToken);
+        tentarPrimaryLer9(tokens, currentToken);
+        if (_do(tokens, currentToken)) {
+            if (compstmt(tokens, currentToken)) {
+                return true;
+            }
+        }
+    }
+
+    *currentToken = pastToken;
+
+    return false;
+}
+
+
+
+void tentarPrimaryLer10(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("ensure") == 0) {
+        eat(currentToken);
+        if (compstmt(tokens, currentToken)) {
+            return;
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarPrimaryLer11(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("<") == 0) {
+        eat(currentToken);
+        if (identifier(tokens, currentToken)) {
+            return;
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
 bool primary(vector<Token> tokens, int* currentToken) 
 {
     int pastToken = *currentToken;
@@ -151,7 +345,7 @@ bool primary(vector<Token> tokens, int* currentToken)
         if (expr(tokens, currentToken)) {
             if (then(tokens, currentToken)) {
                 if (compstmt(tokens, currentToken)) {
-                    while (funcaoComAsterisco(tokens, currentToken)) {}
+                    while (funcaoPrimaryComAsterisco(tokens, currentToken)) {}
 
                     tentarPrimaryLer8(tokens, currentToken);
 
@@ -295,195 +489,4 @@ bool primary(vector<Token> tokens, int* currentToken)
     *currentToken = pastToken;
 
     return false;
-}
-
-bool funcaoComMais(vector<Token> tokens, int* currentToken) {
-    int pastToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare("rescue") == 0) {
-        eat(currentToken);
-        tentarPrimaryLer9(tokens, currentToken);
-        if (_do(tokens, currentToken)) {
-            if (compstmt(tokens, currentToken)) {
-                return true;
-            }
-        }
-    }
-
-    *currentToken = pastToken;
-
-    return false;
-}
-
-bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
-    int pastToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare("elsif") == 0) {
-        eat(currentToken);
-        if (expr(tokens, currentToken)) {
-            if (then(tokens, currentToken)) {
-                if (compstmt(tokens, currentToken)) {
-                    return true;
-                }
-            }
-        }
-    }
-
-    *currentToken = pastToken;
-
-    return false;
-}
-
-void tentarPrimaryLer1(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (args(tokens, currentToken)) {
-        tentarPrimaryLer2(tokens, currentToken);
-        return;
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarPrimaryLer2(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
-        return;
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarPrimaryLer3(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (assocs(tokens, currentToken)) {
-        tentarPrimaryLer2(tokens, currentToken);
-        return;
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarPrimaryLer4(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare("(")) {
-        eat(currentToken);
-        tentarPrimaryLer5(tokens, currentToken);
-        if (tokens[*currentToken].content.compare(")") == 0) {
-            eat(currentToken);
-            return;
-        }
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarPrimaryLer5(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (call_args(tokens, currentToken)) {
-        return;
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarPrimaryLer6(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare("|") == 0) {
-        eat(currentToken);
-        tentarPrimaryLer7(tokens, currentToken);
-        if (tokens[*currentToken].content.compare("|") == 0) {
-            eat(currentToken);
-            return;
-        }
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarPrimaryLer7(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (block_var(tokens, currentToken)) {
-        return;
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarPrimaryLer8(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare("else") == 0) {
-        eat(currentToken);
-        if (compstmt(tokens, currentToken)) {
-            return;
-        }
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarPrimaryLer9(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (args(tokens, currentToken)) {
-        return;
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarPrimaryLer10(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare("ensure") == 0) {
-        eat(currentToken);
-        if (compstmt(tokens, currentToken)) {
-            return;
-        }
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarPrimaryLer11(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare("<") == 0) {
-        eat(currentToken);
-        if (identifier(tokens, currentToken)) {
-            return;
-        }
-    }
-
-    *currentToken = pstToken;
-    return;
 }

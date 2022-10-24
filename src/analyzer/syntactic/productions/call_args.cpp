@@ -12,6 +12,56 @@
 
 using namespace std;
 
+void tentarCallArgsLer1(vector<Token> tokens, int *currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare(",") == 0) {
+        eat(currentToken);
+        if (assocs(tokens, currentToken)){
+            return;
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarCallArgsLer2(vector<Token> tokens, int *currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare(",") == 0) {
+        eat(currentToken);
+        if (tokens[*currentToken].content.compare("*") == 0) {
+            eat(currentToken);
+            if (arg(tokens, currentToken)) {
+                return;
+            }
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarCallArgsLer3(vector<Token> tokens, int *currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare(",") == 0) {
+        eat(currentToken);
+        if (tokens[*currentToken].content.compare("&") == 0) {
+            eat(currentToken);
+            if (arg(tokens, currentToken)) {
+                return;
+            }
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
+}
 
 bool call_args(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
@@ -69,55 +119,4 @@ bool call_args(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     return false;
-}
-
-void tentarCallArgsLer1(vector<Token> tokens, int *currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
-        if (assocs(tokens, currentToken)){
-            return;
-        }
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarCallArgsLer2(vector<Token> tokens, int *currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
-        if (tokens[*currentToken].content.compare("*") == 0) {
-            eat(currentToken);
-            if (arg(tokens, currentToken)) {
-                return;
-            }
-        }
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
-void tentarCallArgsLer3(vector<Token> tokens, int *currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
-        if (tokens[*currentToken].content.compare("&") == 0) {
-            eat(currentToken);
-            if (arg(tokens, currentToken)) {
-                return;
-            }
-        }
-    }
-
-    *currentToken = pstToken;
-    return;
 }

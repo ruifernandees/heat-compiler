@@ -12,6 +12,18 @@
 
 using namespace std;
 
+void tentarLHSLer1(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (args(tokens, currentToken)) {
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
 bool lhs(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
@@ -51,14 +63,3 @@ bool lhs(vector<Token> tokens, int* currentToken) {
     return false;
 }
 
-void tentarLHSLer1(vector<Token> tokens, int* currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (args(tokens, currentToken)) {
-        return;
-    }
-
-    *currentToken = pstToken;
-    return;
-}
