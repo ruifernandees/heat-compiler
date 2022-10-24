@@ -6,7 +6,7 @@
 
 #include "syntactic-analyzer.h"
 
-#include "./productions/index.cpp"
+#include "./productions/_index.cpp"
 
 using namespace std;
 
