@@ -15,11 +15,12 @@ void syntacticAnalyzer(vector<Token> tokens) {
 
     //token.content = "$"; <- temos na BNF
     //token.type = "final";
-    program(tokens, &currentToken);
+    bool sem_erros = program(tokens, &currentToken);
+    cout << sem_erros << endl;
 }
 
 bool program(vector<Token> tokens, int* currentToken) {
-    compstmt(tokens, currentToken);
+    return compstmt(tokens, currentToken);
     // if (tokens[*currentToken].content.compare("$") == 0)
     // {
     //     return true;

@@ -5,7 +5,7 @@
 #include "./exprL.cpp"
 #include "./call.cpp"
 #include "./command.cpp"
-#include "./Function.cpp"
+#include "./function.cpp"
 #include "./arg.cpp"
 #include "./argL.cpp"
 #include "./primary.cpp"

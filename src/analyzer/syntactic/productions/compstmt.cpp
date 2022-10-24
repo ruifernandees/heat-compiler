@@ -48,5 +48,6 @@ bool compstmt(vector<Token> tokens, int* currentToken) {
         return true;
     }
 
+    return false;
 }
 

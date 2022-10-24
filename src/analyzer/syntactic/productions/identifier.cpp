@@ -14,6 +14,5 @@ using namespace std;
 
 bool identifier(vector<Token> tokens, int* currentToken)
 {
-  // TTT
-  return true;
+    return tokens[*currentToken].type.compare(IDENTIFIER) == 0;
 }

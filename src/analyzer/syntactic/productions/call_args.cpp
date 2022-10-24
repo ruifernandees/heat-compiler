@@ -96,6 +96,7 @@ bool call_args(vector<Token> tokens, int* currentToken) {
         eat(currentToken);
         if (arg(tokens, currentToken)) {
             tentarCallArgsLer3(tokens, currentToken);
+            return true;
         }
     }
 

@@ -25,6 +25,8 @@ bool operation(vector<Token> tokens, int* currentToken) {
             return true;
         }
 
+        *currentToken = pstToken;
+
         // possibilidade 3
         if (tokens[*currentToken].content.compare("?") == 0) {
             eat(currentToken);
