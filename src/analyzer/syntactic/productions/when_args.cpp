@@ -18,15 +18,8 @@ bool when_args(vector<Token> tokens, int* currentToken) {
 
     // 1 possibilidade
     if (args(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare(",") == 0) {
-            eat(currentToken);
-            if (tokens[*currentToken].content.compare("*") == 0) {
-                eat(currentToken);
-                if (arg(tokens, currentToken)) {
-                    return true;
-                }
-            }
-        }
+        tentarLer1(tokens, currentToken);
+        return true;
     }
 
     *currentToken = pastToken;
@@ -42,4 +35,22 @@ bool when_args(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     return false;
+}
+
+void tentarLer1(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare(",") == 0) {
+        eat(currentToken);
+        if (tokens[*currentToken].content.compare("*") == 0) {
+            eat(currentToken);
+            if (arg(tokens, currentToken)) {
+                return;
+            }
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
 }

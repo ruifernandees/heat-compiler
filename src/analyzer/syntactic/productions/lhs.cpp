@@ -23,11 +23,12 @@ bool lhs(vector<Token> tokens, int* currentToken) {
     if (primary(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare("[") == 0) {
             eat(currentToken);
-            if (args(tokens, currentToken)) {
-                if (tokens[*currentToken].content.compare("]")) {
-                    eat(currentToken);
-                    return true;
-                }
+
+            tentarLer1(tokens, currentToken);
+            
+            if (tokens[*currentToken].content.compare("]")) {
+                eat(currentToken);
+                return true;
             }
         }
     }
@@ -47,4 +48,16 @@ bool lhs(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     return false;
+}
+
+void tentarLer1(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (args(tokens, currentToken)) {
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
 }

@@ -18,19 +18,14 @@ bool stmt(vector<Token> tokens, int* currentToken) {
     if (call(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare("do") == 0) {
             eat(currentToken);
-            if (tokens[*currentToken].content.compare("|") == 0) {
-                eat(currentToken);
-                if (block_var(tokens, currentToken)) {
-                    if (tokens[*currentToken].content.compare("|") == 0) {
-                        eat(currentToken);
-                        if (compstmt(tokens, currentToken)) {
-                            if (tokens[*currentToken].content.compare("end") == 0) {
-                                eat(currentToken);
-                                if (stmtL(tokens, currentToken)) {
-                                    return true;
-                                }
-                            }
-                        }
+
+            tentarLer1(tokens, currentToken);
+
+            if (compstmt(tokens, currentToken)) {
+                if (tokens[*currentToken].content.compare("end") == 0) {
+                    eat(currentToken);
+                    if (stmtL(tokens, currentToken)) {
+                        return true;
                     }
                 }
             }
@@ -63,27 +58,13 @@ bool stmt(vector<Token> tokens, int* currentToken) {
         if (tokens[*currentToken].content.compare("=") == 0) {
             eat(currentToken);
             if (command(tokens, currentToken)) {
-                if (tokens[*currentToken].content.compare("do") == 0) {
-                    eat(currentToken);
-                    if (tokens[*currentToken].content.compare("|") == 0) {
-                        eat(currentToken);
-                        if (block_var(tokens, currentToken)) {
-                            if (tokens[*currentToken].content.compare("|") == 0) {
-                                eat(currentToken);
-                                if (compstmt(tokens, currentToken)) {
-                                    if (tokens[*currentToken].content.compare("end") == 0) {
-                                        eat(currentToken);
-                                        if (stmtL(tokens, currentToken)) {
-                                            return true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                tentarLer2(tokens, currentToken);
 
-                    }
+                if (stmtL(tokens, currentToken)) {
+                    return true;
                 }
             }
+
         }
     }
 
@@ -99,4 +80,43 @@ bool stmt(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     return false;
+}
+
+void tentarLer1(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("|") == 0) {
+        eat(currentToken);
+        if (block_var(tokens, currentToken)) {
+            if (tokens[*currentToken].content.compare("|") == 0) {
+                eat(currentToken);
+                
+            }
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarLer2(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("do") == 0) {
+        eat(currentToken);
+
+        tentarLer1(tokens, currentToken);
+
+        if (compstmt(tokens, currentToken)) {
+            if (tokens[*currentToken].content.compare("end") == 0) {
+                eat(currentToken);
+                return;
+            }
+        }
+    }
+
+    *currentToken = pstToken;
+    return;
 }

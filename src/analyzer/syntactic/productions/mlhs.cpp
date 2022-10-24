@@ -19,16 +19,10 @@ bool mlhs(vector<Token> tokens, int* currentToken) {
     if (mlhs_item(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare(",") == 0) {
             eat(currentToken);
-            if (mlhs_item(tokens, currentToken)) {
-                while(funcaoComAsterisco(tokens, currentToken)) {}
 
-                if (tokens[*currentToken].content.compare("*") == 0) {
-                    eat(currentToken);
-                    if (lhs(tokens, currentToken)) {
-                        return true;
-                    }
-                }
-            }
+            tentarLer1(tokens, currentToken);
+            tentarLer2(tokens, currentToken);
+            return true;
         }
     }
 
@@ -60,4 +54,43 @@ bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     return false;
+}
+
+void tentarLer1(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (mlhs_item(tokens, currentToken)) {
+        while(funcaoComAsterisco(tokens, currentToken)) {}
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarLer2(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("*") == 0) {
+        eat(currentToken);
+        tentarLer3(tokens, currentToken);
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarLer3(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (lhs(tokens, currentToken)) {
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
 }

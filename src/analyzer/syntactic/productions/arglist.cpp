@@ -20,9 +20,7 @@ bool arglist(vector<Token> tokens, int* currentToken) {
         // varios ou vazio
         while (funcaoComAsterisco(tokens, currentToken)) {}
 
-        if (tentarLer1(tokens, currentToken)) {
-            tentarLer2(tokens, currentToken);
-        }
+        tentarLer1(tokens, currentToken);
         tentarLer3(tokens, currentToken);
 
         return true;
@@ -63,19 +61,21 @@ bool funcaoComAsterisco(vector<Token> tokens, int* currentToken) {
     return false;
 }
 
-bool tentarLer1(vector<Token> tokens, int *currentToken)
+void tentarLer1(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
     if (tokens[*currentToken].content.compare(",")) {
         eat(currentToken);
         if (tokens[*currentToken].content.compare("*")) {
             eat(currentToken);
-            return true;
+            tentarLer2(tokens, currentToken);
+            return;
         }
     }
 
+
     *currentToken = pstToken;
-    return false;
+    return;
 }
 
 void tentarLer2(vector<Token> tokens, int *currentToken)

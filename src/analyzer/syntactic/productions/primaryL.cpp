@@ -29,12 +29,13 @@ bool primaryL(vector<Token> tokens, int* currentToken) {
     // possibilidade 2
     if (tokens[*currentToken].content.compare("[")) {
         eat(currentToken);
-        if (args(tokens, currentToken)) {
-            if (tokens[*currentToken].content.compare("]")) {
-                eat(currentToken);
-                if (primaryL(tokens, currentToken)) {
-                    return true;
-                }
+
+        tentarLer1(tokens, currentToken);
+
+        if (tokens[*currentToken].content.compare("]")) {
+            eat(currentToken);
+            if (primaryL(tokens, currentToken)) {
+                return true;
             }
         }
     }
@@ -44,4 +45,16 @@ bool primaryL(vector<Token> tokens, int* currentToken) {
     // 3 possibidade (vazio)
 
     return true;
+}
+
+void tentarLer1(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (args(tokens, currentToken)) {
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
 }

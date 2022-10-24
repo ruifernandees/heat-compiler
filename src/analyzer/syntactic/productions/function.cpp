@@ -17,15 +17,8 @@ bool Function(vector<Token> tokens, int* currentToken)
 
     // possibilidade 1
     if (operation(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare("(") == 0) {
-            eat(currentToken);
-            if (call_args(tokens, currentToken)) {
-                if (tokens[*currentToken].content.compare(")") == 0) {
-                    eat(currentToken);
-                    return true;
-                }
-            }
-        }
+        tentarLer1(tokens, currentToken);
+        return true;
     }
 
     *currentToken = pastToken;
@@ -40,11 +33,10 @@ bool Function(vector<Token> tokens, int* currentToken)
                 // possibilidade 2
                 if (tokens[*currentToken].content.compare("(") == 0) {
                     eat(currentToken);
-                    if (call_args(tokens, currentToken)) {
-                        if (tokens[*currentToken].content.compare(")") != 0) {
-                            eat(currentToken);
-                            return true;
-                        }
+                    tentarLer2(tokens, currentToken);
+                    if (tokens[*currentToken].content.compare(")") == 0) {
+                        eat(currentToken);
+                        return true;
                     }
                 }
 
@@ -68,11 +60,10 @@ bool Function(vector<Token> tokens, int* currentToken)
                 // possibilidade 3
                 if (tokens[*currentToken].content.compare("(") == 0) {
                     eat(currentToken);
-                    if (call_args(tokens, currentToken)) {
-                        if (tokens[*currentToken].content.compare(")") == 0) {
-                            eat(currentToken);
-                            return true;
-                        }
+                    tentarLer2(tokens, currentToken);
+                    if (tokens[*currentToken].content.compare(")") == 0) {
+                        eat(currentToken);
+                        return true;
                     }
                 }
 
@@ -95,11 +86,10 @@ bool Function(vector<Token> tokens, int* currentToken)
         // possibilidade 6
         if (tokens[*currentToken].content.compare("(") == 0) {
             eat(currentToken);
-            if (call_args(tokens, currentToken)) {
-                if (tokens[*currentToken].content.compare(")")) {
-                    eat(currentToken);
-                    return true;
-                }
+            tentarLer2(tokens, currentToken);
+            if (tokens[*currentToken].content.compare(")") == 0) {
+                eat(currentToken);
+                return true;
             }
         }
 
@@ -112,4 +102,34 @@ bool Function(vector<Token> tokens, int* currentToken)
     *currentToken = pastToken;
     
     return false;
+}
+
+void tentarLer1(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (tokens[*currentToken].content.compare("(") == 0) {
+            eat(currentToken);
+
+            tentarLer2(tokens, currentToken);
+            if (tokens[*currentToken].content.compare(")") == 0) {
+                eat(currentToken);
+                return;
+            }
+        }
+
+    *currentToken = pstToken;
+    return;
+}
+
+void tentarLer2(vector<Token> tokens, int* currentToken)
+{
+    int pstToken = *currentToken;
+
+    if (call_args(tokens, currentToken)) {
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
 }
