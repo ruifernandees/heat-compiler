@@ -45,8 +45,9 @@ bool arg(vector<Token> tokens, int* currentToken)
 
     // possibilidade 3
     if (primary(tokens, currentToken)) {
-        if (argL(tokens, currentToken))
+        if (argL(tokens, currentToken)) {
             return true;
+        }
     }
 
     *currentToken = pastToken;

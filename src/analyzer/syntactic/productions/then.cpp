@@ -21,7 +21,7 @@ bool then(vector<Token> tokens, int* currentToken) {
         int pstToken = *currentToken;
 
         // 3 possibilidade
-        if (tokens[*currentToken].content.compare("then") != 0) {
+        if (tokens[*currentToken].content.compare("then") == 0) {
             eat(currentToken);
             return true;
         }

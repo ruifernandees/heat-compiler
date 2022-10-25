@@ -14,10 +14,14 @@ using namespace std;
 
 bool command(vector<Token> tokens, int* currentToken)
 {
+    int pastToken = *currentToken;
+
     // possibilidade 1
     if (operation(tokens, currentToken)) {
         if (call_args(tokens, currentToken)) {return true;}
     }
+
+    *currentToken = pastToken;
 
     // possibilidade 2
     if (primary(tokens, currentToken)) {
@@ -30,6 +34,8 @@ bool command(vector<Token> tokens, int* currentToken)
             }
         }
     }
+
+    *currentToken = pastToken;
     
     // possibildade 3
     if (primary(tokens, currentToken)) {
@@ -42,6 +48,8 @@ bool command(vector<Token> tokens, int* currentToken)
             }
         }
     }
+
+    *currentToken = pastToken;
     
     // possibilidade 4
     if (tokens[*currentToken].content.compare("super") == 0) {
@@ -50,6 +58,8 @@ bool command(vector<Token> tokens, int* currentToken)
             return true;
         }
     }
+
+    *currentToken = pastToken;
 
     return false;
 }

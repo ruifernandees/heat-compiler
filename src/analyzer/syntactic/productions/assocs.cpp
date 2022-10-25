@@ -16,7 +16,7 @@ using namespace std;
 bool funcaoAssocsComAsterisco(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",")) {
+    if (tokens[*currentToken].content.compare(",") == 0) {
         eat(currentToken);
         if (assoc(tokens, currentToken)) {
             return true;

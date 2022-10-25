@@ -68,8 +68,6 @@ bool call_args(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 1 e 2
     if (args(tokens, currentToken)) {
-        int pstToken = *currentToken;
-
         tentarCallArgsLer1(tokens, currentToken);
         tentarCallArgsLer2(tokens, currentToken);
         tentarCallArgsLer3(tokens, currentToken);

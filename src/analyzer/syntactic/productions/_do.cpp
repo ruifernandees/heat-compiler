@@ -32,7 +32,7 @@ bool _do(vector<Token> tokens, int* currentToken)
         return true;
     }
 
-    pastToken = *currentToken;
+    *currentToken = pastToken;
 
     // possibilidade 2
     if (tokens[*currentToken].content.compare("do") == 0) {
@@ -40,7 +40,7 @@ bool _do(vector<Token> tokens, int* currentToken)
         return true;
     }
 
-    pastToken = *currentToken;
+    *currentToken = pastToken;
 
     return false;
 }

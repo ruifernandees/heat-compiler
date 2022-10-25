@@ -24,7 +24,7 @@ bool exprL(vector<Token> tokens, int* currentToken)
             if (exprL(tokens, currentToken)) {
                 return true;
             }
-        }   
+        }
     }
 
     *currentToken = pastToken;

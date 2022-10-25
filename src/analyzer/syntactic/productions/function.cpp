@@ -30,14 +30,14 @@ void tentarFunctionLer1(vector<Token> tokens, int* currentToken)
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("(") == 0) {
-            eat(currentToken);
+        eat(currentToken);
 
-            tentarFunctionLer2(tokens, currentToken);
-            if (tokens[*currentToken].content.compare(")") == 0) {
-                eat(currentToken);
-                return;
-            }
+        tentarFunctionLer2(tokens, currentToken);
+        if (tokens[*currentToken].content.compare(")") == 0) {
+            eat(currentToken);
+            return;
         }
+    }
 
     *currentToken = pstToken;
     return;

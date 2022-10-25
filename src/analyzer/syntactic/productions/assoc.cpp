@@ -18,7 +18,7 @@ bool assoc(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 1
     if (arg(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare("=>")) {
+        if (tokens[*currentToken].content.compare("=>") == 0) {
             eat(currentToken);
             if (arg(tokens, currentToken)) {
                 return true;

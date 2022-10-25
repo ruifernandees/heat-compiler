@@ -29,9 +29,11 @@ bool argdecl(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     // possibilidade 2
-    if (arglist(tokens, currentToken))
-        if (term(tokens, currentToken))
+    if (arglist(tokens, currentToken)) {
+        if (term(tokens, currentToken)) {
             return true;
+        }
+    }
 
     *currentToken = pastToken;
 

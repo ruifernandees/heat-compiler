@@ -29,7 +29,7 @@ bool primaryL(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
     // possibilidade 1
-    if (tokens[*currentToken].content.compare("::")) {
+    if (tokens[*currentToken].content.compare("::") == 0) {
         eat(currentToken);
         if (identifier(tokens, currentToken)) {
             if (primaryL(tokens, currentToken)) {
@@ -41,12 +41,12 @@ bool primaryL(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     // possibilidade 2
-    if (tokens[*currentToken].content.compare("[")) {
+    if (tokens[*currentToken].content.compare("[") == 0) {
         eat(currentToken);
 
         tentarPrimaryLLer1(tokens, currentToken);
 
-        if (tokens[*currentToken].content.compare("]")) {
+        if (tokens[*currentToken].content.compare("]") == 0) {
             eat(currentToken);
             if (primaryL(tokens, currentToken)) {
                 return true;

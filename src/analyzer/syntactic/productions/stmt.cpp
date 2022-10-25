@@ -22,7 +22,7 @@ void tentarSTMTLer1(vector<Token> tokens, int* currentToken)
         if (block_var(tokens, currentToken)) {
             if (tokens[*currentToken].content.compare("|") == 0) {
                 eat(currentToken);
-                
+                return;
             }
         }
     }
@@ -61,7 +61,7 @@ bool stmt(vector<Token> tokens, int* currentToken) {
             eat(currentToken);
 
             tentarSTMTLer1(tokens, currentToken);
-
+    
             if (compstmt(tokens, currentToken)) {
                 if (tokens[*currentToken].content.compare("end") == 0) {
                     eat(currentToken);

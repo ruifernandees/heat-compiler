@@ -19,19 +19,19 @@ bool symbol(vector<Token> tokens, int* currentToken)
     // possibilidade 1 e 2
     if (tokens[*currentToken].content.compare(":") == 0) {
         eat(currentToken);
+        int pstToken = *currentToken;
 
         // possibilidade 1
         if (fname(tokens, currentToken)) {
             return true;
         }
+
         *currentToken = pastToken;
 
         // possibilidade 2
         if (varname(tokens, currentToken)) {
             return true;
         }
-        *currentToken = pastToken;
-
     }
 
     *currentToken = pastToken;

@@ -17,8 +17,9 @@ bool block_var(vector<Token> tokens, int* currentToken)
     int pastToken = *currentToken;
 
     // possibilidade 1
-    if (lhs(tokens, currentToken))
+    if (lhs(tokens, currentToken)){
         return true;
+    }
 
     *currentToken = pastToken;
 

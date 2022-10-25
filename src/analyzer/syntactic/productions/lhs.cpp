@@ -39,7 +39,7 @@ bool lhs(vector<Token> tokens, int* currentToken) {
 
             tentarLHSLer1(tokens, currentToken);
             
-            if (tokens[*currentToken].content.compare("]")) {
+            if (tokens[*currentToken].content.compare("]") == 0) {
                 eat(currentToken);
                 return true;
             }

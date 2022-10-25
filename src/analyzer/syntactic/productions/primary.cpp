@@ -88,7 +88,7 @@ void tentarPrimaryLer4(vector<Token> tokens, int* currentToken)
 {
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare("(")) {
+    if (tokens[*currentToken].content.compare("(") == 0) {
         eat(currentToken);
         tentarPrimaryLer5(tokens, currentToken);
         if (tokens[*currentToken].content.compare(")") == 0) {
@@ -277,7 +277,7 @@ bool primary(vector<Token> tokens, int* currentToken)
     if (tokens[*currentToken].content.compare("{") == 0) {
         eat(currentToken);
         tentarPrimaryLer1(tokens, currentToken);
-        if (tokens[*currentToken].content.compare("}")) {
+        if (tokens[*currentToken].content.compare("}") == 0) {
             eat(currentToken);
             if (primaryL(tokens, currentToken)) {
                 return true;

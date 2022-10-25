@@ -16,7 +16,7 @@ using namespace std;
 bool funcaoArglistComAsterisco(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",")) {
+    if (tokens[*currentToken].content.compare(",") == 0) {
         eat(currentToken);
         if (identifier(tokens, currentToken)) {
             return true;
@@ -43,9 +43,9 @@ void tentarArglistLer2(vector<Token> tokens, int *currentToken)
 void tentarArglistLer1(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
-    if (tokens[*currentToken].content.compare(",")) {
+    if (tokens[*currentToken].content.compare(",") == 0) {
         eat(currentToken);
-        if (tokens[*currentToken].content.compare("*")) {
+        if (tokens[*currentToken].content.compare("*") == 0) {
             eat(currentToken);
             tentarArglistLer2(tokens, currentToken);
             return;
@@ -62,9 +62,9 @@ void tentarArglistLer3(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",")) {
+    if (tokens[*currentToken].content.compare(",") == 0) {
         eat(currentToken);
-        if (tokens[*currentToken].content.compare("&")) {
+        if (tokens[*currentToken].content.compare("&") == 0) {
             eat(currentToken);
             if (identifier(tokens, currentToken)) {
                 return;
