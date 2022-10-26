@@ -13,14 +13,17 @@
 using namespace std;
 
 bool argdecl(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
+    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 agdecl" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1
     if (tokens[*currentToken].content.compare("(") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (arglist(tokens, currentToken)) {
             if (tokens[*currentToken].content.compare(")") == 0) {
-                eat(currentToken);
+                eat(tokens, currentToken);
                 return true;
             }
         }

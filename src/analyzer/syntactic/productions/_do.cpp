@@ -14,6 +14,8 @@ using namespace std;
 
 bool _do(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     // possibilidade 1 e 3
@@ -22,7 +24,7 @@ bool _do(vector<Token> tokens, int* currentToken)
 
         // possibilidade 3
         if (tokens[*currentToken].content.compare("do") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             return true;
         }
 
@@ -36,7 +38,7 @@ bool _do(vector<Token> tokens, int* currentToken)
 
     // possibilidade 2
     if (tokens[*currentToken].content.compare("do") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         return true;
     }
 

@@ -14,10 +14,12 @@ using namespace std;
 
 
 bool funcaoAssocsComAsterisco(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (assoc(tokens, currentToken)) {
             return true;
         }
@@ -29,6 +31,9 @@ bool funcaoAssocsComAsterisco(vector<Token> tokens, int* currentToken) {
 }
 
 bool assocs(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
+    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 assocs" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1

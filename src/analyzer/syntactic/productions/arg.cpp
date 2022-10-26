@@ -14,12 +14,14 @@ using namespace std;
 
 bool arg(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     // possibilidade 1
     if (lhs(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare("=") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             if (arg(tokens, currentToken)) {
                 if (argL(tokens, currentToken)) {
                     return true;
@@ -56,7 +58,7 @@ bool arg(vector<Token> tokens, int* currentToken)
 
     if (tokens[*currentToken].content.compare("+") == 0 
         || tokens[*currentToken].content.compare("-") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (arg(tokens, currentToken)) {
             if (argL(tokens, currentToken)) {
                 return true;

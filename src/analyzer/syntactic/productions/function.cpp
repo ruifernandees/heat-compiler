@@ -14,6 +14,7 @@ using namespace std;
 
 void tentarFunctionLer2(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (call_args(tokens, currentToken)) {
@@ -27,14 +28,15 @@ void tentarFunctionLer2(vector<Token> tokens, int* currentToken)
 
 void tentarFunctionLer1(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("(") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
 
         tentarFunctionLer2(tokens, currentToken);
         if (tokens[*currentToken].content.compare(")") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             return;
         }
     }
@@ -46,6 +48,8 @@ void tentarFunctionLer1(vector<Token> tokens, int* currentToken)
 
 bool Function(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     // possibilidade 1
@@ -59,16 +63,16 @@ bool Function(vector<Token> tokens, int* currentToken)
     // possibilidade 2 e 4
     if (primary(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare(".") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             if (operation(tokens, currentToken)) {
                 int pstToken = *currentToken;
 
                 // possibilidade 2
                 if (tokens[*currentToken].content.compare("(") == 0) {
-                    eat(currentToken);
+                    eat(tokens, currentToken);
                     tentarFunctionLer2(tokens, currentToken);
                     if (tokens[*currentToken].content.compare(")") == 0) {
-                        eat(currentToken);
+                        eat(tokens, currentToken);
                         return true;
                     }
                 }
@@ -86,16 +90,16 @@ bool Function(vector<Token> tokens, int* currentToken)
     // possibilidade 3 e 5
     if (primary(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare("::") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             if (operation(tokens, currentToken)) {
                 int pstToken = *currentToken;
 
                 // possibilidade 3
                 if (tokens[*currentToken].content.compare("(") == 0) {
-                    eat(currentToken);
+                    eat(tokens, currentToken);
                     tentarFunctionLer2(tokens, currentToken);
                     if (tokens[*currentToken].content.compare(")") == 0) {
-                        eat(currentToken);
+                        eat(tokens, currentToken);
                         return true;
                     }
                 }
@@ -112,16 +116,16 @@ bool Function(vector<Token> tokens, int* currentToken)
 
     // possibilidade 6 e 7
     if (tokens[*currentToken].content.compare("super") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
 
         int pstToken = *currentToken;
 
         // possibilidade 6
         if (tokens[*currentToken].content.compare("(") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             tentarFunctionLer2(tokens, currentToken);
             if (tokens[*currentToken].content.compare(")") == 0) {
-                eat(currentToken);
+                eat(tokens, currentToken);
                 return true;
             }
         }

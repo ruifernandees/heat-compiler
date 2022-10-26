@@ -49,6 +49,8 @@ bool isAnfnameOperator(string operato) {
 
 bool fname(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     // possibilidade 1
@@ -58,7 +60,7 @@ bool fname(vector<Token> tokens, int* currentToken)
 
     // outras possibilidades
     if (isAnfnameOperator(tokens[*currentToken].content)) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         return true;
     }
 

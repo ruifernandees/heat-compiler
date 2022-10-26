@@ -14,6 +14,9 @@ using namespace std;
 
 
 bool then(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
+    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 THEN" << endl;
     int pastToken = *currentToken;
 
     // 1 e 3 possibilidade
@@ -22,7 +25,7 @@ bool then(vector<Token> tokens, int* currentToken) {
 
         // 3 possibilidade
         if (tokens[*currentToken].content.compare("then") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             return true;
         }
 
@@ -36,7 +39,7 @@ bool then(vector<Token> tokens, int* currentToken) {
 
     // 2 possibilidade
     if (tokens[*currentToken].content.compare("then") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         return true;
     }
 

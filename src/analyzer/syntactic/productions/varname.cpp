@@ -14,6 +14,9 @@ using namespace std;
 
 
 bool varname(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
+    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 VARNAME" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1
@@ -25,7 +28,7 @@ bool varname(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 2
     if (tokens[*currentToken].content.compare("@") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (identifier(tokens, currentToken)) {
             return true;
         }

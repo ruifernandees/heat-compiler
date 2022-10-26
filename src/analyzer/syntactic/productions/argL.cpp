@@ -47,10 +47,12 @@ bool isAnArgLOperator(string operato) {
 
 bool argL(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     if (isAnArgLOperator(tokens[*currentToken].content)) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (arg(tokens, currentToken)) {
             if (argL(tokens, currentToken)) {
                 return true;

@@ -14,10 +14,12 @@ using namespace std;
 
 
 bool funcaoArglistComAsterisco(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (identifier(tokens, currentToken)) {
             return true;
         }
@@ -44,9 +46,9 @@ void tentarArglistLer1(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
     if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (tokens[*currentToken].content.compare("*") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             tentarArglistLer2(tokens, currentToken);
             return;
         }
@@ -63,9 +65,9 @@ void tentarArglistLer3(vector<Token> tokens, int *currentToken)
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (tokens[*currentToken].content.compare("&") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             if (identifier(tokens, currentToken)) {
                 return;
             }
@@ -81,9 +83,9 @@ void tentarArglistLer4(vector<Token> tokens, int *currentToken)
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (tokens[*currentToken].content.compare("&") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             if (identifier(tokens, currentToken)) {
                 return;
             }
@@ -99,7 +101,7 @@ void tentarArglistLer5(vector<Token> tokens, int *currentToken)
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("&") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (identifier(tokens, currentToken)) {
             return;
         }
@@ -110,6 +112,9 @@ void tentarArglistLer5(vector<Token> tokens, int *currentToken)
 }
 
 bool arglist(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
+    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 arglist" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1
@@ -127,7 +132,7 @@ bool arglist(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 2
     if (tokens[*currentToken].content.compare("*") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (identifier(tokens, currentToken)) {
             tentarArglistLer4(tokens, currentToken);
             return true;

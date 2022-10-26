@@ -14,11 +14,13 @@ using namespace std;
 
 bool symbol(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     // possibilidade 1 e 2
     if (tokens[*currentToken].content.compare(":") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         int pstToken = *currentToken;
 
         // possibilidade 1

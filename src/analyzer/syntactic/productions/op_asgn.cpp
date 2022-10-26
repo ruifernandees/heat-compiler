@@ -34,9 +34,11 @@ bool isAnop_asgnOperator(string operato) {
 
 bool op_asgn(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
     if (isAnop_asgnOperator(tokens[*currentToken].content)){
-        eat(currentToken);
+        eat(tokens, currentToken);
         return true;
     }
 

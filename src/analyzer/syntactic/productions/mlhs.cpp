@@ -14,10 +14,12 @@ using namespace std;
 
 
 bool funcaoMLHSComAsterisco(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (mlhs_item(tokens, currentToken)) {
             return true;
         }
@@ -31,6 +33,7 @@ bool funcaoMLHSComAsterisco(vector<Token> tokens, int* currentToken) {
 
 void tentarMLHSLer1(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (mlhs_item(tokens, currentToken)) {
@@ -45,6 +48,7 @@ void tentarMLHSLer1(vector<Token> tokens, int* currentToken)
 
 void tentarMLHSLer3(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (lhs(tokens, currentToken)) {
@@ -57,10 +61,11 @@ void tentarMLHSLer3(vector<Token> tokens, int* currentToken)
 
 void tentarMLHSLer2(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("*") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         tentarMLHSLer3(tokens, currentToken);
         return;
     }
@@ -71,12 +76,15 @@ void tentarMLHSLer2(vector<Token> tokens, int* currentToken)
 
 
 bool mlhs(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
+    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 MLHS" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1
     if (mlhs_item(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare(",") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
 
             tentarMLHSLer1(tokens, currentToken);
             tentarMLHSLer2(tokens, currentToken);
@@ -88,7 +96,7 @@ bool mlhs(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 2
     if (tokens[*currentToken].content.compare("*") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (lhs(tokens, currentToken)) {
             return true;
         }

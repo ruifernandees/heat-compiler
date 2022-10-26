@@ -15,6 +15,7 @@ using namespace std;
 
 void tentarPrimaryLLer1(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (args(tokens, currentToken)) {
@@ -26,11 +27,14 @@ void tentarPrimaryLLer1(vector<Token> tokens, int* currentToken)
 }
 
 bool primaryL(vector<Token> tokens, int* currentToken) {
+    // // if (tokens.size() <= *currentToken + 1) return true;
+    // // if (tokens.size() <= *currentToken) return true;
+    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 PRIMARYL" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1
     if (tokens[*currentToken].content.compare("::") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (identifier(tokens, currentToken)) {
             if (primaryL(tokens, currentToken)) {
                 return true;
@@ -42,12 +46,12 @@ bool primaryL(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 2
     if (tokens[*currentToken].content.compare("[") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
 
         tentarPrimaryLLer1(tokens, currentToken);
 
         if (tokens[*currentToken].content.compare("]") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             if (primaryL(tokens, currentToken)) {
                 return true;
             }

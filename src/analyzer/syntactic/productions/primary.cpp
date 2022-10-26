@@ -15,10 +15,12 @@ using namespace std;
 
 
 bool funcaoPrimaryComAsterisco(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("elsif") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (expr(tokens, currentToken)) {
             if (then(tokens, currentToken)) {
                 if (compstmt(tokens, currentToken)) {
@@ -35,10 +37,11 @@ bool funcaoPrimaryComAsterisco(vector<Token> tokens, int* currentToken) {
 
 void tentarPrimaryLer2(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         return;
     }
 
@@ -47,6 +50,7 @@ void tentarPrimaryLer2(vector<Token> tokens, int* currentToken)
 }
 void tentarPrimaryLer1(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (args(tokens, currentToken)) {
@@ -61,6 +65,7 @@ void tentarPrimaryLer1(vector<Token> tokens, int* currentToken)
 
 void tentarPrimaryLer3(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (assocs(tokens, currentToken)) {
@@ -74,6 +79,7 @@ void tentarPrimaryLer3(vector<Token> tokens, int* currentToken)
 
 void tentarPrimaryLer5(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (call_args(tokens, currentToken)) {
@@ -86,13 +92,14 @@ void tentarPrimaryLer5(vector<Token> tokens, int* currentToken)
 
 void tentarPrimaryLer4(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("(") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         tentarPrimaryLer5(tokens, currentToken);
         if (tokens[*currentToken].content.compare(")") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             return;
         }
     }
@@ -103,6 +110,7 @@ void tentarPrimaryLer4(vector<Token> tokens, int* currentToken)
 
 void tentarPrimaryLer7(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (block_var(tokens, currentToken)) {
@@ -114,13 +122,14 @@ void tentarPrimaryLer7(vector<Token> tokens, int* currentToken)
 }
 void tentarPrimaryLer6(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("|") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         tentarPrimaryLer7(tokens, currentToken);
         if (tokens[*currentToken].content.compare("|") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             return;
         }
     }
@@ -132,10 +141,11 @@ void tentarPrimaryLer6(vector<Token> tokens, int* currentToken)
 
 void tentarPrimaryLer8(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("else") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (compstmt(tokens, currentToken)) {
             return;
         }
@@ -147,6 +157,7 @@ void tentarPrimaryLer8(vector<Token> tokens, int* currentToken)
 
 void tentarPrimaryLer9(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (args(tokens, currentToken)) {
@@ -159,10 +170,12 @@ void tentarPrimaryLer9(vector<Token> tokens, int* currentToken)
 
 
 bool funcaoComMais(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("rescue") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         tentarPrimaryLer9(tokens, currentToken);
         if (_do(tokens, currentToken)) {
             if (compstmt(tokens, currentToken)) {
@@ -180,10 +193,11 @@ bool funcaoComMais(vector<Token> tokens, int* currentToken) {
 
 void tentarPrimaryLer10(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("ensure") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (compstmt(tokens, currentToken)) {
             return;
         }
@@ -195,10 +209,11 @@ void tentarPrimaryLer10(vector<Token> tokens, int* currentToken)
 
 void tentarPrimaryLer11(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("<") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (identifier(tokens, currentToken)) {
             return;
         }
@@ -210,14 +225,15 @@ void tentarPrimaryLer11(vector<Token> tokens, int* currentToken)
 
 bool primary(vector<Token> tokens, int* currentToken) 
 {
+    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 PRIMARY" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1
     if (tokens[*currentToken].content.compare("(") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (compstmt(tokens, currentToken)) {
             if (tokens[*currentToken].content.compare(")") == 0) {
-                eat(currentToken);
+                eat(tokens, currentToken);
                 if (primaryL(tokens, currentToken)) {
                     return true;
                 }
@@ -228,7 +244,10 @@ bool primary(vector<Token> tokens, int* currentToken)
     *currentToken = pastToken;
     
     // possibilidade 2
+    cout << "[PRIMARY CALLS] LITERAL" << endl;
     if (literal(tokens, currentToken)) {
+        cout << "[PRIMARY CALLS] PRIMARYL" << endl;
+        
         if (primaryL(tokens, currentToken)) {
             return true;
         }
@@ -247,7 +266,7 @@ bool primary(vector<Token> tokens, int* currentToken)
 
     // possibilidade 4
     if (tokens[*currentToken].content.compare("::") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (identifier(tokens, currentToken)) {
             if (primaryL(tokens, currentToken)) {
                 return true;
@@ -259,11 +278,11 @@ bool primary(vector<Token> tokens, int* currentToken)
 
     // possibilidade 5
     if (tokens[*currentToken].content.compare("[") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         tentarPrimaryLer1(tokens, currentToken);
         
         if (tokens[*currentToken].content.compare("]") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             if (primaryL(tokens, currentToken)) {
                 return true;
             }
@@ -275,10 +294,10 @@ bool primary(vector<Token> tokens, int* currentToken)
 
     // possibilidade 6
     if (tokens[*currentToken].content.compare("{") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         tentarPrimaryLer1(tokens, currentToken);
         if (tokens[*currentToken].content.compare("}") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             if (primaryL(tokens, currentToken)) {
                 return true;
             }
@@ -289,10 +308,10 @@ bool primary(vector<Token> tokens, int* currentToken)
 
     // possibilidade 7
     if (tokens[*currentToken].content.compare("{") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         tentarPrimaryLer3(tokens, currentToken);
         if (tokens[*currentToken].content.compare("}") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             if (primaryL(tokens, currentToken)) {
                 return true;
             }
@@ -303,7 +322,7 @@ bool primary(vector<Token> tokens, int* currentToken)
 
     // possibilidade 8
     if (tokens[*currentToken].content.compare("return") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         tentarPrimaryLer4(tokens, currentToken);
         if (primaryL(tokens, currentToken)) {
             return true;
@@ -324,11 +343,11 @@ bool primary(vector<Token> tokens, int* currentToken)
     // possibilidade 10
     if (Function(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare("{") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             tentarPrimaryLer6(tokens, currentToken);
             if (compstmt(tokens, currentToken)) {
                 if (tokens[*currentToken].content.compare("}") == 0) {
-                    eat(currentToken);
+                    eat(tokens, currentToken);
                     if (primaryL(tokens, currentToken)) {
                         return true;
                     }
@@ -341,7 +360,7 @@ bool primary(vector<Token> tokens, int* currentToken)
     
     // possiblidade 11
     if (tokens[*currentToken].content.compare("if") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (expr(tokens, currentToken)) {
             if (then(tokens, currentToken)) {
                 if (compstmt(tokens, currentToken)) {
@@ -350,7 +369,7 @@ bool primary(vector<Token> tokens, int* currentToken)
                     tentarPrimaryLer8(tokens, currentToken);
 
                     if (tokens[*currentToken].content.compare("end") == 0) {
-                        eat(currentToken);                        
+                        eat(tokens, currentToken);                        
                         if (primaryL(tokens, currentToken)) {
                             return true;
                         }
@@ -364,12 +383,12 @@ bool primary(vector<Token> tokens, int* currentToken)
 
     // possibilidade 11
     if (tokens[*currentToken].content.compare("while") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (expr(tokens, currentToken)) {
             if (_do(tokens, currentToken)) {
                 if (compstmt(tokens, currentToken)) {
                     if (tokens[*currentToken].content.compare("end") == 0) {
-                        eat(currentToken);
+                        eat(tokens, currentToken);
                         if (primaryL(tokens, currentToken)) {
                             return true;
                         }
@@ -385,15 +404,15 @@ bool primary(vector<Token> tokens, int* currentToken)
     
     // possibilidade 12 
     if (tokens[*currentToken].content.compare("for") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (block_var(tokens, currentToken)) {
             if (tokens[*currentToken].content.compare("in") == 0) {
-                eat(currentToken);
+                eat(tokens, currentToken);
                 if (expr(tokens, currentToken)) {
                     if (_do(tokens, currentToken)) {
                         if (compstmt(tokens, currentToken)) {
                             if (tokens[*currentToken].content.compare("end") == 0) {
-                                eat(currentToken);
+                                eat(tokens, currentToken);
                                 if (primaryL(tokens, currentToken)) {
                                     return true;
                                 }
@@ -410,7 +429,7 @@ bool primary(vector<Token> tokens, int* currentToken)
 
     // possibilidade 13
     if (tokens[*currentToken].content.compare("begin") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (compstmt(tokens, currentToken)) {
             // bloco do + abaixo
             if (funcaoComMais(tokens, currentToken)) {
@@ -421,7 +440,7 @@ bool primary(vector<Token> tokens, int* currentToken)
                 tentarPrimaryLer10(tokens, currentToken);
 
                 if (tokens[*currentToken].content.compare("end") == 0) {
-                    eat(currentToken);
+                    eat(tokens, currentToken);
                     if (primaryL(tokens, currentToken)) {
                         return true;
                     }
@@ -436,12 +455,12 @@ bool primary(vector<Token> tokens, int* currentToken)
 
     // possibilidade 14
     if (tokens[*currentToken].content.compare("class") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (identifier(tokens, currentToken)) {
             tentarPrimaryLer11(tokens, currentToken);
             if (compstmt(tokens, currentToken)) {
                 if (tokens[*currentToken].content.compare("end") == 0) {
-                    eat(currentToken);
+                    eat(tokens, currentToken);
                     if (primaryL(tokens, currentToken)) {
                         return true;
                     }
@@ -454,11 +473,11 @@ bool primary(vector<Token> tokens, int* currentToken)
     
     // possibilidade 15 
     if (tokens[*currentToken].content.compare("module") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (identifier(tokens, currentToken)) {
             if (compstmt(tokens, currentToken)) {
                 if (tokens[*currentToken].content.compare("end") == 0) {
-                    eat(currentToken);
+                    eat(tokens, currentToken);
                     if (primaryL(tokens, currentToken)) {
                         return true;
                     }
@@ -471,12 +490,12 @@ bool primary(vector<Token> tokens, int* currentToken)
 
     // possibilidade 16 aleluia
     if (tokens[*currentToken].content.compare("def") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (fname(tokens, currentToken)) {
             if (argdecl(tokens, currentToken)) {
                 if (compstmt(tokens, currentToken)) {
                     if (tokens[*currentToken].content.compare("end") == 0) {
-                        eat(currentToken);
+                        eat(tokens, currentToken);
                         if (primaryL(tokens, currentToken)) {
                             return true;
                         }

@@ -14,6 +14,8 @@ using namespace std;
 
 bool variable(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     // possibilidade 1
@@ -26,7 +28,7 @@ bool variable(vector<Token> tokens, int* currentToken)
     // possibilidade 2 e 3
     if (tokens[*currentToken].content.compare("nil") == 0 ||
         tokens[*currentToken].content.compare("self") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         return true;
     }
 

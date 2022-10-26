@@ -13,6 +13,8 @@
 using namespace std;
 
 bool funcaoCompstmtComAsterisco(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     if (term(tokens, currentToken)) {
@@ -29,6 +31,7 @@ bool funcaoCompstmtComAsterisco(vector<Token> tokens, int* currentToken) {
 
 void tentarCompstmtLer1(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (term(tokens, currentToken)) {
@@ -40,6 +43,9 @@ void tentarCompstmtLer1(vector<Token> tokens, int* currentToken)
 }
 
 bool compstmt(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
+    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 COMPSTMT" << endl;
     if (stmt(tokens, currentToken)) {
         while(funcaoCompstmtComAsterisco(tokens, currentToken)) {}
 

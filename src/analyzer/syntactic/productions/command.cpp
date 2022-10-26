@@ -14,6 +14,8 @@ using namespace std;
 
 bool command(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     // possibilidade 1
@@ -26,7 +28,7 @@ bool command(vector<Token> tokens, int* currentToken)
     // possibilidade 2
     if (primary(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare(".") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             if (operation(tokens, currentToken)) {
                 if (call_args(tokens, currentToken)) {
                     return true;
@@ -40,7 +42,7 @@ bool command(vector<Token> tokens, int* currentToken)
     // possibildade 3
     if (primary(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare("::") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             if (operation(tokens, currentToken)) {
                 if (call_args(tokens, currentToken)) {
                     return true;
@@ -53,7 +55,7 @@ bool command(vector<Token> tokens, int* currentToken)
     
     // possibilidade 4
     if (tokens[*currentToken].content.compare("super") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (call_args(tokens, currentToken)) {
             return true;
         }

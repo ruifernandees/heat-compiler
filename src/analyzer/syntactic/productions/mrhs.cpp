@@ -15,12 +15,13 @@ using namespace std;
 
 void tentarMRHSLer1(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (tokens[*currentToken].content.compare("*") == 0) {
-            eat(currentToken);
+            eat(tokens, currentToken);
             if (arg(tokens, currentToken)) {
                 return;
             }
@@ -33,6 +34,9 @@ void tentarMRHSLer1(vector<Token> tokens, int* currentToken)
 
 
 bool mrhs(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
+    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 MRHS" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1
@@ -45,7 +49,7 @@ bool mrhs(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 2
     if (tokens[*currentToken].content.compare("*") == 0) {
-        eat(currentToken);
+        eat(tokens, currentToken);
         if (arg(tokens, currentToken)) {
             return true;
         }
