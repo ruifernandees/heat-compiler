@@ -2,8 +2,8 @@
 
 bool eat(vector<Token> tokens, int *currentToken)
 {
-    if (tokens.size() <= *currentToken + 1) {
-        // throw new runtime_error("EVERYTHING OK");
+    if (*currentToken + 1 >= tokens.size()) {
+        //throw new runtime_error("EVERYTHING OK");
         return false;
     }
     *currentToken = *currentToken + 1;

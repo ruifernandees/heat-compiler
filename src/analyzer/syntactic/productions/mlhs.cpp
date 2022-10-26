@@ -19,9 +19,10 @@ bool funcaoMLHSComAsterisco(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
     if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(tokens, currentToken);
-        if (mlhs_item(tokens, currentToken)) {
-            return true;
+        if (eat(tokens, currentToken)) {
+            if (mlhs_item(tokens, currentToken)) {
+                return true;
+            }
         }
     }
 
@@ -65,9 +66,10 @@ void tentarMLHSLer2(vector<Token> tokens, int* currentToken)
     int pstToken = *currentToken;
 
     if (tokens[*currentToken].content.compare("*") == 0) {
-        eat(tokens, currentToken);
-        tentarMLHSLer3(tokens, currentToken);
-        return;
+        if (eat(tokens, currentToken)) {
+            tentarMLHSLer3(tokens, currentToken);
+            return;
+        }
     }
 
     *currentToken = pstToken;
@@ -84,11 +86,12 @@ bool mlhs(vector<Token> tokens, int* currentToken) {
     // possibilidade 1
     if (mlhs_item(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare(",") == 0) {
-            eat(tokens, currentToken);
+            if (eat(tokens, currentToken)) {
+                tentarMLHSLer1(tokens, currentToken);
+                tentarMLHSLer2(tokens, currentToken);
+                return true;
+            }
 
-            tentarMLHSLer1(tokens, currentToken);
-            tentarMLHSLer2(tokens, currentToken);
-            return true;
         }
     }
 
@@ -96,9 +99,10 @@ bool mlhs(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 2
     if (tokens[*currentToken].content.compare("*") == 0) {
-        eat(tokens, currentToken);
-        if (lhs(tokens, currentToken)) {
-            return true;
+        if (eat(tokens, currentToken)) {
+            if (lhs(tokens, currentToken)) {
+                return true;
+            }
         }
     }
 

@@ -60,8 +60,7 @@ bool fname(vector<Token> tokens, int* currentToken)
 
     // outras possibilidades
     if (isAnfnameOperator(tokens[*currentToken].content)) {
-        eat(tokens, currentToken);
-        return true;
+        if (eat(tokens, currentToken)) return true;
     }
 
     *currentToken = pastToken;

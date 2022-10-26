@@ -15,8 +15,8 @@ using namespace std;
 bool operation(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    // if (*currentToken >= 7) throw runtime_error("OPERATION");
     cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 OPERATION" << endl;
+    
     int pastToken = *currentToken;
 
     // possibilidade 1, 2 e 3
@@ -27,8 +27,7 @@ bool operation(vector<Token> tokens, int* currentToken) {
         // possibilidade 2
         if (tokens[*currentToken].content.compare("!") == 0) {
             cout << "OPERATION > COMPARE !" << endl;
-            eat(tokens, currentToken);
-            return true;
+            if (eat(tokens, currentToken)) return true;
         }
 
         *currentToken = pstToken;
@@ -36,8 +35,7 @@ bool operation(vector<Token> tokens, int* currentToken) {
         // possibilidade 3
         if (tokens[*currentToken].content.compare("?") == 0) {
             cout << "OPERATION > COMPARE ?" << endl;
-            eat(tokens, currentToken);
-            return true;
+            if (eat(tokens, currentToken)) return true;
         }
 
         *currentToken = pstToken;

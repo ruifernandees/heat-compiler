@@ -22,8 +22,7 @@ bool term(vector<Token> tokens, int* currentToken) {
     // possibilidade 1
     if (tokens[*currentToken].content.compare(";") == 0 ||
         tokens[*currentToken].content.compare("\n") == 0) {
-        eat(tokens, currentToken);
-        return true;
+        if (eat(tokens, currentToken)) return true;
     }
 
     *currentToken = pastToken;

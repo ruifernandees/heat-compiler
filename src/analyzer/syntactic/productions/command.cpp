@@ -28,10 +28,11 @@ bool command(vector<Token> tokens, int* currentToken)
     // possibilidade 2
     if (primary(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare(".") == 0) {
-            eat(tokens, currentToken);
-            if (operation(tokens, currentToken)) {
-                if (call_args(tokens, currentToken)) {
-                    return true;
+            if (eat(tokens, currentToken)) {
+                if (operation(tokens, currentToken)) {
+                    if (call_args(tokens, currentToken)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -42,10 +43,11 @@ bool command(vector<Token> tokens, int* currentToken)
     // possibildade 3
     if (primary(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare("::") == 0) {
-            eat(tokens, currentToken);
-            if (operation(tokens, currentToken)) {
-                if (call_args(tokens, currentToken)) {
-                    return true;
+            if (eat(tokens, currentToken)) {
+                if (operation(tokens, currentToken)) {
+                    if (call_args(tokens, currentToken)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -55,9 +57,10 @@ bool command(vector<Token> tokens, int* currentToken)
     
     // possibilidade 4
     if (tokens[*currentToken].content.compare("super") == 0) {
-        eat(tokens, currentToken);
-        if (call_args(tokens, currentToken)) {
-            return true;
+        if (eat(tokens, currentToken)) {
+            if (call_args(tokens, currentToken)) {
+                return true;
+            }
         }
     }
 

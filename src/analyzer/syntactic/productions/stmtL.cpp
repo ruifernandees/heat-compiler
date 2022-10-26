@@ -20,10 +20,11 @@ bool stmtL(vector<Token> tokens, int* currentToken)
 
     // 1 possibilidade
     if (tokens[*currentToken].content.compare("if") == 0) {
-        eat(tokens, currentToken);
-        if (expr(tokens, currentToken)) {
-            if (stmtL(tokens, currentToken)) {
-                return true;
+        if (eat(tokens, currentToken)) {
+            if (expr(tokens, currentToken)) {
+                if (stmtL(tokens, currentToken)) {
+                    return true;
+                }
             }
         }
     }
@@ -32,10 +33,11 @@ bool stmtL(vector<Token> tokens, int* currentToken)
     
     // 2 possibilidade
     if (tokens[*currentToken].content.compare("while") == 0) {
-        eat(tokens, currentToken);
-        if (expr(tokens, currentToken)) {
-            if (stmtL(tokens, currentToken)) {
-                return true;
+        if (eat(tokens, currentToken)) {
+            if (expr(tokens, currentToken)) {
+                if (stmtL(tokens, currentToken)) {
+                    return true;
+                }
             }
         }
     }

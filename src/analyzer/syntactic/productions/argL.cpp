@@ -52,11 +52,12 @@ bool argL(vector<Token> tokens, int* currentToken)
     int pastToken = *currentToken;
 
     if (isAnArgLOperator(tokens[*currentToken].content)) {
-        eat(tokens, currentToken);
-        if (arg(tokens, currentToken)) {
-            if (argL(tokens, currentToken)) {
-                return true;
-            } 
+        if (eat(tokens, currentToken)) {
+            if (arg(tokens, currentToken)) {
+                if (argL(tokens, currentToken)) {
+                    return true;
+                } 
+            }
         }
     }
 

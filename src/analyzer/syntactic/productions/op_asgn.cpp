@@ -38,8 +38,7 @@ bool op_asgn(vector<Token> tokens, int* currentToken)
     // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
     if (isAnop_asgnOperator(tokens[*currentToken].content)){
-        eat(tokens, currentToken);
-        return true;
+if (eat(tokens, currentToken)) return true;
     }
 
     *currentToken = pastToken;

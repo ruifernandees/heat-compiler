@@ -21,12 +21,14 @@ bool exprL(vector<Token> tokens, int* currentToken)
     //possibilidade 1 e 2
     if (tokens[*currentToken].content.compare("and") == 0
         || tokens[*currentToken].content.compare("or") == 0) {
-        eat(tokens, currentToken);
-        if (expr(tokens, currentToken)) {
-            if (exprL(tokens, currentToken)) {
-                return true;
+        if (eat(tokens, currentToken)) {
+            if (expr(tokens, currentToken)) {
+                if (exprL(tokens, currentToken)) {
+                    return true;
+                }
             }
         }
+        
     }
 
     *currentToken = pastToken;

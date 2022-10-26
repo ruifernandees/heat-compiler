@@ -24,8 +24,7 @@ bool _do(vector<Token> tokens, int* currentToken)
 
         // possibilidade 3
         if (tokens[*currentToken].content.compare("do") == 0) {
-            eat(tokens, currentToken);
-            return true;
+            if (eat(tokens, currentToken)) return true;
         }
 
         *currentToken = pstToken;
@@ -38,8 +37,7 @@ bool _do(vector<Token> tokens, int* currentToken)
 
     // possibilidade 2
     if (tokens[*currentToken].content.compare("do") == 0) {
-        eat(tokens, currentToken);
-        return true;
+        if (eat(tokens, currentToken)) return true;
     }
 
     *currentToken = pastToken;

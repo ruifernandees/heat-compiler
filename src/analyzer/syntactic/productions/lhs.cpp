@@ -39,15 +39,16 @@ bool lhs(vector<Token> tokens, int* currentToken) {
     // possibilidade 2
     if (primary(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare("[") == 0) {
-            eat(tokens, currentToken);
-
-            tentarLHSLer1(tokens, currentToken);
-            
-            if (tokens[*currentToken].content.compare("]") == 0) {
-                eat(tokens, currentToken);
-                return true;
+            if (eat(tokens, currentToken)) {
+                tentarLHSLer1(tokens, currentToken);
+                
+                if (tokens[*currentToken].content.compare("]") == 0) {
+                    if (eat(tokens, currentToken)) return true;
+                }
             }
-        }
+                
+            }
+
     }
 
     *currentToken = pastToken;
@@ -55,9 +56,10 @@ bool lhs(vector<Token> tokens, int* currentToken) {
     // possibilidade 3
     if (primary(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare(".") == 0) {
-            eat(tokens, currentToken);
-            if (identifier(tokens, currentToken)) {
-                return true;
+            if (eat(tokens, currentToken)) {
+                if (identifier(tokens, currentToken)) {
+                    return true;
+                }
             }
         }
     }
@@ -66,4 +68,3 @@ bool lhs(vector<Token> tokens, int* currentToken) {
 
     return false;
 }
-

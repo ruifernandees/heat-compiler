@@ -21,10 +21,11 @@ bool arg(vector<Token> tokens, int* currentToken)
     // possibilidade 1
     if (lhs(tokens, currentToken)) {
         if (tokens[*currentToken].content.compare("=") == 0) {
-            eat(tokens, currentToken);
-            if (arg(tokens, currentToken)) {
-                if (argL(tokens, currentToken)) {
-                    return true;
+            if (eat(tokens, currentToken)) {
+                if (arg(tokens, currentToken)) {
+                    if (argL(tokens, currentToken)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -58,11 +59,12 @@ bool arg(vector<Token> tokens, int* currentToken)
 
     if (tokens[*currentToken].content.compare("+") == 0 
         || tokens[*currentToken].content.compare("-") == 0) {
-        eat(tokens, currentToken);
-        if (arg(tokens, currentToken)) {
-            if (argL(tokens, currentToken)) {
-                return true;
-            } 
+        if (eat(tokens, currentToken)) {
+            if (arg(tokens, currentToken)) {
+                if (argL(tokens, currentToken)) {
+                    return true;
+                } 
+            }
         }
     }
 

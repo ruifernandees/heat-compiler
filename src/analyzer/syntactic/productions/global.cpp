@@ -20,9 +20,10 @@ bool global(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 1
     if (tokens[*currentToken].content.compare("$") == 0) {
-        eat(tokens, currentToken);
-        if (identifier(tokens, currentToken)) {
-            return true;
+        if (eat(tokens, currentToken)) {
+            if (identifier(tokens, currentToken)) {
+                return true;
+            }
         }
     }
 
@@ -30,11 +31,13 @@ bool global(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 2
     if (tokens[*currentToken].content.compare("$") == 0) {
-        eat(tokens, currentToken);
-        if (tokens[*currentToken].content.compare("-") == 0) {
-            eat(tokens, currentToken);
-            if (identifier(tokens, currentToken)) {
-                return true;
+        if (eat(tokens, currentToken)) {
+            if (tokens[*currentToken].content.compare("-") == 0) {
+                if (eat(tokens, currentToken)) {
+                    if (identifier(tokens, currentToken)) {
+                        return true;
+                    }
+                }
             }
         }
     }

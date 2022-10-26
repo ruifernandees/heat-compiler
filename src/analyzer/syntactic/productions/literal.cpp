@@ -23,8 +23,7 @@ bool literal(vector<Token> tokens, int* currentToken)
     cout << "[LITERAL CALLS] COMPARE NUMBER" << endl;
     if (tokens[*currentToken].type.compare(NUMBER) == 0) {
         cout << "[LITERAL CALLS] COMPARE NUMBER ok" << endl;
-        eat(tokens, currentToken);
-        return true;
+if (eat(tokens, currentToken)) return true;
     }
     
     *currentToken = pastToken;

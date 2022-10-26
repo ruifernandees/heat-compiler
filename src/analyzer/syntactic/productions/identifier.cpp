@@ -18,8 +18,7 @@ bool identifier(vector<Token> tokens, int* currentToken)
     // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
     if (tokens[*currentToken].type.compare(IDENTIFIER) == 0) {
-        eat(tokens, currentToken);
-        return true;
+        if (eat(tokens, currentToken)) return true;
     }
 
     *currentToken = pastToken;
