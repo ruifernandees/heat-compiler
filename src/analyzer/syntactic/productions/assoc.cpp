@@ -16,7 +16,7 @@ using namespace std;
 bool assoc(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 assoc" << endl;
+    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 assoc" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1

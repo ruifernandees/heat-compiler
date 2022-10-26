@@ -25,7 +25,7 @@ bool program(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
 
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 PROGRAM" << endl;
+    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 PROGRAM" << endl;
     compstmt(tokens, currentToken);
     if (tokens[*currentToken].type.compare("FINAL") == 0) {
         return true;

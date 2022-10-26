@@ -15,7 +15,7 @@ using namespace std;
 bool argdecl(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 agdecl" << endl;
+    // cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 agdecl" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1

@@ -40,7 +40,7 @@ void tentarMRHSLer1(vector<Token> tokens, int* currentToken)
 bool mrhs(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 MRHS" << endl;
+    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 MRHS" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1

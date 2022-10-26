@@ -29,7 +29,7 @@ void tentarPrimaryLLer1(vector<Token> tokens, int* currentToken)
 bool primaryL(vector<Token> tokens, int* currentToken) {
     // // if (tokens.size() <= *currentToken + 1) return true;
     // // if (tokens.size() <= *currentToken) return true;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 PRIMARYL" << endl;
+    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 PRIMARYL" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1

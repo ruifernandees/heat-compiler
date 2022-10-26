@@ -45,7 +45,7 @@ void tentarCompstmtLer1(vector<Token> tokens, int* currentToken)
 bool compstmt(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 COMPSTMT" << endl;
+    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 COMPSTMT" << endl;
     if (stmt(tokens, currentToken)) {
         while(funcaoCompstmtComAsterisco(tokens, currentToken)) {}
 

@@ -15,7 +15,7 @@ using namespace std;
 bool global(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 GLOBAL" << endl;
+    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 GLOBAL" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1

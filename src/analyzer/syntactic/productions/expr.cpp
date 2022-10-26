@@ -16,7 +16,7 @@ using namespace std;
 bool expr(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 EXPR" << endl;
+    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 EXPR" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1

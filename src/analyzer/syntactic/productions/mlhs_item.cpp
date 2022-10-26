@@ -16,7 +16,7 @@ using namespace std;
 bool mlhs_item(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 MLHS ITEM" << endl;
+    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 MLHS ITEM" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1

@@ -18,8 +18,11 @@ bool arg(vector<Token> tokens, int* currentToken)
     // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
-    // possibilidade 1
+    // possibilidade 1 e 2
     if (lhs(tokens, currentToken)) {
+        int pstToken = *currentToken;
+
+        // 1
         if (tokens[*currentToken].content.compare("=") == 0) {
             if (eat(tokens, currentToken)) {
                 if (arg(tokens, currentToken)) {
@@ -29,12 +32,10 @@ bool arg(vector<Token> tokens, int* currentToken)
                 }
             }
         }
-    }
 
-    *currentToken = pastToken;
-
-    // poss 2
-    if (lhs(tokens, currentToken)) {
+        *currentToken = pstToken;
+        
+        // 2
         if (op_asgn(tokens, currentToken)) {
             if (arg(tokens, currentToken)) {
                 if (argL(tokens, currentToken)) {
@@ -42,6 +43,8 @@ bool arg(vector<Token> tokens, int* currentToken)
                 }
             }
         }
+
+        *currentToken = pstToken;
     }
 
     *currentToken = pastToken;

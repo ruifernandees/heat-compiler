@@ -80,7 +80,7 @@ void tentarMLHSLer2(vector<Token> tokens, int* currentToken)
 bool mlhs(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 MLHS" << endl;
+    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 MLHS" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1

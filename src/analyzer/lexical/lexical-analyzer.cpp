@@ -10,8 +10,6 @@
 #include "./utils/split-commands-by-delimiter.cpp"
 #include "./utils/remove-comments.cpp"
 
-#pragma once
-
 using namespace std;
 
 vector<Token> lexicalAnalyzer(vector<string> script) {

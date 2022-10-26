@@ -16,7 +16,7 @@ using namespace std;
 bool then(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 THEN" << endl;
+    // cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 THEN" << endl;
     int pastToken = *currentToken;
 
     // 1 e 3 possibilidade

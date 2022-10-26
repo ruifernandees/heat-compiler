@@ -74,7 +74,7 @@ void tentarCallArgsLer3(vector<Token> tokens, int *currentToken)
 bool call_args(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 call_args" << endl;
+    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 call_args" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1 e 2

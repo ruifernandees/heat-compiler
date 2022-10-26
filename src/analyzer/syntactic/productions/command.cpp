@@ -25,8 +25,11 @@ bool command(vector<Token> tokens, int* currentToken)
 
     *currentToken = pastToken;
 
-    // possibilidade 2
+    // possibilidade 2 e 3
     if (primary(tokens, currentToken)) {
+        int pstToken = *currentToken;
+        
+        // 2
         if (tokens[*currentToken].content.compare(".") == 0) {
             if (eat(tokens, currentToken)) {
                 if (operation(tokens, currentToken)) {
@@ -36,12 +39,10 @@ bool command(vector<Token> tokens, int* currentToken)
                 }
             }
         }
-    }
 
-    *currentToken = pastToken;
-    
-    // possibildade 3
-    if (primary(tokens, currentToken)) {
+        *currentToken = pstToken;
+
+        // 3
         if (tokens[*currentToken].content.compare("::") == 0) {
             if (eat(tokens, currentToken)) {
                 if (operation(tokens, currentToken)) {

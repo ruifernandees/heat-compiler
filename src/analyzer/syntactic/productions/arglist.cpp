@@ -122,7 +122,7 @@ void tentarArglistLer5(vector<Token> tokens, int *currentToken)
 bool arglist(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 arglist" << endl;
+    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 arglist" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1

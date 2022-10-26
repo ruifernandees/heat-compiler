@@ -1,1 +1,1 @@
-puts = 1
+hello = 1

@@ -28,7 +28,7 @@ bool symbol(vector<Token> tokens, int* currentToken)
                 return true;
             }
 
-            *currentToken = pastToken;
+            *currentToken = pstToken;
 
             // possibilidade 2
             if (varname(tokens, currentToken)) {

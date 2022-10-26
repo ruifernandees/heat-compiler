@@ -16,7 +16,7 @@ bool call(vector<Token> tokens, int* currentToken)
 {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 CALL" << endl;
+    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 CALL" << endl;
     int pastToken = *currentToken;
 
     // 1 possibilidade

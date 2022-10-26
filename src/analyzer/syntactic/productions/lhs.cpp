@@ -28,7 +28,7 @@ void tentarLHSLer1(vector<Token> tokens, int* currentToken)
 bool lhs(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 LHS" << endl;
+    // cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 LHS" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1
@@ -36,25 +36,23 @@ bool lhs(vector<Token> tokens, int* currentToken) {
 
     *currentToken = pastToken;
 
-    // possibilidade 2
+    // possibilidade 2 e 3
     if (primary(tokens, currentToken)) {
+        int pstToken = *currentToken;
+
+        // poss 2
         if (tokens[*currentToken].content.compare("[") == 0) {
             if (eat(tokens, currentToken)) {
-                tentarLHSLer1(tokens, currentToken);
-                
+                tentarLHSLer1(tokens, currentToken);        
                 if (tokens[*currentToken].content.compare("]") == 0) {
-                    if (eat(tokens, currentToken)) return true;
+                    if (eat(tokens, currentToken)) 
+                        return true;
                 }
-            }
-                
-            }
-
-    }
-
-    *currentToken = pastToken;
-
-    // possibilidade 3
-    if (primary(tokens, currentToken)) {
+            }    
+        }
+        *currentToken = pstToken;
+        
+        // poss 3
         if (tokens[*currentToken].content.compare(".") == 0) {
             if (eat(tokens, currentToken)) {
                 if (identifier(tokens, currentToken)) {

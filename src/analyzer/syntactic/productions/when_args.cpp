@@ -37,7 +37,7 @@ void tentarWhenArgsLer1(vector<Token> tokens, int* currentToken)
 bool when_args(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 WHEN ARGS" << endl;
+    // cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 WHEN ARGS" << endl;
     int pastToken = *currentToken;
 
     // 1 possibilidade

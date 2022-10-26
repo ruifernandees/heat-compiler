@@ -34,7 +34,7 @@ bool funcaoAssocsComAsterisco(vector<Token> tokens, int* currentToken) {
 bool assocs(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
-    cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 assocs" << endl;
+    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 assocs" << endl;
     int pastToken = *currentToken;
 
     // possibilidade 1
