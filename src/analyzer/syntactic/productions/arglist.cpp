@@ -72,22 +72,6 @@ void tentarArglistLer3(vector<Token> tokens, int *currentToken)
     return;
 }
 
-void tentarArglistLer4(vector<Token> tokens, int *currentToken)
-{
-    int pstToken = *currentToken;
-
-    if (verify_content(tokens, currentToken, ",")) {
-        if (verify_content(tokens, currentToken, "&")) {
-            if (identifier(tokens, currentToken)) {
-                return;
-            }
-        }
-    }
-
-    *currentToken = pstToken;
-    return;
-}
-
 void tentarArglistLer5(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
@@ -124,7 +108,7 @@ bool arglist(vector<Token> tokens, int* currentToken) {
     // possibilidade 2
     if (verify_content(tokens, currentToken, "*")) {
         if (identifier(tokens, currentToken)) {
-            tentarArglistLer4(tokens, currentToken);
+            tentarArglistLer3(tokens, currentToken);
             return true;
         }
     }

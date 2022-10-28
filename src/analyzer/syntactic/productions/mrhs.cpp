@@ -30,7 +30,6 @@ void tentarMRHSLer1(vector<Token> tokens, int* currentToken)
     return;
 }
 
-
 bool mrhs(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;

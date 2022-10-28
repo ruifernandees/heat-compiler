@@ -27,21 +27,8 @@ bool command(vector<Token> tokens, int* currentToken)
 
     // possibilidade 2 e 3
     if (primary(tokens, currentToken)) {
-        int pstToken = *currentToken;
-        
-        // 2
-        if (verify_content(tokens, currentToken, ".")) {
-            if (operation(tokens, currentToken)) {
-                if (call_args(tokens, currentToken)) {
-                    return true;
-                }
-            }
-        }
-
-        *currentToken = pstToken;
-
-        // 3
-        if (verify_content(tokens, currentToken, "::")) {
+        // 2 e 3
+        if (verify_content(tokens, currentToken, ".") || verify_content(tokens, currentToken, "::")) {
             if (operation(tokens, currentToken)) {
                 if (call_args(tokens, currentToken)) {
                     return true;

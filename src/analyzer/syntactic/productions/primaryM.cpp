@@ -12,8 +12,6 @@
 
 using namespace std;
 
-
-
 bool funcaoPrimaryMComAsterisco(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
@@ -46,6 +44,7 @@ void tentarPrimaryMLer2(vector<Token> tokens, int* currentToken)
     *currentToken = pstToken;
     return;
 }
+
 void tentarPrimaryMLer1(vector<Token> tokens, int* currentToken)
 {
     // if (tokens.size() <= *currentToken + 1) return ;
@@ -59,7 +58,6 @@ void tentarPrimaryMLer1(vector<Token> tokens, int* currentToken)
     *currentToken = pstToken;
     return;
 }
-
 
 void tentarPrimaryMLer3(vector<Token> tokens, int* currentToken)
 {
@@ -116,6 +114,7 @@ void tentarPrimaryMLer7(vector<Token> tokens, int* currentToken)
     *currentToken = pstToken;
     return;
 }
+
 void tentarPrimaryMLer6(vector<Token> tokens, int* currentToken)
 {
     /// if (tokens.size() <= *currentToken + 1) return ;
@@ -131,7 +130,6 @@ void tentarPrimaryMLer6(vector<Token> tokens, int* currentToken)
     *currentToken = pstToken;
     return;
 }
-
 
 void tentarPrimaryMLer8(vector<Token> tokens, int* currentToken)
 {
@@ -161,7 +159,6 @@ void tentarPrimaryMLer9(vector<Token> tokens, int* currentToken)
     return;
 }
 
-
 bool funcaoPrimaryMComMais(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
     // if (tokens.size() <= *currentToken) return false;
@@ -180,8 +177,6 @@ bool funcaoPrimaryMComMais(vector<Token> tokens, int* currentToken) {
 
     return false;
 }
-
-
 
 void tentarPrimaryMLer10(vector<Token> tokens, int* currentToken)
 {

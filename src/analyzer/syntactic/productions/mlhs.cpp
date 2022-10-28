@@ -29,7 +29,6 @@ bool funcaoMLHSComAsterisco(vector<Token> tokens, int* currentToken) {
     return false;
 }
 
-
 void tentarMLHSLer1(vector<Token> tokens, int* currentToken)
 {
     // if (tokens.size() <= *currentToken + 1) return ;
@@ -43,7 +42,6 @@ void tentarMLHSLer1(vector<Token> tokens, int* currentToken)
     *currentToken = pstToken;
     return;
 }
-
 
 void tentarMLHSLer3(vector<Token> tokens, int* currentToken)
 {

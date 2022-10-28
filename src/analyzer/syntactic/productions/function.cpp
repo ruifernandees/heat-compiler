@@ -25,7 +25,6 @@ void tentarFunctionLer2(vector<Token> tokens, int* currentToken)
     return;
 }
 
-
 void tentarFunctionLer1(vector<Token> tokens, int* currentToken)
 {
     // if (tokens.size() <= *currentToken + 1) return ;

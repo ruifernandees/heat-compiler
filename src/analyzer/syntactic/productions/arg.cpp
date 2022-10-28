@@ -56,8 +56,7 @@ bool arg(vector<Token> tokens, int* currentToken)
 
     *currentToken = pastToken;
     
-    // possibilidade 4 (+) e 5(=)
-
+    // possibilidade 4 (+) e 5(-)
     if (verify_content(tokens, currentToken, "+") || verify_content(tokens, currentToken, "-")) {
         if (arg(tokens, currentToken)) {
             if (argL(tokens, currentToken)) {

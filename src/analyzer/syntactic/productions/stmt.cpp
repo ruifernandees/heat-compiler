@@ -12,6 +12,18 @@
 
 using namespace std;
 
+void tentarSTMTLer3(vector<Token> tokens, int* currentToken)
+{
+    // if (tokens.size() <= *currentToken + 1) return ;
+    int pstToken = *currentToken;
+
+    if (block_var(tokens, currentToken)) {
+        return;
+    }
+
+    *currentToken = pstToken;
+    return;
+}
 
 void tentarSTMTLer1(vector<Token> tokens, int* currentToken)
 {
@@ -19,10 +31,9 @@ void tentarSTMTLer1(vector<Token> tokens, int* currentToken)
     int pstToken = *currentToken;
 
     if (verify_content(tokens, currentToken, "|")) {
-        if (block_var(tokens, currentToken)) {
-            if (verify_content(tokens, currentToken, "|")) {
-                return;
-            }
+        tentarSTMTLer3(tokens, currentToken);
+        if (verify_content(tokens, currentToken, "|")) {
+            return;
         }
     }
 

@@ -17,8 +17,6 @@ vector<string> fnameOperators;
 void initializefnameOperatorsVector() {
     fnameOperators.push_back("..");
     fnameOperators.push_back("==");
-    fnameOperators.push_back("..");
-    fnameOperators.push_back("==");
     fnameOperators.push_back("===");
     fnameOperators.push_back(">");
     fnameOperators.push_back(">=");

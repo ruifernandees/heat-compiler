@@ -71,7 +71,6 @@ bool call_args(vector<Token> tokens, int* currentToken) {
         tentarCallArgsLer3(tokens, currentToken);
 
         // possibilidade 1 (se der tudo errado as tentativas)
-
         return true;
     }
 

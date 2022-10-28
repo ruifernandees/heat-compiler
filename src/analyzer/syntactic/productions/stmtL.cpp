@@ -19,18 +19,7 @@ bool stmtL(vector<Token> tokens, int* currentToken)
     int pastToken = *currentToken;
 
     // 1 possibilidade
-    if (verify_content(tokens, currentToken, "if")) {
-        if (expr(tokens, currentToken)) {
-            if (stmtL(tokens, currentToken)) {
-                return true;
-            }
-        }
-    }
-
-    *currentToken = pastToken;
-    
-    // 2 possibilidade
-    if (verify_content(tokens, currentToken, "while")) {
+    if (verify_content(tokens, currentToken, "if") || verify_content(tokens, currentToken, "while")) {
         if (expr(tokens, currentToken)) {
             if (stmtL(tokens, currentToken)) {
                 return true;
