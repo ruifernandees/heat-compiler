@@ -20,7 +20,7 @@ bool functionL(vector<Token> tokens, int *currentToken)
 
     // possibilidade 1
     if (primaryL(tokens, currentToken)) {
-        if (functionL(tokens, currentToken)) {
+        if (func2(tokens, currentToken)) {
             return true;
         }
     }

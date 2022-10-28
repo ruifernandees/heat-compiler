@@ -17,6 +17,8 @@ void syntacticAnalyzer(vector<Token> tokens) {
     token.content = "final";
     token.type = "FINAL";
 
+    tokens.push_back(token);
+
     bool sem_erros = program(tokens, &currentToken);
     cout << "DEU CERTO? " << sem_erros << endl;
 }
@@ -26,7 +28,7 @@ bool program(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken) return false;
 
     //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 PROGRAM" << endl;
-    compstmt(tokens, currentToken);
+    bool c = compstmt(tokens, currentToken);
     if (tokens[*currentToken].type.compare("FINAL") == 0) {
         return true;
     }
