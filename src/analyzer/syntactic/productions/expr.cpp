@@ -21,12 +21,10 @@ bool expr(vector<Token> tokens, int* currentToken) {
 
     // possibilidade 1
     if (mlhs(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare("=") == 0) {
-            if (eat(tokens, currentToken)) {
-                if (mrhs(tokens, currentToken)) {
-                    if (exprL(tokens, currentToken)) {
-                        return true;
-                    }
+        if (verify_content(tokens, currentToken, "=")) {
+            if (mrhs(tokens, currentToken)) {
+                if (exprL(tokens, currentToken)) {
+                    return true;
                 }
             }
         }
@@ -35,12 +33,10 @@ bool expr(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     // possibilidade 2
-    if (tokens[*currentToken].content.compare("return") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (call_args(tokens, currentToken)) {
-                if (exprL(tokens, currentToken)) {
-                    return true;
-                }
+    if (verify_content(tokens, currentToken, "return")) {
+        if (call_args(tokens, currentToken)) {
+            if (exprL(tokens, currentToken)) {
+                return true;
             }
         }
     }
@@ -48,12 +44,10 @@ bool expr(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     //possibilidade 3
-    if (tokens[*currentToken].content.compare("not") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (expr(tokens, currentToken)) {
-                if (exprL(tokens, currentToken)) {
-                    return true;
-                }
+    if (verify_content(tokens, currentToken, "not")) {
+        if (expr(tokens, currentToken)) {
+            if (exprL(tokens, currentToken)) {
+                return true;
             }
         }
     }
@@ -70,13 +64,10 @@ bool expr(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     // possibilidade 5
-    
-    if (tokens[*currentToken].content.compare("!") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (command(tokens, currentToken)) {
-                if (exprL(tokens, currentToken)) {
-                    return true;
-                }
+    if (verify_content(tokens, currentToken, "!")) {
+        if (command(tokens, currentToken)) {
+            if (exprL(tokens, currentToken)) {
+                return true;
             }
         }
     }

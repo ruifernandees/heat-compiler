@@ -41,23 +41,19 @@ bool lhs(vector<Token> tokens, int* currentToken) {
         int pstToken = *currentToken;
 
         // poss 2
-        if (tokens[*currentToken].content.compare("[") == 0) {
-            if (eat(tokens, currentToken)) {
-                tentarLHSLer1(tokens, currentToken);        
-                if (tokens[*currentToken].content.compare("]") == 0) {
-                    if (eat(tokens, currentToken)) 
-                        return true;
-                }
-            }    
+        if (verify_content(tokens, currentToken, "[")) {
+            tentarLHSLer1(tokens, currentToken);
+            if (verify_content(tokens, currentToken, "]")) {
+                return true;
+            }
         }
+
         *currentToken = pstToken;
         
         // poss 3
-        if (tokens[*currentToken].content.compare(".") == 0) {
-            if (eat(tokens, currentToken)) {
-                if (identifier(tokens, currentToken)) {
-                    return true;
-                }
+        if (verify_content(tokens, currentToken, ".")) {
+            if (identifier(tokens, currentToken)) {
+                return true;
             }
         }
     }

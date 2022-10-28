@@ -18,11 +18,9 @@ bool funcaoAssocsComAsterisco(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (assoc(tokens, currentToken)) {
-                return true;
-            }
+    if (verify_content(tokens, currentToken, ",")) {
+        if (assoc(tokens, currentToken)) {
+            return true;
         }
     }
 

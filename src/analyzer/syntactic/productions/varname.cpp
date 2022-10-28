@@ -27,11 +27,9 @@ bool varname(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     // possibilidade 2
-    if (tokens[*currentToken].content.compare("@") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (identifier(tokens, currentToken)) {
-                return true;
-            }
+    if (verify_content(tokens, currentToken, "@")) {
+        if (identifier(tokens, currentToken)) {
+            return true;
         }
     }
 

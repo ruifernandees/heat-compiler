@@ -26,9 +26,8 @@ bool variable(vector<Token> tokens, int* currentToken)
     *currentToken = pastToken;
 
     // possibilidade 2 e 3
-    if (tokens[*currentToken].content.compare("nil") == 0 ||
-        tokens[*currentToken].content.compare("self") == 0) {
-        if (eat(tokens, currentToken)) return true;
+    if (verify_content(tokens, currentToken, "nil") || verify_content(tokens, currentToken, "self")) {
+        return true;
     }
 
     *currentToken = pastToken;

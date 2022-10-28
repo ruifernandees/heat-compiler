@@ -19,25 +19,19 @@ bool global(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
     // possibilidade 1
-    if (tokens[*currentToken].content.compare("$") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (identifier(tokens, currentToken)) {
-                return true;
-            }
+    if (verify_content(tokens, currentToken, "$")) {
+        if (identifier(tokens, currentToken)) {
+            return true;
         }
     }
 
     *currentToken = pastToken;
 
     // possibilidade 2
-    if (tokens[*currentToken].content.compare("$") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (tokens[*currentToken].content.compare("-") == 0) {
-                if (eat(tokens, currentToken)) {
-                    if (identifier(tokens, currentToken)) {
-                        return true;
-                    }
-                }
+    if (verify_content(tokens, currentToken, "$")) {
+        if (verify_content(tokens, currentToken, "-")) {
+            if (identifier(tokens, currentToken)) {
+                return true;
             }
         }
     }

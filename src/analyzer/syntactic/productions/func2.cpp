@@ -30,14 +30,10 @@ void tentarFunc2Ler6(vector<Token> tokens, int* currentToken)
     // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare("|") == 0) {
-        if (eat(tokens, currentToken)) {
-            tentarFunc2Ler7(tokens, currentToken);
-            if (tokens[*currentToken].content.compare("|") == 0) {
-                if (eat(tokens, currentToken)) {
-                    return;
-                }
-            }
+    if (verify_content(tokens, currentToken, "|")) {
+        tentarFunc2Ler7(tokens, currentToken);
+        if (verify_content(tokens, currentToken, "|")) {
+            return;
         }
     }
 
@@ -49,17 +45,13 @@ bool func2(vector<Token> tokens, int* currentToken)
 {
     int pastToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare("{") == 0) {
-        if (eat(tokens, currentToken)) {
-            tentarFunc2Ler6(tokens, currentToken);
-            if (compstmt(tokens, currentToken)) {
-                if (tokens[*currentToken].content.compare("}") == 0) {
-                    if (eat(tokens, currentToken)) {
-                        if (primaryL(tokens, currentToken)) {
-                            if (functionL(tokens, currentToken)) {
-                                return true;
-                            }
-                        }
+    if (verify_content(tokens, currentToken, "{")) {
+        tentarFunc2Ler6(tokens, currentToken);
+        if (compstmt(tokens, currentToken)) {
+            if (verify_content(tokens, currentToken, "}")) {
+                if (primaryL(tokens, currentToken)) {
+                    if (functionL(tokens, currentToken)) {
+                        return true;
                     }
                 }
             }

@@ -25,17 +25,15 @@ bool operation(vector<Token> tokens, int* currentToken) {
         int pstToken = *currentToken;
 
         // possibilidade 2
-        if (tokens[*currentToken].content.compare("!") == 0) {
-            //cout << "OPERATION > COMPARE !" << endl;
-            if (eat(tokens, currentToken)) return true;
+        if (verify_content(tokens, currentToken, "!")) {
+            return true;
         }
 
         *currentToken = pstToken;
 
         // possibilidade 3
-        if (tokens[*currentToken].content.compare("?") == 0) {
-            //cout << "OPERATION > COMPARE ?" << endl;
-            if (eat(tokens, currentToken)) return true;
+        if (verify_content(tokens, currentToken, "?")) {
+            return true;
         }
 
         *currentToken = pstToken;

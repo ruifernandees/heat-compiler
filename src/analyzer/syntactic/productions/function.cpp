@@ -31,15 +31,11 @@ void tentarFunctionLer1(vector<Token> tokens, int* currentToken)
     // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare("(") == 0) {
-        if (eat(tokens, currentToken)) {    
-            tentarFunctionLer2(tokens, currentToken);
-            if (tokens[*currentToken].content.compare(")") == 0) {
-                if (eat(tokens, currentToken))
-                    return;
-            }
+    if (verify_content(tokens, currentToken, "(")) {
+        tentarFunctionLer2(tokens, currentToken);
+        if (verify_content(tokens, currentToken, ")")) {
+            return;
         }
-
     }
 
     *currentToken = pstToken;
@@ -65,34 +61,27 @@ bool Function(vector<Token> tokens, int* currentToken)
 
     // possibilidade 2 e 4
     if (primaryM(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare(".") == 0) {
-            if (eat(tokens, currentToken)) {
-                if (operation(tokens, currentToken)) {
-                    int pstToken = *currentToken;
+        if (verify_content(tokens, currentToken, ".")) {
+            if (operation(tokens, currentToken)) {
+                int pstToken = *currentToken;
 
-                    // possibilidade 2
-                    if (tokens[*currentToken].content.compare("(") == 0) {
-                        if (eat(tokens, currentToken)) {
-                            tentarFunctionLer2(tokens, currentToken);
-                            if (tokens[*currentToken].content.compare(")") == 0) {
-                                if (eat(tokens, currentToken)) {
-                                    if (functionL(tokens, currentToken)) {
-                                        return true;
-                                    }
-                                }
-                            }
+                // possibilidade 2
+                if (verify_content(tokens, currentToken, "(")) {
+                    tentarFunctionLer2(tokens, currentToken);
+                    if (verify_content(tokens, currentToken, ")")) {
+                        if (functionL(tokens, currentToken)) {
+                            return true;
                         }
                     }
+                }
 
-                    *currentToken = pstToken;
+                *currentToken = pstToken;
 
-                    // possibilidade 4
-                    if (functionL(tokens, currentToken)) {
-                        return true;
-                    }
+                // possibilidade 4
+                if (functionL(tokens, currentToken)) {
+                    return true;
                 }
             }
-
         }
     }
 
@@ -100,33 +89,25 @@ bool Function(vector<Token> tokens, int* currentToken)
     
     // possibilidade 3 e 5
     if (primaryM(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare("::") == 0) {
-            if (eat(tokens, currentToken)) {
+        if (verify_content(tokens, currentToken, "::")) {
+            if (operation(tokens, currentToken)) {
+                int pstToken = *currentToken;
 
-                if (operation(tokens, currentToken)) {
-                    int pstToken = *currentToken;
-
-                    // possibilidade 3
-                    if (tokens[*currentToken].content.compare("(") == 0) {
-                        if (eat(tokens, currentToken)) {
-                            tentarFunctionLer2(tokens, currentToken);
-                            if (tokens[*currentToken].content.compare(")") == 0) {
-                                if (eat(tokens, currentToken)) {
-                                    if (functionL(tokens, currentToken)) {
-                                        return true;
-                                    }
-                                }
-                            }
-
+                // possibilidade 3
+                if (verify_content(tokens, currentToken, "(")) {
+                    tentarFunctionLer2(tokens, currentToken);
+                    if (verify_content(tokens, currentToken, ")")) {
+                        if (functionL(tokens, currentToken)) {
+                            return true;
                         }
                     }
+                }
 
-                    *currentToken = pstToken;
+                *currentToken = pstToken;
 
-                    // possibilidade 5
-                    if (functionL(tokens, currentToken)) {
-                        return true;
-                    }
+                // possibilidade 5
+                if (functionL(tokens, currentToken)) {
+                    return true;
                 }
             }
         }
@@ -135,33 +116,25 @@ bool Function(vector<Token> tokens, int* currentToken)
     *currentToken = pastToken;
 
     // possibilidade 6 e 7
-    if (tokens[*currentToken].content.compare("super") == 0) {
-        if (eat(tokens, currentToken)) {
+    if (verify_content(tokens, currentToken, "super")) {
+        int pstToken = *currentToken;
 
-            int pstToken = *currentToken;
-
-            // possibilidade 6
-            if (tokens[*currentToken].content.compare("(") == 0) {
-                if (eat(tokens, currentToken)) {
-                    tentarFunctionLer2(tokens, currentToken);
-                    if (tokens[*currentToken].content.compare(")") == 0) {
-                        if (eat(tokens, currentToken)) {
-                            if (functionL(tokens, currentToken)) {
-                                return true;
-                            }
-                        }
-                    }
+        // possibilidade 6
+        if (verify_content(tokens, currentToken, "(")) {
+            tentarFunctionLer2(tokens, currentToken);
+            if (verify_content(tokens, currentToken, ")")) {
+                if (functionL(tokens, currentToken)) {
+                    return true;
                 }
-            }
-
-            *currentToken = pstToken;
-
-            // possibilidade 7
-            if (functionL(tokens, currentToken)) {
-                return true;
             }
         }
 
+        *currentToken = pstToken;
+
+        // possibilidade 7
+        if (functionL(tokens, currentToken)) {
+            return true;
+        }
     }
 
     *currentToken = pastToken;

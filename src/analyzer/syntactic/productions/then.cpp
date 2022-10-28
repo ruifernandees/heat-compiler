@@ -24,8 +24,8 @@ bool then(vector<Token> tokens, int* currentToken) {
         int pstToken = *currentToken;
 
         // 3 possibilidade
-        if (tokens[*currentToken].content.compare("then") == 0) {
-            if (eat(tokens, currentToken)) return true;
+        if (verify_content(tokens, currentToken, "then")) {
+            return true;
         }
 
         *currentToken = pstToken;
@@ -37,8 +37,8 @@ bool then(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     // 2 possibilidade
-    if (tokens[*currentToken].content.compare("then") == 0) {
-        if (eat(tokens, currentToken)) return true;
+    if (verify_content(tokens, currentToken, "then")) {
+        return true;
     }
 
     *currentToken = pastToken;

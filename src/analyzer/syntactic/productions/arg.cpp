@@ -23,12 +23,10 @@ bool arg(vector<Token> tokens, int* currentToken)
         int pstToken = *currentToken;
 
         // 1
-        if (tokens[*currentToken].content.compare("=") == 0) {
-            if (eat(tokens, currentToken)) {
-                if (arg(tokens, currentToken)) {
-                    if (argL(tokens, currentToken)) {
-                        return true;
-                    }
+        if (verify_content(tokens, currentToken, "=")) {
+            if (arg(tokens, currentToken)) {
+                if (argL(tokens, currentToken)) {
+                    return true;
                 }
             }
         }
@@ -60,14 +58,11 @@ bool arg(vector<Token> tokens, int* currentToken)
     
     // possibilidade 4 (+) e 5(=)
 
-    if (tokens[*currentToken].content.compare("+") == 0 
-        || tokens[*currentToken].content.compare("-") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (arg(tokens, currentToken)) {
-                if (argL(tokens, currentToken)) {
-                    return true;
-                } 
-            }
+    if (verify_content(tokens, currentToken, "+") || verify_content(tokens, currentToken, "-")) {
+        if (arg(tokens, currentToken)) {
+            if (argL(tokens, currentToken)) {
+                return true;
+            } 
         }
     }
 

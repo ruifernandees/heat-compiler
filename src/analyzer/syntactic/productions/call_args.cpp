@@ -16,12 +16,9 @@ void tentarCallArgsLer1(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        if (eat(tokens, currentToken)) {
-
-            if (assocs(tokens, currentToken)){
-                return;
-            }
+    if (verify_content(tokens, currentToken, ",")) {
+        if (assocs(tokens, currentToken)){
+            return;
         }
     }
 
@@ -33,18 +30,12 @@ void tentarCallArgsLer2(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (tokens[*currentToken].content.compare("*") == 0) {
-                if (eat(tokens, currentToken)) {
-                    if (arg(tokens, currentToken)) {
-                        return;
-                    }
-
-                }
+    if (verify_content(tokens, currentToken, ",")) {
+        if (verify_content(tokens, currentToken, "*")) {
+            if (arg(tokens, currentToken)) {
+                return;
             }
         }
-        
     }
 
     *currentToken = pstToken;
@@ -55,14 +46,10 @@ void tentarCallArgsLer3(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (tokens[*currentToken].content.compare("&") == 0) {
-                if (eat(tokens, currentToken)) {
-                    if (arg(tokens, currentToken)) {
-                        return;
-                    }
-                }
+    if (verify_content(tokens, currentToken, ",")) {
+        if (verify_content(tokens, currentToken, "&")) {
+            if (arg(tokens, currentToken)) {
+                return;
             }
         }
     }
@@ -101,24 +88,19 @@ bool call_args(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     // possibilidade 4
-    if (tokens[*currentToken].content.compare("*") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (arg(tokens, currentToken)) {
-                tentarCallArgsLer3(tokens, currentToken);
-                return true;
-            }
-
+    if (verify_content(tokens, currentToken, "*")) {
+        if (arg(tokens, currentToken)) {
+            tentarCallArgsLer3(tokens, currentToken);
+            return true;
         }
     }
 
     *currentToken = pastToken;
 
     // possibilidade 5
-    if (tokens[*currentToken].content.compare("&") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (arg(tokens, currentToken)) {
-                return true;
-            }
+    if (verify_content(tokens, currentToken, "&")) {
+        if (arg(tokens, currentToken)) {
+            return true;
         }
     }
 

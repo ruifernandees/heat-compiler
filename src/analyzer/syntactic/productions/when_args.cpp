@@ -18,14 +18,10 @@ void tentarWhenArgsLer1(vector<Token> tokens, int* currentToken)
     // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (tokens[*currentToken].content.compare("*") == 0) {
-                if (eat(tokens, currentToken)) {
-                    if (arg(tokens, currentToken)) {
-                        return;
-                    }
-                }
+    if (verify_content(tokens, currentToken, ",")) {
+        if (verify_content(tokens, currentToken, "*")) {
+            if (arg(tokens, currentToken)) {
+                return;
             }
         }
     }
@@ -49,11 +45,9 @@ bool when_args(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     // 2 possibilidade
-    if (tokens[*currentToken].content.compare("*") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (arg(tokens, currentToken)) {
-                return true;
-            }
+    if (verify_content(tokens, currentToken, "*")) {
+        if (arg(tokens, currentToken)) {
+            return true;
         }
     }
 

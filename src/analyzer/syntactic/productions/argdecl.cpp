@@ -19,12 +19,10 @@ bool argdecl(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
     // possibilidade 1
-    if (tokens[*currentToken].content.compare("(") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (arglist(tokens, currentToken)) {
-                if (tokens[*currentToken].content.compare(")") == 0) {
-                    if (eat(tokens, currentToken)) return true;
-                }
+    if (verify_content(tokens, currentToken, "(")) {
+        if (arglist(tokens, currentToken)) {
+            if (verify_content(tokens, currentToken, ")")) {
+                return true;
             }
         }
     }

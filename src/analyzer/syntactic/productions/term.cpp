@@ -20,9 +20,8 @@ bool term(vector<Token> tokens, int* currentToken) {
     int pastToken = *currentToken;
 
     // possibilidade 1
-    if (tokens[*currentToken].content.compare(";") == 0 ||
-        tokens[*currentToken].content.compare("\n") == 0) {
-        if (eat(tokens, currentToken)) return true;
+    if (verify_content(tokens, currentToken, ";") || verify_content(tokens, currentToken, "\n")) {
+        return true;
     }
 
     *currentToken = pastToken;

@@ -18,11 +18,9 @@ bool funcaoArglistComAsterisco(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (identifier(tokens, currentToken)) {
-                return true;
-            }
+    if (verify_content(tokens, currentToken, ",")) {
+        if (identifier(tokens, currentToken)) {
+            return true;
         }
     }
 
@@ -46,17 +44,12 @@ void tentarArglistLer2(vector<Token> tokens, int *currentToken)
 void tentarArglistLer1(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (tokens[*currentToken].content.compare("*") == 0) {
-                if (eat(tokens, currentToken)) {
-                    tentarArglistLer2(tokens, currentToken);
-                    return;
-                }
-            }
+    if (verify_content(tokens, currentToken, ",")) {
+        if (verify_content(tokens, currentToken, "*")) {
+            tentarArglistLer2(tokens, currentToken);
+            return;
         }
     }
-
 
     *currentToken = pstToken;
     return;
@@ -67,14 +60,10 @@ void tentarArglistLer3(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (tokens[*currentToken].content.compare("&") == 0) {
-                if (eat(tokens, currentToken)) {
-                    if (identifier(tokens, currentToken)) {
-                        return;
-                    }
-                }
+    if (verify_content(tokens, currentToken, ",")) {
+        if (verify_content(tokens, currentToken, "&")) {
+            if (identifier(tokens, currentToken)) {
+                return;
             }
         }
     }
@@ -87,14 +76,10 @@ void tentarArglistLer4(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (tokens[*currentToken].content.compare("&") == 0) {
-                if (eat(tokens, currentToken)) {
-                    if (identifier(tokens, currentToken)) {
-                        return;
-                    }
-                }
+    if (verify_content(tokens, currentToken, ",")) {
+        if (verify_content(tokens, currentToken, "&")) {
+            if (identifier(tokens, currentToken)) {
+                return;
             }
         }
     }
@@ -107,11 +92,9 @@ void tentarArglistLer5(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare("&") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (identifier(tokens, currentToken)) {
-                return;
-            }
+    if (verify_content(tokens, currentToken, "&")) {
+        if (identifier(tokens, currentToken)) {
+            return;
         }
     }
 
@@ -139,12 +122,10 @@ bool arglist(vector<Token> tokens, int* currentToken) {
     *currentToken = pastToken;
 
     // possibilidade 2
-    if (tokens[*currentToken].content.compare("*") == 0) {
-        if (eat(tokens, currentToken)) {
-            if (identifier(tokens, currentToken)) {
-                tentarArglistLer4(tokens, currentToken);
-                return true;
-            }
+    if (verify_content(tokens, currentToken, "*")) {
+        if (identifier(tokens, currentToken)) {
+            tentarArglistLer4(tokens, currentToken);
+            return true;
         }
     }
 
