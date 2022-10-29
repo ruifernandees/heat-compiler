@@ -20,6 +20,7 @@ void syntacticAnalyzer(vector<Token> tokens) {
     tokens.push_back(token);
 
     bool sem_erros = program(tokens, &currentToken);
+    // cout << "currentToken: " << currentToken << "\n";
     cout << "DEU CERTO? " << sem_erros << endl;
 }
 

@@ -22,7 +22,12 @@ bool argdecl(vector<Token> tokens, int* currentToken) {
     if (verify_content(tokens, currentToken, "(")) {
         if (arglist(tokens, currentToken)) {
             if (verify_content(tokens, currentToken, ")")) {
-                return true;
+                if (tokens[*currentToken].content[0] == '\n') {
+                    if (eat(tokens, currentToken)) {
+                        return true;
+                    }
+
+                }
             }
         }
     }
