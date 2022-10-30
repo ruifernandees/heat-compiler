@@ -133,8 +133,11 @@ void tentarPrimaryLer6(vector<Token> tokens, int* currentToken)
 void tentarPrimaryLer8(vector<Token> tokens, int* currentToken)
 {
     int pstToken = *currentToken;
-
+    
     if (verify_content(tokens, currentToken, "else")) {
+        if (tokens[*currentToken].content.compare("\n") == 0) {
+            eat(tokens, currentToken);
+        }
         if (compstmt(tokens, currentToken)) {
             return;
         }

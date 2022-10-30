@@ -32,6 +32,11 @@ vector<Token> lexicalAnalyzerAutomata(vector<string> commands)
         while (character_stopped != WAS_ENTIRE_COMMAND_VERIFIED)
         {
             Token token = handleCurrentCommandVerification(command, &character_stopped);
+            if (token.content.compare("\n") == 0) {
+                if (allTokens.size() > 0 && allTokens.back().content.compare(";") == 0) {
+                    continue;
+                }
+            }
             allTokens.push_back(token);
         }
     }
