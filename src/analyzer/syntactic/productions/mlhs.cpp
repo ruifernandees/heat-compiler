@@ -6,12 +6,12 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
 
 using namespace std;
-
 
 bool funcaoMLHSComAsterisco(vector<Token> tokens, int* currentToken) {
     // if (tokens.size() <= *currentToken + 1) return false;
@@ -70,13 +70,8 @@ void tentarMLHSLer2(vector<Token> tokens, int* currentToken)
     return;
 }
 
-
-bool mlhs(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 MLHS" << endl;
-    int pastToken = *currentToken;
-
+bool mlhs1(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 1
     if (mlhs_item(tokens, currentToken)) {
         if (verify_content(tokens, currentToken, ",")) {
@@ -85,17 +80,20 @@ bool mlhs(vector<Token> tokens, int* currentToken) {
             return true;
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool mlhs2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2
     if (verify_content(tokens, currentToken, "*")) {
         if (lhs(tokens, currentToken)) {
             return true;
         }
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool mlhs(vector<Token> tokens, int* currentToken) {
+    return verify_productions(tokens, currentToken, {mlhs1, mlhs2});
 }

@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
@@ -41,24 +42,29 @@ void tentarFunc2Ler6(vector<Token> tokens, int* currentToken)
     return;
 }
 
-bool func2(vector<Token> tokens, int* currentToken)
+bool func21(vector<Token> tokens, int* currentToken)
 {
-    int pastToken = *currentToken;
-
     if (verify_content(tokens, currentToken, "{")) {
         tentarFunc2Ler6(tokens, currentToken);
         if (compstmt(tokens, currentToken)) {
             if (verify_content(tokens, currentToken, "}")) {
                 if (primaryL(tokens, currentToken)) {
-                    if (functionL(tokens, currentToken)) {
+                    if (func2(tokens, currentToken)) {
                         return true;
                     }
                 }
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
+bool func2(vector<Token> tokens, int* currentToken)
+{
+    if (verify_productions(tokens, currentToken, {func21})) {
+        return true;
+    }
 
+    // vazio
     return true;
 }

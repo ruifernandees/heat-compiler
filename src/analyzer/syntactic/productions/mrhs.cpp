@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
@@ -15,7 +16,6 @@ using namespace std;
 
 void tentarMRHSLer1(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (verify_content(tokens, currentToken, ",")) {
@@ -30,28 +30,27 @@ void tentarMRHSLer1(vector<Token> tokens, int* currentToken)
     return;
 }
 
-bool mrhs(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 MRHS" << endl;
-    int pastToken = *currentToken;
-
+bool mrhs1(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 1
     if (args(tokens, currentToken)) {
         tentarMRHSLer1(tokens, currentToken);
         return true;
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool mrhs2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2
     if (verify_content(tokens, currentToken, "*")) {
         if (arg(tokens, currentToken)) {
             return true;
         }
     }
-    
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool mrhs(vector<Token> tokens, int* currentToken) {
+    return verify_productions(tokens, currentToken, {mrhs1, mrhs2});
 }

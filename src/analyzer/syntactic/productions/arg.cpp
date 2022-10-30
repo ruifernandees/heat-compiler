@@ -8,16 +8,12 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
-
+#include "../utils/verify-productions.cpp"
 
 using namespace std;
 
-bool arg(vector<Token> tokens, int* currentToken)
+bool arg1(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    int pastToken = *currentToken;
-
     // possibilidade 1 e 2
     if (lhs(tokens, currentToken)) {
         int pstToken = *currentToken;
@@ -44,18 +40,22 @@ bool arg(vector<Token> tokens, int* currentToken)
 
         *currentToken = pstToken;
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool arg3(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 3
     if (primary(tokens, currentToken)) {
         if (argL(tokens, currentToken)) {
             return true;
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-    
+bool arg4(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 4 (+) e 5(-)
     if (verify_content(tokens, currentToken, "+") || verify_content(tokens, currentToken, "-")) {
         if (arg(tokens, currentToken)) {
@@ -64,8 +64,10 @@ bool arg(vector<Token> tokens, int* currentToken)
             } 
         }
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool arg(vector<Token> tokens, int* currentToken)
+{
+    return verify_productions(tokens, currentToken, {arg1, arg3, arg4});
 }

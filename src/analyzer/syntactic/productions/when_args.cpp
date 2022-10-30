@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 #include "./stmt.cpp"
 
@@ -15,7 +16,6 @@ using namespace std;
 
 void tentarWhenArgsLer1(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (verify_content(tokens, currentToken, ",")) {
@@ -30,29 +30,28 @@ void tentarWhenArgsLer1(vector<Token> tokens, int* currentToken)
     return;
 }
 
-bool when_args(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    // cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 WHEN ARGS" << endl;
-    int pastToken = *currentToken;
-
+bool when_args1(vector<Token> tokens, int* currentToken)
+{
     // 1 possibilidade
     if (args(tokens, currentToken)) {
         tentarWhenArgsLer1(tokens, currentToken);
         return true;
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool when_args2(vector<Token> tokens, int* currentToken)
+{
     // 2 possibilidade
     if (verify_content(tokens, currentToken, "*")) {
         if (arg(tokens, currentToken)) {
             return true;
         }
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool when_args(vector<Token> tokens, int* currentToken) {
+    return verify_productions(tokens, currentToken, {when_args1, when_args2});
 }
 

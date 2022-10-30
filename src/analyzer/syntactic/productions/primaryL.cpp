@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
@@ -15,7 +16,6 @@ using namespace std;
 
 void tentarPrimaryLLer1(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (args(tokens, currentToken)) {
@@ -26,12 +26,8 @@ void tentarPrimaryLLer1(vector<Token> tokens, int* currentToken)
     return;
 }
 
-bool primaryL(vector<Token> tokens, int* currentToken) {
-    // // if (tokens.size() <= *currentToken + 1) return true;
-    // // if (tokens.size() <= *currentToken) return true;
-    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 PRIMARYL" << endl;
-    int pastToken = *currentToken;
-
+bool primaryL1(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 1
     if (verify_content(tokens, currentToken, "::")) {
         if (identifier(tokens, currentToken)) {
@@ -40,9 +36,11 @@ bool primaryL(vector<Token> tokens, int* currentToken) {
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool primaryL2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2
     if (verify_content(tokens, currentToken, "[")) {
         tentarPrimaryLLer1(tokens, currentToken);
@@ -53,10 +51,13 @@ bool primaryL(vector<Token> tokens, int* currentToken) {
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool primaryL(vector<Token> tokens, int* currentToken) {
+    if (verify_productions(tokens, currentToken, {primaryL1, primaryL2})) {
+        return true;
+    }
     // 3 possibidade (vazio)
-
     return true;
 }

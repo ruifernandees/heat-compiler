@@ -6,18 +6,15 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
 
 using namespace std;
 
-bool argdecl(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    // cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 agdecl" << endl;
-    int pastToken = *currentToken;
-
+bool argdecl1(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 1
     if (verify_content(tokens, currentToken, "(")) {
         if (arglist(tokens, currentToken)) {
@@ -26,22 +23,24 @@ bool argdecl(vector<Token> tokens, int* currentToken) {
                     if (eat(tokens, currentToken)) {
                         return true;
                     }
-
                 }
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool argdecl2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2
     if (arglist(tokens, currentToken)) {
         if (term(tokens, currentToken)) {
             return true;
         }
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool argdecl(vector<Token> tokens, int* currentToken) {
+    return verify_productions(tokens, currentToken, {argdecl1, argdecl2});
 }

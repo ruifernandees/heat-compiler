@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
@@ -14,8 +15,6 @@ using namespace std;
 
 
 bool funcaoArgsComAsterisco(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     if (verify_content(tokens, currentToken, ",")) {
@@ -29,18 +28,15 @@ bool funcaoArgsComAsterisco(vector<Token> tokens, int* currentToken) {
     return false;
 }
 
-bool args(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 args" << endl;
-    int pastToken = *currentToken;
-
+bool args1(vector<Token> tokens, int* currentToken)
+{
     if (arg(tokens, currentToken)) {
         while (funcaoArgsComAsterisco(tokens, currentToken)) {}
         return true;
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool args(vector<Token> tokens, int* currentToken) {
+    return verify_productions(tokens, currentToken, {args1});
 }

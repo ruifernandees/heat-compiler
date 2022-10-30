@@ -6,18 +6,15 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
 
 using namespace std;
 
-bool symbol(vector<Token> tokens, int* currentToken)
+bool symbol1(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    int pastToken = *currentToken;
-
     // possibilidade 1 e 2
     if (verify_content(tokens, currentToken, ":")) {
         int pstToken = *currentToken;
@@ -34,8 +31,10 @@ bool symbol(vector<Token> tokens, int* currentToken)
             return true;
         }
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool symbol(vector<Token> tokens, int* currentToken)
+{
+    return verify_productions(tokens, currentToken, {symbol1});
 }

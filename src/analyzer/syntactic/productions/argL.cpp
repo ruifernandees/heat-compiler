@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 
 #pragma once
 
@@ -34,6 +35,7 @@ void initializeArgLOperatorsVector() {
     argLOperators.push_back("&&");
     argLOperators.push_back("||");
 }
+
 bool isAnArgLOperator(string operato) {
     if (argLOperators.size() == 0) { 
         initializeArgLOperatorsVector();
@@ -44,13 +46,8 @@ bool isAnArgLOperator(string operato) {
     return false;
 }
 
-
-bool argL(vector<Token> tokens, int* currentToken)
+bool argL1(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    int pastToken = *currentToken;
-
     if (isAnArgLOperator(tokens[*currentToken].content)) {
         if (eat(tokens, currentToken)) {
             if (arg(tokens, currentToken)) {
@@ -60,9 +57,14 @@ bool argL(vector<Token> tokens, int* currentToken)
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool argL(vector<Token> tokens, int* currentToken)
+{
+    if (verify_productions(tokens, currentToken, {argL1})){
+        return true;
+    }
     // vazio
     return true;
 }

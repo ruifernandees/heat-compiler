@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
@@ -14,7 +15,6 @@ using namespace std;
 
 void tentarLHSLer1(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (args(tokens, currentToken)) {
@@ -25,17 +25,15 @@ void tentarLHSLer1(vector<Token> tokens, int* currentToken)
     return;
 }
 
-bool lhs(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    // cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 LHS" << endl;
-    int pastToken = *currentToken;
-
+bool lhs1(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 1
     if (variable(tokens, currentToken)) {return true;}
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool lhs2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2 e 3
     if (primary(tokens, currentToken)) {
         int pstToken = *currentToken;
@@ -57,8 +55,9 @@ bool lhs(vector<Token> tokens, int* currentToken) {
             }
         }
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool lhs(vector<Token> tokens, int* currentToken) {
+    return verify_productions(tokens, currentToken, {lhs1, lhs2});
 }

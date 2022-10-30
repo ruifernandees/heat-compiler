@@ -6,18 +6,15 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
 
 using namespace std;
 
-bool exprL(vector<Token> tokens, int* currentToken)
+bool exprL1(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    int pastToken = *currentToken;
-
     //possibilidade 1 e 2
     if (verify_content(tokens, currentToken, "and") || verify_content(tokens, currentToken, "or")) {
         if (expr(tokens, currentToken)) {
@@ -26,9 +23,14 @@ bool exprL(vector<Token> tokens, int* currentToken)
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool exprL(vector<Token> tokens, int* currentToken)
+{
+    if (verify_productions(tokens, currentToken, {exprL1})) {
+        return true;
+    }
     // pode ser vazio
     return true;
 }

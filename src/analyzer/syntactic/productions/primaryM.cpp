@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
@@ -13,8 +14,6 @@
 using namespace std;
 
 bool funcaoPrimaryMComAsterisco(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     if (verify_content(tokens, currentToken, "elsif")) {
@@ -34,7 +33,6 @@ bool funcaoPrimaryMComAsterisco(vector<Token> tokens, int* currentToken) {
 
 void tentarPrimaryMLer2(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (verify_content(tokens, currentToken, ",")) {
@@ -47,7 +45,6 @@ void tentarPrimaryMLer2(vector<Token> tokens, int* currentToken)
 
 void tentarPrimaryMLer1(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (args(tokens, currentToken)) {
@@ -61,7 +58,6 @@ void tentarPrimaryMLer1(vector<Token> tokens, int* currentToken)
 
 void tentarPrimaryMLer3(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (assocs(tokens, currentToken)) {
@@ -75,7 +71,6 @@ void tentarPrimaryMLer3(vector<Token> tokens, int* currentToken)
 
 void tentarPrimaryMLer5(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (call_args(tokens, currentToken)) {
@@ -88,7 +83,6 @@ void tentarPrimaryMLer5(vector<Token> tokens, int* currentToken)
 
 void tentarPrimaryMLer4(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (verify_content(tokens, currentToken, "(")) {
@@ -104,7 +98,6 @@ void tentarPrimaryMLer4(vector<Token> tokens, int* currentToken)
 
 void tentarPrimaryMLer7(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (block_var(tokens, currentToken)) {
@@ -160,8 +153,6 @@ void tentarPrimaryMLer9(vector<Token> tokens, int* currentToken)
 }
 
 bool funcaoPrimaryMComMais(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     if (verify_content(tokens, currentToken, "rescue")) {
@@ -208,11 +199,8 @@ void tentarPrimaryMLer11(vector<Token> tokens, int* currentToken)
     return;
 }
 
-bool primaryM(vector<Token> tokens, int* currentToken) 
+bool primaryM1(vector<Token> tokens, int* currentToken)
 {
-    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 PRIMARY" << endl;
-    int pastToken = *currentToken;
-
     // possibilidade 1
     if (verify_content(tokens, currentToken, "(")) {
         if (compstmt(tokens, currentToken)) {
@@ -223,116 +211,100 @@ bool primaryM(vector<Token> tokens, int* currentToken)
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-    
+bool primaryM2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2
-    //cout << "[PRIMARY CALLS] LITERAL" << endl;
     if (literal(tokens, currentToken)) {
-        //cout << "[PRIMARY CALLS] PRIMARYL" << endl;
-        
         if (primaryL(tokens, currentToken)) {
             return true;
         }
     }
-    
-    *currentToken = pastToken;
+    return false;
+}
 
+bool primaryM3(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 3
     if (variable(tokens, currentToken)) {
-        if (primaryL(tokens, currentToken)) {
+        if (primaryM(tokens, currentToken)) {
             return true;
         }
-    };
+    }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool primaryM4(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 4
     if (verify_content(tokens, currentToken, "::")) {
         if (identifier(tokens, currentToken)) {
-            if (primaryL(tokens, currentToken)) {
+            if (primaryM(tokens, currentToken)) {
                 return true;
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool primaryM5(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 5
     if (verify_content(tokens, currentToken, "[")) {
-        tentarPrimaryMLer1(tokens, currentToken);
-        
+        tentarPrimaryMLer1(tokens, currentToken); 
         if (verify_content(tokens, currentToken, "]")) {
-            if (primaryL(tokens, currentToken)) {
+            if (primaryM(tokens, currentToken)) {
                 return true;
             }
         }
     }
+    return false;
+}
 
-
-    *currentToken = pastToken;
-
+bool primaryM6(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 6
     if (verify_content(tokens, currentToken, "{")) {
         tentarPrimaryMLer1(tokens, currentToken);
         if (verify_content(tokens, currentToken, "}")) {
-            if (primaryL(tokens, currentToken)) {
+            if (primaryM(tokens, currentToken)) {
                 return true;
             }
         }
     }
-    
-    *currentToken = pastToken;
+    return false;
+}
 
+bool primaryM7(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 7
-   if (verify_content(tokens, currentToken, "{")) {
+    if (verify_content(tokens, currentToken, "{")) {
         tentarPrimaryMLer3(tokens, currentToken);
         if (verify_content(tokens, currentToken, "}")) {
-            if (primaryL(tokens, currentToken)) {
+            if (primaryM(tokens, currentToken)) {
                 return true;
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool primaryM8(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 8
     if (verify_content(tokens, currentToken, "return")) {
         tentarPrimaryMLer4(tokens, currentToken);
-        if (primaryL(tokens, currentToken)) {
+        if (primaryM(tokens, currentToken)) {
             return true;
         }
     }
+    return false;
+}
 
-    // // possibilidade 9
-    // if (Function(tokens, currentToken)) {
-    //     if (primaryL(tokens, currentToken)) {
-    //         return true;
-    //     }
-    // }
-
-    // *currentToken = pastToken;
-
-    // // possibilidade 10
-    // if (Function(tokens, currentToken)) {
-    //     if (tokens[*currentToken].content.compare("{") == 0) {
-    //         if (eat(tokens, currentToken)) {
-    //             tentarPrimaryMLer6(tokens, currentToken);
-    //             if (compstmt(tokens, currentToken)) {
-    //                 if (tokens[*currentToken].content.compare("}") == 0) {
-    //                     if (eat(tokens, currentToken)) {
-    //                         if (primaryL(tokens, currentToken)) {
-    //                             return true;
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-
-    *currentToken = pastToken;
-    
+bool primaryM11(vector<Token> tokens, int* currentToken)
+{
     // possiblidade 11
     if (verify_content(tokens, currentToken, "if")) {
         if (expr(tokens, currentToken)) {
@@ -343,7 +315,7 @@ bool primaryM(vector<Token> tokens, int* currentToken)
                     tentarPrimaryMLer8(tokens, currentToken);
 
                     if (verify_content(tokens, currentToken, "end")) {
-                        if (primaryL(tokens, currentToken)) {
+                        if (primaryM(tokens, currentToken)) {
                             return true;
                         }
                     }
@@ -351,16 +323,18 @@ bool primaryM(vector<Token> tokens, int* currentToken)
             }
         }
     }
-    
-    *currentToken = pastToken;
+    return false;
+}
 
-    // possibilidade 11
+bool primaryM12(vector<Token> tokens, int* currentToken)
+{
+    // possibilidade 12
     if (verify_content(tokens, currentToken, "while")) {
         if (expr(tokens, currentToken)) {
             if (_do(tokens, currentToken)) {
                 if (compstmt(tokens, currentToken)) {
                     if (verify_content(tokens, currentToken, "end")) {
-                        if (primaryL(tokens, currentToken)) {
+                        if (primaryM(tokens, currentToken)) {
                             return true;
                         }
                     }
@@ -368,12 +342,12 @@ bool primaryM(vector<Token> tokens, int* currentToken)
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
-    // possibilidade 11 -- REMOVIDA
-    
-    // possibilidade 12 
+bool primaryM13(vector<Token> tokens, int* currentToken)
+{
+    // possibilidade 13
     if (verify_content(tokens, currentToken, "for")) {
         if (block_var(tokens, currentToken)) {
             if (verify_content(tokens, currentToken, "in")) {
@@ -381,7 +355,7 @@ bool primaryM(vector<Token> tokens, int* currentToken)
                     if (_do(tokens, currentToken)) {
                         if (compstmt(tokens, currentToken)) {
                             if (verify_content(tokens, currentToken, "end")) {
-                                if (primaryL(tokens, currentToken)) {
+                                if (primaryM(tokens, currentToken)) {
                                     return true;
                                 }
                             }
@@ -391,11 +365,12 @@ bool primaryM(vector<Token> tokens, int* currentToken)
             }
         }
     }
-    
+    return false;
+}
 
-    *currentToken = pastToken;
-
-    // possibilidade 13
+bool primaryM14(vector<Token> tokens, int* currentToken)
+{
+    // possibilidade 14
     if (verify_content(tokens, currentToken, "begin")) {
         if (compstmt(tokens, currentToken)) {
             // bloco do + abaixo
@@ -407,56 +382,60 @@ bool primaryM(vector<Token> tokens, int* currentToken)
                 tentarPrimaryMLer10(tokens, currentToken);
 
                 if (verify_content(tokens, currentToken, "end")) {
-                    if (primaryL(tokens, currentToken)) {
+                    if (primaryM(tokens, currentToken)) {
                         return true;
                     }
                 }
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-        
-    // [rescue [ARGS] DO COMPSTMT]+
-
-    // possibilidade 14
+bool primaryM15(vector<Token> tokens, int* currentToken)
+{
+    // possibilidade 15
     if (verify_content(tokens, currentToken, "class")) {
         if (identifier(tokens, currentToken)) {
             tentarPrimaryMLer11(tokens, currentToken);
             if (compstmt(tokens, currentToken)) {
                 if (verify_content(tokens, currentToken, "end")) {
-                    if (primaryL(tokens, currentToken)) {
+                    if (primaryM(tokens, currentToken)) {
                         return true;
                     }
                 }
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-    
-    // possibilidade 15 
+bool primaryM16(vector<Token> tokens, int* currentToken)
+{
+    // possibilidade 16
     if (verify_content(tokens, currentToken, "module")) {
         if (identifier(tokens, currentToken)) {
             if (compstmt(tokens, currentToken)) {
                 if (verify_content(tokens, currentToken, "end")) {
-                    if (primaryL(tokens, currentToken)) {
+                    if (primaryM(tokens, currentToken)) {
                         return true;
                     }
                 }
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
-    // possibilidade 16 aleluia
+bool primaryM17(vector<Token> tokens, int* currentToken)
+{
+    // possibilidade 17 aleluia
     if (verify_content(tokens, currentToken, "def")) {
         if (fname(tokens, currentToken)) {
             if (argdecl(tokens, currentToken)) {
                 if (compstmt(tokens, currentToken)) {
                     if (verify_content(tokens, currentToken, "end")) {
-                        if (primaryL(tokens, currentToken)) {
+                        if (primaryM(tokens, currentToken)) {
                             return true;
                         }
                     }
@@ -464,8 +443,11 @@ bool primaryM(vector<Token> tokens, int* currentToken)
             }
         }
     }
-    
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool primaryM(vector<Token> tokens, int* currentToken) 
+{
+    return verify_productions(tokens, currentToken, {primaryM1, primaryM2, primaryM3, primaryM4, primaryM5, primaryM6, primaryM7, primaryM8,
+                                                     primaryM11, primaryM12, primaryM13, primaryM14, primaryM15, primaryM16, primaryM17});
 }

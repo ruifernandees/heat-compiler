@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
@@ -14,8 +15,6 @@ using namespace std;
 
 
 bool funcaoArglistComAsterisco(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
     if (verify_content(tokens, currentToken, ",")) {
@@ -40,7 +39,6 @@ void tentarArglistLer2(vector<Token> tokens, int *currentToken)
     return;
 }
 
-
 void tentarArglistLer1(vector<Token> tokens, int *currentToken)
 {
     int pstToken = *currentToken;
@@ -54,7 +52,6 @@ void tentarArglistLer1(vector<Token> tokens, int *currentToken)
     *currentToken = pstToken;
     return;
 }
-
 
 void tentarArglistLer3(vector<Token> tokens, int *currentToken)
 {
@@ -86,12 +83,8 @@ void tentarArglistLer5(vector<Token> tokens, int *currentToken)
     return;
 }
 
-bool arglist(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 arglist" << endl;
-    int pastToken = *currentToken;
-
+bool arglist1(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 1
     if (identifier(tokens, currentToken)) {
         // varios ou vazio
@@ -102,9 +95,11 @@ bool arglist(vector<Token> tokens, int* currentToken) {
 
         return true;
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool arglist2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2
     if (verify_content(tokens, currentToken, "*")) {
         if (identifier(tokens, currentToken)) {
@@ -113,7 +108,13 @@ bool arglist(vector<Token> tokens, int* currentToken) {
         }
     }
 
-    *currentToken = pastToken;
+    return false;
+}
+
+bool arglist(vector<Token> tokens, int* currentToken) {
+    if (verify_productions(tokens, currentToken, {arglist1, arglist2})) {
+        return true;
+    }
 
     // possibilidade 3
     tentarArglistLer5(tokens, currentToken);

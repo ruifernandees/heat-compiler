@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
@@ -32,16 +33,15 @@ bool isAnop_asgnOperator(string operato) {
     return false;
 }
 
-bool op_asgn(vector<Token> tokens, int* currentToken)
+bool op_asgn1(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    int pastToken = *currentToken;
     if (isAnop_asgnOperator(tokens[*currentToken].content)){
         if (eat(tokens, currentToken)) return true;
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool op_asgn(vector<Token> tokens, int* currentToken)
+{
+    return verify_productions(tokens, currentToken, {op_asgn1});
 }

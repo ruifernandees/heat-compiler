@@ -6,32 +6,32 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
 
 using namespace std;
 
-
-bool term(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    // cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 TERM" << endl;
-    int pastToken = *currentToken;
-
+bool term1(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 1
-
     if (verify_content(tokens, currentToken, ";")) {        
         return true;
     }
+    return false;
+}
 
+bool term2(vector<Token> tokens, int* currentToken)
+{
     if (tokens[*currentToken].content[0] == '\n') {
         if (eat(tokens, currentToken)) {
             return true;
         }
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool term(vector<Token> tokens, int* currentToken) {
+    return verify_productions(tokens, currentToken, {term1, term2});
 }

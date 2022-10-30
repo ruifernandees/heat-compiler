@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 // Roda ai
@@ -14,18 +15,21 @@
 
 using namespace std;
 
-bool functionL(vector<Token> tokens, int *currentToken)
+bool functionL1(vector<Token> tokens, int *currentToken)
 {
-    int pastToken = *currentToken;
-
     // possibilidade 1
     if (primaryL(tokens, currentToken)) {
         if (func2(tokens, currentToken)) {
             return true;
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool functionL(vector<Token> tokens, int *currentToken)
+{
+    if (verify_productions(tokens, currentToken, {functionL1})) {
+        return true;
+    }
     return true;
 }

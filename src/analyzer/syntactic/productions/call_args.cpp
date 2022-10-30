@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
@@ -58,12 +59,8 @@ void tentarCallArgsLer3(vector<Token> tokens, int *currentToken)
     return;
 }
 
-bool call_args(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 call_args" << endl;
-    int pastToken = *currentToken;
-
+bool call_args1(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 1 e 2
     if (args(tokens, currentToken)) {
         tentarCallArgsLer1(tokens, currentToken);
@@ -73,9 +70,11 @@ bool call_args(vector<Token> tokens, int* currentToken) {
         // possibilidade 1 (se der tudo errado as tentativas)
         return true;
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool call_args3(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 3
     if (assocs(tokens, currentToken)) {
         tentarCallArgsLer2(tokens, currentToken);
@@ -83,9 +82,11 @@ bool call_args(vector<Token> tokens, int* currentToken) {
 
         return true;
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool call_args4(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 4
     if (verify_content(tokens, currentToken, "*")) {
         if (arg(tokens, currentToken)) {
@@ -93,24 +94,29 @@ bool call_args(vector<Token> tokens, int* currentToken) {
             return true;
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool call_args5(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 5
     if (verify_content(tokens, currentToken, "&")) {
         if (arg(tokens, currentToken)) {
             return true;
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-        
+bool call_args6(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 6
     if (command(tokens, currentToken)) {
         return true;
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool call_args(vector<Token> tokens, int* currentToken) {
+    return verify_productions(tokens, currentToken, {call_args1, call_args3, call_args4, call_args5, call_args6});
 }

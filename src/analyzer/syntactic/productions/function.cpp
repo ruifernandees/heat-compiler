@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
@@ -41,13 +42,8 @@ void tentarFunctionLer1(vector<Token> tokens, int* currentToken)
     return;
 }
 
-
-bool Function(vector<Token> tokens, int* currentToken)
+bool Function1(vector<Token> tokens, int* currentToken)
 {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    int pastToken = *currentToken;
-
     // possibilidade 1
     if (operation(tokens, currentToken)) {
         tentarFunctionLer1(tokens, currentToken);
@@ -55,9 +51,11 @@ bool Function(vector<Token> tokens, int* currentToken)
             return true;
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool Function2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2 e 4
     if (primaryM(tokens, currentToken)) {
         if (verify_content(tokens, currentToken, ".")) {
@@ -83,9 +81,11 @@ bool Function(vector<Token> tokens, int* currentToken)
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-    
+bool Function3(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 3 e 5
     if (primaryM(tokens, currentToken)) {
         if (verify_content(tokens, currentToken, "::")) {
@@ -111,9 +111,11 @@ bool Function(vector<Token> tokens, int* currentToken)
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool Function6(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 6 e 7
     if (verify_content(tokens, currentToken, "super")) {
         int pstToken = *currentToken;
@@ -135,8 +137,10 @@ bool Function(vector<Token> tokens, int* currentToken)
             return true;
         }
     }
-
-    *currentToken = pastToken;
-    
     return false;
+}
+
+bool Function(vector<Token> tokens, int* currentToken)
+{
+    return verify_productions(tokens, currentToken, {Function1, Function2, Function3, Function6});
 }

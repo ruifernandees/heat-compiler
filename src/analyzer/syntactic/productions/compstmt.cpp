@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
@@ -41,13 +42,8 @@ void tentarCompstmtLer1(vector<Token> tokens, int* currentToken)
     return;
 }
 
-bool compstmt(vector<Token> tokens, int* currentToken) {
-    // if (tokens.size() <= *currentToken + 1) return false;
-    // if (tokens.size() <= *currentToken) return false;
-    //cout << tokens[*currentToken].content << ", " << *currentToken << "🧪 COMPSTMT" << endl;
-
-    int pastToken = *currentToken;
-
+bool compstmt1(vector<Token> tokens, int* currentToken)
+{
     if (stmt(tokens, currentToken)) {
         while(funcaoCompstmtComAsterisco(tokens, currentToken)) {}
 
@@ -55,9 +51,10 @@ bool compstmt(vector<Token> tokens, int* currentToken) {
         tentarCompstmtLer1(tokens, currentToken);
         return true;
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool compstmt(vector<Token> tokens, int* currentToken) {
+    return verify_productions(tokens, currentToken, {compstmt1});
 }
 
