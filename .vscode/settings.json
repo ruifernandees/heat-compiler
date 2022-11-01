@@ -70,6 +70,13 @@
     "functional": "cpp",
     "iterator": "cpp",
     "utility": "cpp",
-    "filesystem": "cpp"
+    "filesystem": "cpp",
+    "*.tcc": "cpp",
+    "map": "cpp",
+    "memory_resource": "cpp",
+    "numeric": "cpp",
+    "random": "cpp",
+    "numbers": "cpp",
+    "cinttypes": "cpp"
   }
 }

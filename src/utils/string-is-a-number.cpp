@@ -20,4 +20,5 @@ bool isValidNumber(string num)
     if (errno == 0) {
         return true;
     }
+    return false;
 }

@@ -24,6 +24,7 @@ vector<string> removeComments(vector<string> text)
     {
         regex onlySpaces("^\\s+$");
         string newLine = "";
+
         for (int i = 0; i < line.length(); i++)
         {
             if (line[i] == '=') {
@@ -54,6 +55,10 @@ vector<string> removeComments(vector<string> text)
             if (hasBeginCommentStatement) break;
             if (line[i] == ONE_LINE_COMMENT) break;
             newLine.push_back(line[i]);
+        }
+        if (line.compare("\n") == 0 && cmds.back().compare("\n") != 0) {
+            cmds.push_back(line);
+            continue;
         }
         if (newLine.length() == 0) continue;
         if (regex_match(newLine, onlySpaces)) continue;

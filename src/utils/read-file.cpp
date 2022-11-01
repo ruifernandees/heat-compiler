@@ -16,6 +16,10 @@ vector<string> readFile(string filename) {
     if (fileToRead.is_open()) {
         while (getline(fileToRead, line)) {
             lines.push_back(line);
+
+            if (line.back() != ';') {
+                lines.push_back("\n");
+            }
         }
         fileToRead.close();
         return lines;
