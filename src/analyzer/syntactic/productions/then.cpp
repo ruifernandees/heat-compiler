@@ -42,5 +42,8 @@ bool then2(vector<Token> tokens, int* currentToken)
 }
 
 bool then(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {then1, then2});
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(then1);
+    prodVector.push_back(then2);
+    return verify_productions(tokens, currentToken, prodVector);
 }

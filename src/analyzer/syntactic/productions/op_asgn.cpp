@@ -43,5 +43,7 @@ bool op_asgn1(vector<Token> tokens, int* currentToken)
 
 bool op_asgn(vector<Token> tokens, int* currentToken)
 {
-    return verify_productions(tokens, currentToken, {op_asgn1});
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(op_asgn1);
+    return verify_productions(tokens, currentToken, prodVector);
 }

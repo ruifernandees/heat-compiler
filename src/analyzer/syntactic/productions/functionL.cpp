@@ -28,7 +28,10 @@ bool functionL1(vector<Token> tokens, int *currentToken)
 
 bool functionL(vector<Token> tokens, int *currentToken)
 {
-    if (verify_productions(tokens, currentToken, {functionL1})) {
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(functionL1);
+
+    if (verify_productions(tokens, currentToken, prodVector)) {
         return true;
     }
     return true;

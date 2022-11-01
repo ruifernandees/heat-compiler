@@ -30,5 +30,8 @@ bool literal2(vector<Token> tokens, int* currentToken)
 
 bool literal(vector<Token> tokens, int* currentToken)
 {
-    return verify_productions(tokens, currentToken, {literal1, literal2});
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(literal1);
+    prodVector.push_back(literal2);
+    return verify_productions(tokens, currentToken, prodVector);
 }

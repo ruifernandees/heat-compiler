@@ -64,5 +64,8 @@ bool fname2(vector<Token> tokens, int* currentToken)
 
 bool fname(vector<Token> tokens, int* currentToken)
 {
-    return verify_productions(tokens, currentToken, {fname1, fname2});
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(fname1);
+    prodVector.push_back(fname2);
+    return verify_productions(tokens, currentToken, prodVector);
 }

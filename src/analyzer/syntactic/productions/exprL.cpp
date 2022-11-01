@@ -28,7 +28,10 @@ bool exprL1(vector<Token> tokens, int* currentToken)
 
 bool exprL(vector<Token> tokens, int* currentToken)
 {
-    if (verify_productions(tokens, currentToken, {exprL1})) {
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(exprL1);
+
+    if (verify_productions(tokens, currentToken, prodVector)) {
         return true;
     }
     // pode ser vazio

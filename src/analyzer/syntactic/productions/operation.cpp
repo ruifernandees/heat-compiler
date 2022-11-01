@@ -40,5 +40,7 @@ bool operation1(vector<Token> tokens, int* currentToken)
 }
 
 bool operation(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {operation1});
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(operation1);
+    return verify_productions(tokens, currentToken, prodVector);
 }

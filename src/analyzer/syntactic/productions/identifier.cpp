@@ -23,5 +23,7 @@ bool identifier1(vector<Token> tokens, int* currentToken)
 
 bool identifier(vector<Token> tokens, int* currentToken)
 {
-    return verify_productions(tokens, currentToken, {identifier1});
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(identifier1);
+    return verify_productions(tokens, currentToken, prodVector);
 }

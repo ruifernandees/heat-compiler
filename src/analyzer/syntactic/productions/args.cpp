@@ -38,5 +38,7 @@ bool args1(vector<Token> tokens, int* currentToken)
 }
 
 bool args(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {args1});
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(args1);
+    return verify_productions(tokens, currentToken, prodVector);
 }

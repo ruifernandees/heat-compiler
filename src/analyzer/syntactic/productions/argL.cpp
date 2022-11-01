@@ -62,7 +62,10 @@ bool argL1(vector<Token> tokens, int* currentToken)
 
 bool argL(vector<Token> tokens, int* currentToken)
 {
-    if (verify_productions(tokens, currentToken, {argL1})){
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(argL1);
+
+    if (verify_productions(tokens, currentToken, prodVector)){
         return true;
     }
     // vazio
