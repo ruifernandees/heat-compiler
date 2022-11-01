@@ -90,5 +90,13 @@ bool expr6(vector<Token> tokens, int* currentToken)
 }
 
 bool expr(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {expr1, expr2, expr3, expr4, expr5, expr6});
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(expr1);
+    prodVector.push_back(expr2);
+    prodVector.push_back(expr3);
+    prodVector.push_back(expr4);
+    prodVector.push_back(expr5);
+    prodVector.push_back(expr6);
+
+    return verify_productions(tokens, currentToken, prodVector);
 }

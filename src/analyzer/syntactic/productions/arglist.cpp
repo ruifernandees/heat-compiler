@@ -112,7 +112,11 @@ bool arglist2(vector<Token> tokens, int* currentToken)
 }
 
 bool arglist(vector<Token> tokens, int* currentToken) {
-    if (verify_productions(tokens, currentToken, {arglist1, arglist2})) {
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(arglist1);
+    prodVector.push_back(arglist2);
+
+    if (verify_productions(tokens, currentToken, prodVector)) {
         return true;
     }
 

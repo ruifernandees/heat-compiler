@@ -482,6 +482,23 @@ bool primary17(vector<Token> tokens, int* currentToken)
 
 bool primary(vector<Token> tokens, int* currentToken)
 {
-    return verify_productions(tokens, currentToken, {primary1, primary2, primary3, primary4, primary5, primary6, primary7, primary8, primary9,
-                                                     primary10, primary11, primary12, primary13, primary14, primary15, primary16, primary17});
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(primary1); 
+    prodVector.push_back(primary2); 
+    prodVector.push_back(primary3); 
+    prodVector.push_back(primary4); 
+    prodVector.push_back(primary5); 
+    prodVector.push_back(primary6); 
+    prodVector.push_back(primary7); 
+    prodVector.push_back(primary8); 
+    prodVector.push_back(primary9);
+    prodVector.push_back(primary10); 
+    prodVector.push_back(primary11); 
+    prodVector.push_back(primary12); 
+    prodVector.push_back(primary13); 
+    prodVector.push_back(primary14); 
+    prodVector.push_back(primary15); 
+    prodVector.push_back(primary16); 
+    prodVector.push_back(primary17);
+    return verify_productions(tokens, currentToken, prodVector);
 }

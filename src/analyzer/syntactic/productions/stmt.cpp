@@ -126,5 +126,11 @@ bool stmt5(vector<Token> tokens, int* currentToken)
 
 bool stmt(vector<Token> tokens, int* currentToken) {
 
-    return verify_productions(tokens, currentToken, {stmt1, stmt2, stmt4, stmt5});
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(stmt1);
+    prodVector.push_back(stmt2);
+    prodVector.push_back(stmt4);
+    prodVector.push_back(stmt5);
+
+    return verify_productions(tokens, currentToken, prodVector);
 }

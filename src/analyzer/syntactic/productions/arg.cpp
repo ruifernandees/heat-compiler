@@ -69,5 +69,10 @@ bool arg4(vector<Token> tokens, int* currentToken)
 
 bool arg(vector<Token> tokens, int* currentToken)
 {
-    return verify_productions(tokens, currentToken, {arg1, arg3, arg4});
+    vector<bool (*)(vector<Token>, int*)> prodVector;
+    prodVector.push_back(arg1);
+    prodVector.push_back(arg3);
+    prodVector.push_back(arg4);
+
+    return verify_productions(tokens, currentToken, prodVector);
 }
