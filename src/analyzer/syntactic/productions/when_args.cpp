@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 #include "./stmt.cpp"
 
@@ -17,10 +18,8 @@ void tentarWhenArgsLer1(vector<Token> tokens, int* currentToken)
 {
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
-        if (tokens[*currentToken].content.compare("*") == 0) {
-            eat(currentToken);
+    if (verify_content(tokens, currentToken, ",")) {
+        if (verify_content(tokens, currentToken, "*")) {
             if (arg(tokens, currentToken)) {
                 return;
             }
@@ -31,27 +30,28 @@ void tentarWhenArgsLer1(vector<Token> tokens, int* currentToken)
     return;
 }
 
-bool when_args(vector<Token> tokens, int* currentToken) {
-    int pastToken = *currentToken;
-
+bool when_args1(vector<Token> tokens, int* currentToken)
+{
     // 1 possibilidade
     if (args(tokens, currentToken)) {
         tentarWhenArgsLer1(tokens, currentToken);
         return true;
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool when_args2(vector<Token> tokens, int* currentToken)
+{
     // 2 possibilidade
-    if (tokens[*currentToken].content.compare("*") == 0) {
-        eat(currentToken);
+    if (verify_content(tokens, currentToken, "*")) {
         if (arg(tokens, currentToken)) {
             return true;
         }
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool when_args(vector<Token> tokens, int* currentToken) {
+    return verify_productions(tokens, currentToken, {when_args1, when_args2});
 }
 

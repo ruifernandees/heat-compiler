@@ -6,18 +6,19 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
 
 using namespace std;
 
-
 bool funcaoMLHSComAsterisco(vector<Token> tokens, int* currentToken) {
+    // if (tokens.size() <= *currentToken + 1) return false;
+    // if (tokens.size() <= *currentToken) return false;
     int pastToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
+    if (verify_content(tokens, currentToken, ",")) {
         if (mlhs_item(tokens, currentToken)) {
             return true;
         }
@@ -28,9 +29,9 @@ bool funcaoMLHSComAsterisco(vector<Token> tokens, int* currentToken) {
     return false;
 }
 
-
 void tentarMLHSLer1(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (mlhs_item(tokens, currentToken)) {
@@ -42,9 +43,9 @@ void tentarMLHSLer1(vector<Token> tokens, int* currentToken)
     return;
 }
 
-
 void tentarMLHSLer3(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (lhs(tokens, currentToken)) {
@@ -57,10 +58,10 @@ void tentarMLHSLer3(vector<Token> tokens, int* currentToken)
 
 void tentarMLHSLer2(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare("*") == 0) {
-        eat(currentToken);
+    if (verify_content(tokens, currentToken, "*")) {
         tentarMLHSLer3(tokens, currentToken);
         return;
     }
@@ -69,32 +70,30 @@ void tentarMLHSLer2(vector<Token> tokens, int* currentToken)
     return;
 }
 
-
-bool mlhs(vector<Token> tokens, int* currentToken) {
-    int pastToken = *currentToken;
-
+bool mlhs1(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 1
     if (mlhs_item(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare(",") == 0) {
-            eat(currentToken);
-
+        if (verify_content(tokens, currentToken, ",")) {
             tentarMLHSLer1(tokens, currentToken);
             tentarMLHSLer2(tokens, currentToken);
             return true;
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool mlhs2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2
-    if (tokens[*currentToken].content.compare("*") == 0) {
-        eat(currentToken);
+    if (verify_content(tokens, currentToken, "*")) {
         if (lhs(tokens, currentToken)) {
             return true;
         }
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool mlhs(vector<Token> tokens, int* currentToken) {
+    return verify_productions(tokens, currentToken, {mlhs1, mlhs2});
 }

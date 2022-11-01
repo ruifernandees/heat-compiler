@@ -34,5 +34,8 @@
 #include "./varname.cpp"
 #include "./global.cpp"
 #include "./identifier.cpp"
+#include "./primaryM.cpp"
+#include "./functionL.cpp"
+#include "./func2.cpp"
 
 #pragma once

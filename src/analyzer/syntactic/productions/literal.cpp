@@ -6,28 +6,29 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
 
 using namespace std;
 
-bool literal(vector<Token> tokens, int* currentToken)
+bool literal1(vector<Token> tokens, int* currentToken)
 {
-    int pastToken = *currentToken;
-
-    // possibilidade 1
     if (tokens[*currentToken].type.compare(NUMBER) == 0) {
-        eat(currentToken);
-        return true;
+        if (eat(tokens, currentToken)) return true;
     }
-    
-    *currentToken = pastToken;
+    return false;
+}
 
+bool literal2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2
     if (symbol(tokens, currentToken)) {return true;}
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool literal(vector<Token> tokens, int* currentToken)
+{
+    return verify_productions(tokens, currentToken, {literal1, literal2});
 }

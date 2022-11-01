@@ -6,20 +6,18 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
 
 using namespace std;
 
-
-bool expr(vector<Token> tokens, int* currentToken) {
-    int pastToken = *currentToken;
-
+bool expr1(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 1
     if (mlhs(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare("=") == 0) {
-            eat(currentToken);
+        if (verify_content(tokens, currentToken, "=")) {
             if (mrhs(tokens, currentToken)) {
                 if (exprL(tokens, currentToken)) {
                     return true;
@@ -27,63 +25,70 @@ bool expr(vector<Token> tokens, int* currentToken) {
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool expr2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2
-    if (tokens[*currentToken].content.compare("return") == 0) {
-        eat(currentToken);
+    if (verify_content(tokens, currentToken, "return")) {
         if (call_args(tokens, currentToken)) {
             if (exprL(tokens, currentToken)) {
                 return true;
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool expr3(vector<Token> tokens, int* currentToken)
+{
     //possibilidade 3
-    if (tokens[*currentToken].content.compare("not") == 0) {
-        eat(currentToken);
+    if (verify_content(tokens, currentToken, "not")) {
         if (expr(tokens, currentToken)) {
             if (exprL(tokens, currentToken)) {
                 return true;
             }
         }
     }
-    
-    *currentToken = pastToken;
+    return false;
+}
 
+bool expr4(vector<Token> tokens, int* currentToken)
+{
     //possibilidade 4
     if (command(tokens, currentToken)) {
         if (exprL(tokens, currentToken)) {
             return true;
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool expr5(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 5
-    
-    if (tokens[*currentToken].content.compare("!") == 0) {
-        eat(currentToken);
+    if (verify_content(tokens, currentToken, "!")) {
         if (command(tokens, currentToken)) {
             if (exprL(tokens, currentToken)) {
                 return true;
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-    
+bool expr6(vector<Token> tokens, int* currentToken)
+{
     //possibilidade 6
     if (arg(tokens, currentToken)) {
         if (exprL(tokens, currentToken)) {
             return true;
         }
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool expr(vector<Token> tokens, int* currentToken) {
+    return verify_productions(tokens, currentToken, {expr1, expr2, expr3, expr4, expr5, expr6});
 }

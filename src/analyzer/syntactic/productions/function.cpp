@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
@@ -14,6 +15,7 @@ using namespace std;
 
 void tentarFunctionLer2(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
     if (call_args(tokens, currentToken)) {
@@ -24,17 +26,14 @@ void tentarFunctionLer2(vector<Token> tokens, int* currentToken)
     return;
 }
 
-
 void tentarFunctionLer1(vector<Token> tokens, int* currentToken)
 {
+    // if (tokens.size() <= *currentToken + 1) return ;
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare("(") == 0) {
-        eat(currentToken);
-
+    if (verify_content(tokens, currentToken, "(")) {
         tentarFunctionLer2(tokens, currentToken);
-        if (tokens[*currentToken].content.compare(")") == 0) {
-            eat(currentToken);
+        if (verify_content(tokens, currentToken, ")")) {
             return;
         }
     }
@@ -43,96 +42,105 @@ void tentarFunctionLer1(vector<Token> tokens, int* currentToken)
     return;
 }
 
-
-bool Function(vector<Token> tokens, int* currentToken)
+bool Function1(vector<Token> tokens, int* currentToken)
 {
-    int pastToken = *currentToken;
-
     // possibilidade 1
     if (operation(tokens, currentToken)) {
         tentarFunctionLer1(tokens, currentToken);
-        return true;
+        if (functionL(tokens, currentToken)) {
+            return true;
+        }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool Function2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2 e 4
-    if (primary(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare(".") == 0) {
-            eat(currentToken);
+    if (primaryM(tokens, currentToken)) {
+        if (verify_content(tokens, currentToken, ".")) {
             if (operation(tokens, currentToken)) {
                 int pstToken = *currentToken;
 
                 // possibilidade 2
-                if (tokens[*currentToken].content.compare("(") == 0) {
-                    eat(currentToken);
+                if (verify_content(tokens, currentToken, "(")) {
                     tentarFunctionLer2(tokens, currentToken);
-                    if (tokens[*currentToken].content.compare(")") == 0) {
-                        eat(currentToken);
-                        return true;
+                    if (verify_content(tokens, currentToken, ")")) {
+                        if (functionL(tokens, currentToken)) {
+                            return true;
+                        }
                     }
                 }
 
                 *currentToken = pstToken;
 
                 // possibilidade 4
-                return true;
+                if (functionL(tokens, currentToken)) {
+                    return true;
+                }
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-    
+bool Function3(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 3 e 5
-    if (primary(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare("::") == 0) {
-            eat(currentToken);
+    if (primaryM(tokens, currentToken)) {
+        if (verify_content(tokens, currentToken, "::")) {
             if (operation(tokens, currentToken)) {
                 int pstToken = *currentToken;
 
                 // possibilidade 3
-                if (tokens[*currentToken].content.compare("(") == 0) {
-                    eat(currentToken);
+                if (verify_content(tokens, currentToken, "(")) {
                     tentarFunctionLer2(tokens, currentToken);
-                    if (tokens[*currentToken].content.compare(")") == 0) {
-                        eat(currentToken);
-                        return true;
+                    if (verify_content(tokens, currentToken, ")")) {
+                        if (functionL(tokens, currentToken)) {
+                            return true;
+                        }
                     }
                 }
 
                 *currentToken = pstToken;
 
                 // possibilidade 5
-                return true;
+                if (functionL(tokens, currentToken)) {
+                    return true;
+                }
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool Function6(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 6 e 7
-    if (tokens[*currentToken].content.compare("super") == 0) {
-        eat(currentToken);
-
+    if (verify_content(tokens, currentToken, "super")) {
         int pstToken = *currentToken;
 
         // possibilidade 6
-        if (tokens[*currentToken].content.compare("(") == 0) {
-            eat(currentToken);
+        if (verify_content(tokens, currentToken, "(")) {
             tentarFunctionLer2(tokens, currentToken);
-            if (tokens[*currentToken].content.compare(")") == 0) {
-                eat(currentToken);
-                return true;
+            if (verify_content(tokens, currentToken, ")")) {
+                if (functionL(tokens, currentToken)) {
+                    return true;
+                }
             }
         }
 
         *currentToken = pstToken;
 
         // possibilidade 7
-        return true;
+        if (functionL(tokens, currentToken)) {
+            return true;
+        }
     }
-
-    *currentToken = pastToken;
-    
     return false;
+}
+
+bool Function(vector<Token> tokens, int* currentToken)
+{
+    return verify_productions(tokens, currentToken, {Function1, Function2, Function3, Function6});
 }

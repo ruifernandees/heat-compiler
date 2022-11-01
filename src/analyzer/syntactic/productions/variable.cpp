@@ -6,31 +6,32 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
 
 using namespace std;
 
-bool variable(vector<Token> tokens, int* currentToken)
+bool variable1(vector<Token> tokens, int* currentToken)
 {
-    int pastToken = *currentToken;
-
     // possibilidade 1
     if (varname(tokens, currentToken)) {
         return true;
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool variable2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2 e 3
-    if (tokens[*currentToken].content.compare("nil") == 0 ||
-        tokens[*currentToken].content.compare("self") == 0) {
-        eat(currentToken);
+    if (verify_content(tokens, currentToken, "nil") || verify_content(tokens, currentToken, "self")) {
         return true;
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool variable(vector<Token> tokens, int* currentToken)
+{
+    return verify_productions(tokens, currentToken, {variable1, variable2});
 }

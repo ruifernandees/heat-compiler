@@ -6,6 +6,7 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
@@ -17,10 +18,8 @@ void tentarMRHSLer1(vector<Token> tokens, int* currentToken)
 {
     int pstToken = *currentToken;
 
-    if (tokens[*currentToken].content.compare(",") == 0) {
-        eat(currentToken);
-        if (tokens[*currentToken].content.compare("*") == 0) {
-            eat(currentToken);
+    if (verify_content(tokens, currentToken, ",")) {
+        if (verify_content(tokens, currentToken, "*")) {
             if (arg(tokens, currentToken)) {
                 return;
             }
@@ -31,27 +30,27 @@ void tentarMRHSLer1(vector<Token> tokens, int* currentToken)
     return;
 }
 
-
-bool mrhs(vector<Token> tokens, int* currentToken) {
-    int pastToken = *currentToken;
-
+bool mrhs1(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 1
     if (args(tokens, currentToken)) {
         tentarMRHSLer1(tokens, currentToken);
         return true;
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool mrhs2(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 2
-    if (tokens[*currentToken].content.compare("*") == 0) {
-        eat(currentToken);
+    if (verify_content(tokens, currentToken, "*")) {
         if (arg(tokens, currentToken)) {
             return true;
         }
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool mrhs(vector<Token> tokens, int* currentToken) {
+    return verify_productions(tokens, currentToken, {mrhs1, mrhs2});
 }

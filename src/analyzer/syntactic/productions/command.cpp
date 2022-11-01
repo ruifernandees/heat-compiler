@@ -6,27 +6,28 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
 
 using namespace std;
 
-bool command(vector<Token> tokens, int* currentToken)
+bool command1(vector<Token> tokens, int* currentToken)
 {
-    int pastToken = *currentToken;
-
     // possibilidade 1
     if (operation(tokens, currentToken)) {
         if (call_args(tokens, currentToken)) {return true;}
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-
-    // possibilidade 2
+bool command2(vector<Token> tokens, int* currentToken)
+{
+    // possibilidade 2 e 3
     if (primary(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare(".") == 0) {
-            eat(currentToken);
+        // 2 e 3
+        if (verify_content(tokens, currentToken, ".") || verify_content(tokens, currentToken, "::")) {
             if (operation(tokens, currentToken)) {
                 if (call_args(tokens, currentToken)) {
                     return true;
@@ -34,32 +35,21 @@ bool command(vector<Token> tokens, int* currentToken)
             }
         }
     }
+    return false;
+}
 
-    *currentToken = pastToken;
-    
-    // possibildade 3
-    if (primary(tokens, currentToken)) {
-        if (tokens[*currentToken].content.compare("::") == 0) {
-            eat(currentToken);
-            if (operation(tokens, currentToken)) {
-                if (call_args(tokens, currentToken)) {
-                    return true;
-                }
-            }
-        }
-    }
-
-    *currentToken = pastToken;
-    
+bool command4(vector<Token> tokens, int* currentToken)
+{
     // possibilidade 4
-    if (tokens[*currentToken].content.compare("super") == 0) {
-        eat(currentToken);
+    if (verify_content(tokens, currentToken, "super")) {
         if (call_args(tokens, currentToken)) {
             return true;
         }
     }
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool command(vector<Token> tokens, int* currentToken)
+{
+    return verify_productions(tokens, currentToken, {command1, command2, command4});
 }

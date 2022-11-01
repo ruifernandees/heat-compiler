@@ -6,25 +6,28 @@
 
 #include "../syntactic-analyzer.h"
 #include "../utils/eat.cpp"
+#include "../utils/verify-productions.cpp"
 // include "./index.cpp"
 
 #pragma once
 
 using namespace std;
 
-bool call(vector<Token> tokens, int* currentToken)
+bool call1(vector<Token> tokens, int* currentToken)
 {
-    int pastToken = *currentToken;
-
     // 1 possibilidade
     if (Function(tokens, currentToken)) {return true;}
+    return false;
+}
 
-    *currentToken = pastToken;
-
+bool call2(vector<Token> tokens, int* currentToken)
+{
     // 2 possibilidade
     if (command(tokens, currentToken)) {return true;}
-
-    *currentToken = pastToken;
-
     return false;
+}
+
+bool call(vector<Token> tokens, int* currentToken)
+{
+    return verify_productions(tokens, currentToken, {call1, call2});
 }
