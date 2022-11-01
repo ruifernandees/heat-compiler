@@ -55,11 +55,7 @@ bool primaryL2(vector<Token> tokens, int* currentToken)
 }
 
 bool primaryL(vector<Token> tokens, int* currentToken) {
-    vector<bool (*)(vector<Token>, int*)> prodVector;
-    prodVector.push_back(primaryL1);
-    prodVector.push_back(primaryL2);
-
-    if (verify_productions(tokens, currentToken, prodVector)) {
+    if (verify_productions(tokens, currentToken, {primaryL1, primaryL2})) {
         return true;
     }
     // 3 possibidade (vazio)

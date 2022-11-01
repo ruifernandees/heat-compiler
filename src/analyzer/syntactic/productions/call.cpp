@@ -29,8 +29,5 @@ bool call2(vector<Token> tokens, int* currentToken)
 
 bool call(vector<Token> tokens, int* currentToken)
 {
-    vector<bool (*)(vector<Token>, int*)> prodVector;
-    prodVector.push_back(call1);
-    prodVector.push_back(call2);
-    return verify_productions(tokens, currentToken, prodVector);
+    return verify_productions(tokens, currentToken, {call1, call2});
 }

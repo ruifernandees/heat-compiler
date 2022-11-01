@@ -28,10 +28,7 @@ bool stmtL1(vector<Token> tokens, int* currentToken)
 
 bool stmtL(vector<Token> tokens, int* currentToken)
 {
-    vector<bool (*)(vector<Token>, int*)> prodVector;
-    prodVector.push_back(stmtL1);
-
-    if (verify_productions(tokens, currentToken, prodVector)) {
+    if (verify_productions(tokens, currentToken, {stmtL1})) {
         return true;
     }
     // 3 possibidade (vazio)

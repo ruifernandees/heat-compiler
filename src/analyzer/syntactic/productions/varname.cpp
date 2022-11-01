@@ -43,10 +43,5 @@ bool varname3(vector<Token> tokens, int* currentToken)
 }
 
 bool varname(vector<Token> tokens, int* currentToken) {
-    vector<bool (*)(vector<Token>, int*)> prodVector;
-    prodVector.push_back(varname1);
-    prodVector.push_back(varname2);
-    prodVector.push_back(varname3);
-
-    return verify_productions(tokens, currentToken, prodVector);
+    return verify_productions(tokens, currentToken, {varname1, varname2, varname3});
 }

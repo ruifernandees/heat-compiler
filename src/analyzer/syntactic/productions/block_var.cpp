@@ -33,8 +33,5 @@ bool block_var2(vector<Token> tokens, int* currentToken)
 
 bool block_var(vector<Token> tokens, int* currentToken)
 {
-    vector<bool (*)(vector<Token>, int*)> prodVector;
-    prodVector.push_back(block_var1);
-    prodVector.push_back(block_var2);
-    return verify_productions(tokens, currentToken, prodVector);
+    return verify_productions(tokens, currentToken, {block_var1, block_var2});
 }

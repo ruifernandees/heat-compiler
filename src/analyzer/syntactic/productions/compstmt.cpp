@@ -55,8 +55,6 @@ bool compstmt1(vector<Token> tokens, int* currentToken)
 }
 
 bool compstmt(vector<Token> tokens, int* currentToken) {
-    vector<bool (*)(vector<Token>, int*)> compstmt1Vector;
-    compstmt1Vector.push_back(compstmt1);
-    return verify_productions(tokens, currentToken, compstmt1Vector);
+    return verify_productions(tokens, currentToken, {compstmt1});
 }
 

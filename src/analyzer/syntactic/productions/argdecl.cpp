@@ -42,8 +42,5 @@ bool argdecl2(vector<Token> tokens, int* currentToken)
 }
 
 bool argdecl(vector<Token> tokens, int* currentToken) {
-    vector<bool (*)(vector<Token>, int*)> prodVector;
-    prodVector.push_back(argdecl1);
-    prodVector.push_back(argdecl2);
-    return verify_productions(tokens, currentToken, prodVector);
+    return verify_productions(tokens, currentToken, {argdecl1, argdecl2});
 }

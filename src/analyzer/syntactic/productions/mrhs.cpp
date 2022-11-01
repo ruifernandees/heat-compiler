@@ -52,8 +52,5 @@ bool mrhs2(vector<Token> tokens, int* currentToken)
 }
 
 bool mrhs(vector<Token> tokens, int* currentToken) {
-    vector<bool (*)(vector<Token>, int*)> prodVector;
-    prodVector.push_back(mrhs1);
-    prodVector.push_back(mrhs2);
-    return verify_productions(tokens, currentToken, prodVector);
+    return verify_productions(tokens, currentToken, {mrhs1, mrhs2});
 }

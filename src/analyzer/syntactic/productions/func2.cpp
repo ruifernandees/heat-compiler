@@ -61,10 +61,7 @@ bool func21(vector<Token> tokens, int* currentToken)
 
 bool func2(vector<Token> tokens, int* currentToken)
 {
-    vector<bool (*)(vector<Token>, int*)> prodVector;
-    prodVector.push_back(func21);
-
-    if (verify_productions(tokens, currentToken, prodVector)) {
+    if (verify_productions(tokens, currentToken, {func21})) {
         return true;
     }
 

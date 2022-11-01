@@ -40,7 +40,5 @@ bool assocs1(vector<Token> tokens, int* currentToken)
 }
 
 bool assocs(vector<Token> tokens, int* currentToken) {
-    vector<bool (*)(vector<Token>, int*)> prodVector;
-    prodVector.push_back(assocs1);
-    return verify_productions(tokens, currentToken, prodVector);
+    return verify_productions(tokens, currentToken, {assocs1});
 }

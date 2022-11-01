@@ -38,8 +38,5 @@ bool global2(vector<Token> tokens, int* currentToken)
 }
 
 bool global(vector<Token> tokens, int* currentToken) {
-    vector<bool (*)(vector<Token>, int*)> prodVector;
-    prodVector.push_back(global1);
-    prodVector.push_back(global2);
-    return verify_productions(tokens, currentToken, prodVector);
+    return verify_productions(tokens, currentToken, {global1, global2});
 }
