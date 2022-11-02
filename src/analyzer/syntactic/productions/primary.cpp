@@ -431,11 +431,15 @@ bool primary15(vector<Token> tokens, int* currentToken)
     // possibilidade 15
     if (verify_content(tokens, currentToken, "class")) {
         if (identifier(tokens, currentToken)) {
-            tentarPrimaryLer11(tokens, currentToken);
-            if (compstmt(tokens, currentToken)) {
-                if (verify_content(tokens, currentToken, "end")) {
-                    if (primaryL(tokens, currentToken)) {
-                        return true;
+            if (tokens[*currentToken].content[0] == '\n') {
+                if (eat(tokens, currentToken)) {
+                    tentarPrimaryLer11(tokens, currentToken);
+                    if (compstmt(tokens, currentToken)) {
+                        if (verify_content(tokens, currentToken, "end")) {
+                            if (primaryL(tokens, currentToken)) {
+                                return true;
+                            }
+                        }
                     }
                 }
             }
