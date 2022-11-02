@@ -18,6 +18,10 @@ using namespace std;
  */
 vector<string> removeComments(vector<string> text)
 {
+    cout <<"TEXT\n";
+    for (auto t: text) {
+        cout << t;
+    }
     vector<string> cmds;
     bool hasBeginCommentStatement = false;
     for (string line : text)
