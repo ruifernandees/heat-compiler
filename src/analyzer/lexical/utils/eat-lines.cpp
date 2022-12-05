@@ -17,10 +17,11 @@ vector<string> eat_first_blanks(vector<string> text)
     while (text[i].size() == 0 || text[i].compare("\n") == 0) {
         i++;
     }
-        
+
     for (int j = i; j < text.size(); j++)
     {
         copia.push_back(text[j]);
     }
+
     return copia;
 }

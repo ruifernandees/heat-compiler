@@ -1,12 +1,5 @@
-<<<<<<< Updated upstream
-
-
-def a (asd, awe, qwe)
-  return 1
-=======
 def funcao(asd, ase)
   return zx
->>>>>>> Stashed changes
 end
 
 x = 1
