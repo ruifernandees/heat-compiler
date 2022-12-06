@@ -88,10 +88,10 @@ int dividir();
 
 void atribuir(vector<var_scope>* st, vector<Token> tokens, int* pos_tk, int pos_st)
 {
-    if (pos_st == -1) return;
+    var_scope var = st->at(pos_st);
+    
     int valor = 0, idx = 0;
     // cout << "pos_st:" << pos_st << "\n";
-    var_scope var = st->at(pos_st);
 
     while (tokens[*pos_tk].type.compare(DELIMITER) != 0) {
         if (tokens[*pos_tk].type.compare(IDENTIFIER) == 0) {
@@ -129,8 +129,6 @@ vector<var_scope> tabela_de_simbolos1111(vector<Token> tokens)
     stack<Scope> escopos;
     
     Scope padrao = {"padrao", "padrao"};
-
-
     for (int i = 0; i < tokens.size(); i++) {
         scope_type(tokens, block_keys, &escopos, &i);
 
@@ -139,6 +137,7 @@ vector<var_scope> tabela_de_simbolos1111(vector<Token> tokens)
                 pos = search_var(symbols_table, tokens[i].content, "padrao");
                 if (pos == -1) {
                     symbols_table.push_back({tokens[i].content, 0, {"padrao", "padrao"}});
+                    pos = symbols_table.size() - 1;
                 }
                 ++i;
                 if (tokens[i].content.compare("=") == 0) {
