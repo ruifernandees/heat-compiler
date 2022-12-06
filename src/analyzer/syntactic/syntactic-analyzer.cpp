@@ -22,24 +22,6 @@ typedef struct var_scope {
     Scope scope;
 } var_scope;
 
-Scope newScope(string name, string type)
-{
-    Scope novo;
-    novo.name = name;
-    novo.type = type;
-
-    return novo;
-}
-
-var_scope newVarScope(string name, Scope scope)
-{
-    var_scope nova;
-    nova.name = name;
-    nova.scope = scope;
-
-    return nova;
-}
-
 //verify content
 
 void scope_type(vector<Token> tokens, vector<Scope> keywords, stack<Scope> *escopos, int* i) {
@@ -104,16 +86,36 @@ int subtrair();
 int multiplicar();
 int dividir();
 
-void atribuir(vector<var_scope>* symbols_table, vector<Token> tokens, int* pos_tokens, int pos_var)
+void atribuir(vector<var_scope>* st, vector<Token> tokens, int* pos_tk, int pos_st)
 {
-    /*
-    while (tokens[*pos_tokens].type.compare(DELIMITER) != 0) {
+    if (pos_st == -1) return;
+    int valor = 0, idx = 0;
+    // cout << "pos_st:" << pos_st << "\n";
+    var_scope var = st->at(pos_st);
+
+    while (tokens[*pos_tk].type.compare(DELIMITER) != 0) {
+        if (tokens[*pos_tk].type.compare(IDENTIFIER) == 0) {
+            idx = search_var(*st, var.name, var.scope.name);
+            if (idx == -1) {
+                cout << "ERRO: Variável " << tokens[*pos_tk].content << "não declarada no escopo " << var.scope.name << "\n";
+                exit(1);
+            }
+            else {
+                var.value = st->at(idx).value;
+            }
+        }
+        else if (tokens[*pos_tk].type.compare(NUMBER) == 0) {
+            var.value = stoi(tokens[*pos_tk].content);
+        }
+
         // ideia: escolher a funcao adequada segundo o operador. o problema está nas operações mais complexas
         // outra ideia: já que é uma atribuição, atualizar o valor da variavel em pos_var a cada num/identificador lido
         // assim voce pode realizar operacoes com a propria variavel principal pq é só ir acumulando
-        *pos_tokens++;
+        *pos_tk = *pos_tk + 1;
     }
-    */
+    cout << "valor de {" << var.name << "}: " << var.value << "\n";
+        
+    st->at(pos_st) = var;
 }
 
 vector<var_scope> tabela_de_simbolos1111(vector<Token> tokens)
@@ -126,15 +128,13 @@ vector<var_scope> tabela_de_simbolos1111(vector<Token> tokens)
     
     stack<Scope> escopos;
     
-    Scope padrao = newScope("padrao", "padrao");
+    Scope padrao = {"padrao", "padrao"};
 
 
     for (int i = 0; i < tokens.size(); i++) {
         scope_type(tokens, block_keys, &escopos, &i);
 
-        if (tokens[i].type.compare(IDENTIFIER) == 0) {
-            
-            
+        if (tokens[i].type.compare(IDENTIFIER) == 0) {            
             if (escopos.size() == 0) {
                 pos = search_var(symbols_table, tokens[i].content, "padrao");
                 if (pos == -1) {
@@ -142,7 +142,6 @@ vector<var_scope> tabela_de_simbolos1111(vector<Token> tokens)
                 }
                 ++i;
                 if (tokens[i].content.compare("=") == 0) {
-                    ++i;
                     atribuir(&symbols_table, tokens, &i, pos);
                 }
                 
@@ -151,10 +150,7 @@ vector<var_scope> tabela_de_simbolos1111(vector<Token> tokens)
                 pos = search_var(symbols_table, tokens[i].content, escopos.top().name);
                 if (pos == -1)
                     symbols_table.push_back({tokens[i].content, 0, {escopos.top().name, escopos.top().type}});
-            }
-            cout << "\nPOS ao final desta iteração: " << pos << "\n";
-            
-            
+            }    
             // if (pos == -1) 
             //     symbols_table.push_back({tokens[i].name}, 0, "padrao");
             // else {
