@@ -69,5 +69,9 @@ bool arg4(vector<Token> tokens, int* currentToken)
 
 bool arg(vector<Token> tokens, int* currentToken)
 {
-    return verify_productions(tokens, currentToken, {arg1, arg3, arg4});
+    FunctionCallbackArray callback;
+    callback.push_back(arg1);
+    callback.push_back(arg3);
+    callback.push_back(arg4);
+    return verify_productions(tokens, currentToken, callback);
 }

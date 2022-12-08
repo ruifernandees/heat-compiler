@@ -43,5 +43,9 @@ bool varname3(vector<Token> tokens, int* currentToken)
 }
 
 bool varname(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {varname1, varname2, varname3});
+    FunctionCallbackArray callback;
+    callback.push_back(varname1);
+    callback.push_back(varname2);
+    callback.push_back(varname3);
+    return verify_productions(tokens, currentToken, callback);
 }

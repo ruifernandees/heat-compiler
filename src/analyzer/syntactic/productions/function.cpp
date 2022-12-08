@@ -142,5 +142,10 @@ bool Function6(vector<Token> tokens, int* currentToken)
 
 bool Function(vector<Token> tokens, int* currentToken)
 {
-    return verify_productions(tokens, currentToken, {Function1, Function2, Function3, Function6});
+    FunctionCallbackArray callback;
+    callback.push_back(Function1);
+    callback.push_back(Function2);
+    callback.push_back(Function3);
+    callback.push_back(Function6);
+    return verify_productions(tokens, currentToken, callback);
 }

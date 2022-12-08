@@ -33,5 +33,8 @@ bool variable2(vector<Token> tokens, int* currentToken)
 
 bool variable(vector<Token> tokens, int* currentToken)
 {
-    return verify_productions(tokens, currentToken, {variable1, variable2});
+    FunctionCallbackArray callback;
+    callback.push_back(variable1);
+    callback.push_back(variable2);
+    return verify_productions(tokens, currentToken, callback);
 }

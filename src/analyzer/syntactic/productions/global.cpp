@@ -38,5 +38,8 @@ bool global2(vector<Token> tokens, int* currentToken)
 }
 
 bool global(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {global1, global2});
+    FunctionCallbackArray callback;
+    callback.push_back(global1); 
+    callback.push_back(global2);
+    return verify_productions(tokens, currentToken, callback);
 }

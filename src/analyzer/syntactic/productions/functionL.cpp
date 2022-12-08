@@ -28,7 +28,9 @@ bool functionL1(vector<Token> tokens, int *currentToken)
 
 bool functionL(vector<Token> tokens, int *currentToken)
 {
-    if (verify_productions(tokens, currentToken, {functionL1})) {
+    FunctionCallbackArray callback;
+    callback.push_back(functionL1);
+    if (verify_productions(tokens, currentToken, callback)) {
         return true;
     }
     return true;

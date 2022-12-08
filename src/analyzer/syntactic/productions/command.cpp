@@ -51,5 +51,9 @@ bool command4(vector<Token> tokens, int* currentToken)
 
 bool command(vector<Token> tokens, int* currentToken)
 {
-    return verify_productions(tokens, currentToken, {command1, command2, command4});
+    FunctionCallbackArray callback;
+    callback.push_back(command1);
+    callback.push_back(command2);
+    callback.push_back(command4);
+    return verify_productions(tokens, currentToken, callback);
 }

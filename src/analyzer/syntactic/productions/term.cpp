@@ -33,5 +33,8 @@ bool term2(vector<Token> tokens, int* currentToken)
 }
 
 bool term(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {term1, term2});
+    FunctionCallbackArray callback;
+    callback.push_back(term1);
+    callback.push_back(term2);
+    return verify_productions(tokens, currentToken, callback);
 }

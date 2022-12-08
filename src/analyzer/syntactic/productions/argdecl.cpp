@@ -42,5 +42,8 @@ bool argdecl2(vector<Token> tokens, int* currentToken)
 }
 
 bool argdecl(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {argdecl1, argdecl2});
+    FunctionCallbackArray callback;
+    callback.push_back(argdecl1); 
+    callback.push_back(argdecl2);
+    return verify_productions(tokens, currentToken, callback);
 }

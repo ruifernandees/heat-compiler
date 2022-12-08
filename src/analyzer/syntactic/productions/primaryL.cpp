@@ -55,7 +55,10 @@ bool primaryL2(vector<Token> tokens, int* currentToken)
 }
 
 bool primaryL(vector<Token> tokens, int* currentToken) {
-    if (verify_productions(tokens, currentToken, {primaryL1, primaryL2})) {
+    FunctionCallbackArray callback;
+    callback.push_back(primaryL1);
+    callback.push_back(primaryL2);
+    if (verify_productions(tokens, currentToken, callback)) {
         return true;
     }
     // 3 possibidade (vazio)

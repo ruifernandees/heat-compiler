@@ -33,5 +33,8 @@ bool block_var2(vector<Token> tokens, int* currentToken)
 
 bool block_var(vector<Token> tokens, int* currentToken)
 {
-    return verify_productions(tokens, currentToken, {block_var1, block_var2});
+    FunctionCallbackArray callback;
+    callback.push_back(block_var1);
+    callback.push_back(block_var2);
+    return verify_productions(tokens, currentToken, callback);
 }

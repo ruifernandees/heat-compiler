@@ -118,5 +118,11 @@ bool call_args6(vector<Token> tokens, int* currentToken)
 }
 
 bool call_args(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {call_args1, call_args3, call_args4, call_args5, call_args6});
+    FunctionCallbackArray callback;
+    callback.push_back(call_args1);
+    callback.push_back(call_args3);
+    callback.push_back(call_args4);
+    callback.push_back(call_args5);
+    callback.push_back(call_args6);
+    return verify_productions(tokens, currentToken, callback);
 }

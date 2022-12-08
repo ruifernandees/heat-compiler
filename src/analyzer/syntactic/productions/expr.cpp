@@ -90,5 +90,12 @@ bool expr6(vector<Token> tokens, int* currentToken)
 }
 
 bool expr(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {expr1, expr2, expr3, expr4, expr5, expr6});
+    FunctionCallbackArray callback;
+    callback.push_back(expr1);
+    callback.push_back(expr2);
+    callback.push_back(expr3);
+    callback.push_back(expr4);
+    callback.push_back(expr5);
+    callback.push_back(expr6);
+    return verify_productions(tokens, currentToken, callback);
 }

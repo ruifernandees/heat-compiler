@@ -28,7 +28,9 @@ bool stmtL1(vector<Token> tokens, int* currentToken)
 
 bool stmtL(vector<Token> tokens, int* currentToken)
 {
-    if (verify_productions(tokens, currentToken, {stmtL1})) {
+    FunctionCallbackArray callback;
+    callback.push_back(stmtL1);
+    if (verify_productions(tokens, currentToken, callback)) {
         return true;
     }
     // 3 possibidade (vazio)

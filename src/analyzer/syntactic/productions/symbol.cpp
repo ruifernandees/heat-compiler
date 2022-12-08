@@ -36,5 +36,7 @@ bool symbol1(vector<Token> tokens, int* currentToken)
 
 bool symbol(vector<Token> tokens, int* currentToken)
 {
-    return verify_productions(tokens, currentToken, {symbol1});
+    FunctionCallbackArray callback;
+    callback.push_back(symbol1);
+    return verify_productions(tokens, currentToken, callback);
 }

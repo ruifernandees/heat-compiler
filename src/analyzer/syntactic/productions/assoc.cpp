@@ -27,5 +27,7 @@ bool assoc1(vector<Token> tokens, int* currentToken)
 }
 
 bool assoc(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {assoc1});
+    FunctionCallbackArray callback;
+    callback.push_back(assoc1);
+    return verify_productions(tokens, currentToken, callback);
 }

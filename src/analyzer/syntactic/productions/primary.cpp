@@ -486,6 +486,23 @@ bool primary17(vector<Token> tokens, int* currentToken)
 
 bool primary(vector<Token> tokens, int* currentToken)
 {
-    return verify_productions(tokens, currentToken, {primary1, primary2, primary3, primary4, primary5, primary6, primary7, primary8, primary9,
-                                                     primary10, primary11, primary12, primary13, primary14, primary15, primary16, primary17});
+    FunctionCallbackArray callback;
+    callback.push_back(primary1); 
+    callback.push_back(primary2); 
+    callback.push_back(primary3); 
+    callback.push_back(primary4); 
+    callback.push_back(primary5); 
+    callback.push_back(primary6); 
+    callback.push_back(primary7); 
+    callback.push_back(primary8); 
+    callback.push_back(primary9);
+    callback.push_back(primary10); 
+    callback.push_back(primary11); 
+    callback.push_back(primary12); 
+    callback.push_back(primary13); 
+    callback.push_back(primary14); 
+    callback.push_back(primary15); 
+    callback.push_back(primary16); 
+    callback.push_back(primary17);
+    return verify_productions(tokens, currentToken, callback);
 }

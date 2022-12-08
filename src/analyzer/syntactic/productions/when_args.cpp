@@ -52,6 +52,9 @@ bool when_args2(vector<Token> tokens, int* currentToken)
 }
 
 bool when_args(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {when_args1, when_args2});
+    FunctionCallbackArray callback;
+    callback.push_back(when_args1);
+    callback.push_back(when_args2);
+    return verify_productions(tokens, currentToken, callback);
 }
 

@@ -112,7 +112,10 @@ bool arglist2(vector<Token> tokens, int* currentToken)
 }
 
 bool arglist(vector<Token> tokens, int* currentToken) {
-    if (verify_productions(tokens, currentToken, {arglist1, arglist2})) {
+    FunctionCallbackArray callback;
+    callback.push_back(arglist1);
+    callback.push_back(arglist2);
+    if (verify_productions(tokens, currentToken, callback)) {
         return true;
     }
 

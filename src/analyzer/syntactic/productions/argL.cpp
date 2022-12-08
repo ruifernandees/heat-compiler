@@ -62,7 +62,9 @@ bool argL1(vector<Token> tokens, int* currentToken)
 
 bool argL(vector<Token> tokens, int* currentToken)
 {
-    if (verify_productions(tokens, currentToken, {argL1})){
+    FunctionCallbackArray callback;
+    callback.push_back(argL1);
+    if (verify_productions(tokens, currentToken, callback)){
         return true;
     }
     // vazio

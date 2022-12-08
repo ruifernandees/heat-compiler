@@ -95,5 +95,8 @@ bool mlhs2(vector<Token> tokens, int* currentToken)
 }
 
 bool mlhs(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {mlhs1, mlhs2});
+    FunctionCallbackArray callback;
+    callback.push_back(mlhs1);
+    callback.push_back(mlhs2);
+    return verify_productions(tokens, currentToken, callback);
 }

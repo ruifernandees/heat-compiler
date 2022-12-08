@@ -42,5 +42,8 @@ bool then2(vector<Token> tokens, int* currentToken)
 }
 
 bool then(vector<Token> tokens, int* currentToken) {
-    return verify_productions(tokens, currentToken, {then1, then2});
+    FunctionCallbackArray callback;
+    callback.push_back(then1);
+    callback.push_back(then2);
+    return verify_productions(tokens, currentToken, callback);
 }

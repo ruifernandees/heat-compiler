@@ -6,6 +6,8 @@
 
 #include "../../bnf/types.h"
 
+typedef vector<bool (*)(vector<Token>, int*)> FunctionCallbackArray;
+
 using namespace std;
 
 void syntacticAnalyzer(vector<Token> tokens);

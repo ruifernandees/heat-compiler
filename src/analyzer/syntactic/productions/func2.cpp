@@ -61,7 +61,9 @@ bool func21(vector<Token> tokens, int* currentToken)
 
 bool func2(vector<Token> tokens, int* currentToken)
 {
-    if (verify_productions(tokens, currentToken, {func21})) {
+    FunctionCallbackArray callback;
+    callback.push_back(func21);
+    if (verify_productions(tokens, currentToken, callback)) {
         return true;
     }
 
