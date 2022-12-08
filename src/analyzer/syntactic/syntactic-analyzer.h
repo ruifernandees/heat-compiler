@@ -2,15 +2,31 @@
 #include <cstring>
 #include <vector>
 
+
 #pragma once
 
+#define NULL_ID_RECURSIVE -1
 #include "../../bnf/types.h"
 
 typedef vector<bool (*)(vector<Token>, int*)> FunctionCallbackArray;
 
 using namespace std;
 
-void syntacticAnalyzer(vector<Token> tokens);
+typedef struct scope {
+    string name;
+    string type;
+} Scope;
+
+
+typedef struct var_scope {
+    string name;
+    int value;
+    Scope scope;
+    int idRecursive = NULL_ID_RECURSIVE;
+} var_scope;
+
+
+vector<var_scope> syntacticAnalyzer(vector<Token> tokens);
 
 bool program(vector<Token> tokens, int* currentToken);
 bool compstmt(vector<Token> tokens, int* currentToken);

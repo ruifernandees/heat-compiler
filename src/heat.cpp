@@ -6,7 +6,7 @@
 #include "./utils/read-file.cpp"
 #include "./analyzer/lexical/lexical-analyzer.h"
 #include "./analyzer/syntactic/syntactic-analyzer.h"
-#include "./analyzer/semantic/main.cpp"
+#include "./analyzer/semantic/semantic-analyzer.h"
 #include "./bnf/types.h"
 
 using namespace std;
@@ -26,7 +26,8 @@ int main(int argc, char *argv[]) {
             cout << "< " << token.content << ", " << token.type << " >" << endl;
         }
     }
-    syntacticAnalyzer(tokens);
-    semanticAnalyzer();
+    vector<var_scope> symbol_table = syntacticAnalyzer(tokens);
+    semanticAnalyzer(tokens, symbol_table);
+
     return 0;
 }
