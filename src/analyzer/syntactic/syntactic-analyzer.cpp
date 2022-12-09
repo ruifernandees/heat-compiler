@@ -36,6 +36,18 @@ void scope_type(vector<Token> tokens, vector<Scope> keywords, stack<Scope> *esco
     }
 }
 
+bool findPositionInSymbolTableByContentAndSameScope(vector<var_scope> symbols_table, string tokenContent, Scope scope) {
+    for (auto position : symbols_table) {
+        if (
+            position.name.compare(tokenContent) == 0 
+            && position.scope.name.compare(scope.name) == 0
+        ) {
+            return true;
+        }
+    }
+    return false;
+}
+
 vector<var_scope> tabela_de_simbolos(vector<Token> tokens)
 {
     vector<var_scope> symbols_table;
@@ -52,10 +64,16 @@ vector<var_scope> tabela_de_simbolos(vector<Token> tokens)
 
         if (tokens[i].type.compare(IDENTIFIER) == 0) {
             if (escopos.size() == 0) {
-                symbols_table.push_back({tokens[i].content, 0, {"padrao", "padrao"}, -1});
+                if (!findPositionInSymbolTableByContentAndSameScope(symbols_table, tokens[i].content, padrao))
+                {
+                    symbols_table.push_back({tokens[i].content, 0, padrao, -1});
+                }
             } 
             else {
-                symbols_table.push_back({tokens[i].content, 0, {escopos.top().name, escopos.top().type}, -1});
+                if (!findPositionInSymbolTableByContentAndSameScope(symbols_table, tokens[i].content, {escopos.top().name, escopos.top().type}))
+                {
+                    symbols_table.push_back({tokens[i].content, 0, {escopos.top().name, escopos.top().type}, -1}); 
+                }
             }
         }
         
