@@ -1,0 +1,2 @@
+x | 0 | padrao [padrao]
+y | 0 | padrao [padrao]

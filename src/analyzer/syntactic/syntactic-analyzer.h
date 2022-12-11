@@ -26,7 +26,7 @@ typedef struct var_scope {
 } var_scope;
 
 
-vector<var_scope> syntacticAnalyzer(vector<Token> tokens);
+void syntacticAnalyzer(vector<Token> tokens, vector<var_scope>* symbol_table);
 
 bool program(vector<Token> tokens, int* currentToken);
 bool compstmt(vector<Token> tokens, int* currentToken);

@@ -87,7 +87,7 @@ vector<var_scope> tabela_de_simbolos(vector<Token> tokens)
 
 }
 
-vector<var_scope> syntacticAnalyzer(vector<Token> tokens) {
+void syntacticAnalyzer(vector<Token> tokens, vector<var_scope>* symbol_table) {
     int currentToken = 0;
 
     Token token;
@@ -101,13 +101,13 @@ vector<var_scope> syntacticAnalyzer(vector<Token> tokens) {
     cout << "DEU CERTO? " << sem_erros << endl;
     cout << "CurrentToken: " << currentToken << "\n";
     if (sem_erros) {
-        vector<var_scope> tabela = tabela_de_simbolos(tokens);
+        *symbol_table = tabela_de_simbolos(tokens);
         cout << "TABELA DE SIMBOLOS: \n";
         cout << "name"<< " | " << "value"<< " | " << "scope name"<< " [" << "scope type"<< "]\n";
-        for (auto entry: tabela) {
+        for (auto entry: *symbol_table) {
             cout << entry.name << " | " << entry.value << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
         }
-        return tabela;
+        return;
     }
     throw runtime_error("Wrong syntax");
 }

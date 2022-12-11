@@ -7,6 +7,8 @@
 
 #include "../../bnf/types.h"
 
+#pragma once
+
 using namespace std;
 
 typedef struct scope {
@@ -100,31 +102,40 @@ vector<vector<Token>> catch_lines(vector<Token> tokens)
     return comandos;
 }
 
-void semanticAnalyzer(vector<Token> tokens, vector<var_scope> tabela) {
-    vector<vector<Token>> comandos = catch_lines(tokens);
-    int pos_symbol_table = 0;
-    int pos_token = 0;
+void semanticAnalyzer(vector<Token> tokens, vector<var_scope> *tabela) {
+    // vector<vector<Token>> comandos = catch_lines(tokens);
+    // int pos_symbol_table = 0;
+    // int pos_token = 0;
 
-    cout << "comandos" << endl;
-    for (int i = 0; i < comandos.size(); i++)
-    {
-        cout << "linha " << i << endl;
-        for (auto c : comandos[i])
-        {
-            cout << c.content << " ";
-        }
-        cout << endl;
-    }
+    // cout << "comandos" << endl;
+    // for (int i = 0; i < comandos.size(); i++)
+    // {
+    //     cout << "linha " << i << endl;
+    //     for (auto c : comandos[i])
+    //     {
+    //         cout << c.content << " ";
+    //     }
+    //     cout << endl;
+    // }
     
-    for (auto comando : comandos)
-    {
-        atribuir(&tabela, comando, pos_symbol_table);
-    }
-    // atribuir(&tabela, tokens, &pos_token, pos_symbol_table);
-    // cout << "🔌" << st->at(current_position_st).name << ", " << st->at(current_position_st).scope.name << ", " << st->at(current_position_st).value << endl;
+    // for (auto comando : comandos)
+    // {
+    //     atribuir(&tabela, comando, pos_symbol_table);
+    // }
+    // // atribuir(&tabela, tokens, &pos_token, pos_symbol_table);
+    // // cout << "🔌" << st->at(current_position_st).name << ", " << st->at(current_position_st).scope.name << ", " << st->at(current_position_st).value << endl;
     cout << "TABELA DE SIMBOLOS - SEMANTICO: \n";
     cout << "name"<< " | " << "value"<< " | " << "scope name"<< " [" << "scope type"<< "]\n";
-    for (auto entry: tabela) {
+    vector<var_scope> tentativa;
+    for (auto entry: *tabela) {
+        tentativa.push_back(entry);
+        //cout << entry.name << " | " << entry.value << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
+    }
+
+    for (auto entry: *tabela) {
+        //tentativa.push_back(entry);
         cout << entry.name << " | " << entry.value << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
     }
+
+    cout << "asdasdas" << endl;
 }
