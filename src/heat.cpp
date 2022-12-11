@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
         }
     }
     vector<var_scope> symbol_table = syntacticAnalyzer(tokens);
-    semanticAnalyzer(tokens, symbol_table);
+    //semanticAnalyzer(tokens, symbol_table);
 
     return 0;
 }
