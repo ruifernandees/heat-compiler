@@ -20,7 +20,7 @@ typedef struct scope {
 
 typedef struct var_scope {
     string name;
-    int value;
+    vector<string> value;
     Scope scope;
     int idRecursive = NULL_ID_RECURSIVE;
 } var_scope;

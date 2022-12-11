@@ -23,14 +23,18 @@ Scope newScope(string name, string type)
 
 
 bool findPositionInSymbolTableByContentAndSameScope(vector<var_scope> symbols_table, string tokenContent, Scope scope) {
+    cout << "[FIND POS] " << tokenContent << ", " << scope.name << endl;
     for (auto position : symbols_table) {
+        cout << "ENCONTRANDO " << position.name << ", " << position.scope.name << endl;
         if (
             position.name.compare(tokenContent) == 0 
             && position.scope.name.compare(scope.name) == 0
         ) {
+            cout << "TERMINEI" << endl;
             return true;
         }
     }
+    cout << "TERMINEI" << endl;
     return false;
 }
 
@@ -53,27 +57,35 @@ vector<var_scope> tabela_de_simbolos(vector<Token> tokens)
     escopos.push(padrao);
 
     for (int i = 0; i < tokens.size(); i++) {
+        cout << "start scope_type" << endl;
         scope_type(tokens, block_keys, &escopos, &i);
+        cout << "end scope_type" << endl;
 
         if (tokens[i].type.compare(IDENTIFIER) == 0) {
+            cout << "start find pos" << tokens[i].type << ", " << tokens[i].content << ", " << i << endl;
             if (!findPositionInSymbolTableByContentAndSameScope(symbols_table, tokens[i].content, escopos.top()))
             {
-                symbols_table.push_back({tokens[i].content, 0, {escopos.top().name, escopos.top().type}});
+                vector<string> p;
+                cout << "ASDASDASAS" << endl;
+                symbols_table.push_back({tokens[i].content, p, {escopos.top().name, escopos.top().type}});
+                cout << "ASDASDASAS (1)" << endl;
             }
+            cout << "end find pos" << endl;
         }
         
+        cout << "start qwerty" << endl;
         if (tokens[i].content.compare("end") == 0) {
+            cout << "qwerty" << endl;
             escopos.pop();
+            cout << "qwerty (1)" << endl;
         }
+        cout << "end qwerty" << endl;
 
     }
+    cout << "zxczxczxczx" << endl;
 
     return symbols_table;
-
 }
-
-
-
 
 vector<var_scope> syntacticAnalyzer(vector<Token> tokens) {
     int currentToken = 0;
@@ -93,7 +105,12 @@ vector<var_scope> syntacticAnalyzer(vector<Token> tokens) {
         cout << "TABELA DE SIMBOLOS: \n";
         cout << "name"<< " | " << "value"<< " | " << "scope name"<< " [" << "scope type"<< "]\n";
         for (auto entry: tabela) {
-            cout << entry.name << " | " << entry.value << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
+            cout << entry.name << " | ";
+            for (auto value : entry.value)
+            {
+                cout << value << " ";
+            }
+            cout << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
         }
 
         // semantic(tabela);

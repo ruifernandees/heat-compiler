@@ -29,8 +29,20 @@ void atribuir(vector<var_scope>* st, vector<Token> tokens, stack<Scope> *escopos
 {
     // x = 23
     int idx = search_var(*st, tokens[i-1].content, escopos->top().name);
-    //cout << "idx: " << idx << " st: " << st->at(idx).name << endl;
-    st->at(idx).value = stoi(tokens[i+1].content);
+
+    vector<string> value;
+    cout << "token: " << tokens[i+1].content << endl;
+
+    for (int j = i + 1; j < tokens.size(); j++)
+    {
+        value.push_back(tokens[j].content);
+        cout << "token: " << tokens[j].content << endl;
+    }
+
+
+    st->at(idx).value = value;
+
+    //st->at(idx).value = tokens[i+1].content;
 }
 
 void scope_type(vector<Token> tokens, vector<Scope> keywords, stack<Scope> *escopos, int* i) {
@@ -113,6 +125,11 @@ void semantic(vector<Token> tokens, vector<var_scope> tabela) {
     cout << "TABELA DE SIMBOLOS - SEMANTICO: \n";
     cout << "name"<< " | " << "value"<< " | " << "scope name"<< " [" << "scope type"<< "]\n";
     for (auto entry: tabela) {
-        cout << entry.name << " | " << entry.value << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
+        cout << entry.name << " | ";
+        for (auto value : entry.value)
+        {
+            cout << value << " ";
+        }
+        cout << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
     }
 }
