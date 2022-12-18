@@ -38,7 +38,7 @@ int subtrair();
 int multiplicar();
 int dividir();
 
-void scope_type(vector<Token> tokens, vector<function_scope> *functions, vector<Scope> keywords, stack<Scope> *escopos, int* i) {
+void scope_type(vector<var_scope> *symbols_table, vector<Token> tokens, vector<function_scope> *functions, vector<Scope> keywords, stack<Scope> *escopos, int* i) {
     for (auto key: keywords) {
         if (tokens[*i].content.compare(key.name) == 0) {
             if (key.name.compare("def") == 0) {
@@ -49,6 +49,7 @@ void scope_type(vector<Token> tokens, vector<function_scope> *functions, vector<
                 {
                     if (tokens[*i].type.compare(IDENTIFIER) == 0)
                     {
+                        symbols_table->push_back({tokens[*i].content, {}, {name_function, key.type}});
                         qnt_parametros++;
                     }
                     *i = *i + 1;
@@ -76,7 +77,7 @@ vector<var_scope> tabela_de_simbolos(vector<Token> tokens, vector<function_scope
     escopos.push(padrao);
 
     for (int i = 0; i < tokens.size(); i++) {
-        scope_type(tokens, functions, block_keys, &escopos, &i);
+        scope_type(&symbols_table, tokens, functions, block_keys, &escopos, &i);
     
         if (tokens[i].content.compare("=") == 0) {
             if (!findPositionInSymbolTableByContentAndSameScope(symbols_table, tokens[i-1].content, escopos.top()))

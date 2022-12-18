@@ -24,7 +24,8 @@ vector<string> executar_funcao(vector<var_scope> *st, vector<function_scope> *fu
             // adicionar os parametros na tabela de simbolos
             if (c.type.compare(IDENTIFIER) == 0)
             {
-                st->push_back({c.content, parametros[parametro].value, escopo_atual, 0});
+                int id = search_var(*st, c.content, escopo_atual.name);
+                st->at(id).value = parametros[parametro].value;
                 parametro++;
             }
         }
@@ -48,16 +49,22 @@ vector<string> executar_funcao(vector<var_scope> *st, vector<function_scope> *fu
                 // TA FALTANDO CHAMADA DE FUNCAO IGUAL NO ATRIBUIR
                 if (comandos[i][j].type.compare(IDENTIFIER) == 0)
                 {
+                    /*if (j + 1 < tokens.size() && tokens[j+1].type.compare(IDENTIFIER) == 0)
+                    {
+                        call_fn(tokens, comandos, functions, st, linha, &j, escopo_atual);
+                    }*/
+
                     int id = search_var(*st, comandos[i][j].content, escopo_atual.name);
+                    cout << "escopo: " << escopo_atual.name << endl;
 
                     if (id == -1) {
-                        cout << "variavel nao existente no retorno da funcao" << endl;
+                        cout << "variavel nao existente no retorno da funcao: " << comandos[i][j].content << endl;
                         exit(0);
                     } else {
                         // vetor vazio, nao aconteceu atribuicao
                         if (st->at(id).value.size() == 0)
                         {
-                            cout << "variavel nao existente no retorno da funcao" << endl;
+                            cout << "variavel nao existente no retorno da funcao: " << comandos[i][j].content << endl;
                             exit(0);
                         }
 
