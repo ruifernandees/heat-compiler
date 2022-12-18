@@ -6,10 +6,9 @@
 
 #include "../semantic-analyzer.h"
 
-vector<string> executar_funcao(vector<var_scope> *st, vector<function_scope> *functions, function_scope function, vector<var_scope> parametros, vector<vector<Token>> comandos, int linha_funcao)
+vector<string> executar_funcao(vector<var_scope> *st, vector<function_scope> *functions, function_scope function, vector<vector<string>> valores_parametros, vector<vector<Token>> comandos, int linha_funcao)
 {
     Scope escopo_atual = {function.name, "function"};
-    cout << "funcao: " << function.name << endl;
 
     // add parametros
     bool parentesis = false, retorno = false;
@@ -25,7 +24,7 @@ vector<string> executar_funcao(vector<var_scope> *st, vector<function_scope> *fu
             if (c.type.compare(IDENTIFIER) == 0)
             {
                 int id = search_var(*st, c.content, escopo_atual.name);
-                st->at(id).value = parametros[parametro].value;
+                st->at(id).value = valores_parametros[parametro];
                 parametro++;
             }
         }
@@ -55,7 +54,6 @@ vector<string> executar_funcao(vector<var_scope> *st, vector<function_scope> *fu
                     }*/
 
                     int id = search_var(*st, comandos[i][j].content, escopo_atual.name);
-                    cout << "escopo: " << escopo_atual.name << endl;
 
                     if (id == -1) {
                         cout << "variavel nao existente no retorno da funcao: " << comandos[i][j].content << endl;
@@ -94,8 +92,8 @@ vector<string> executar_funcao(vector<var_scope> *st, vector<function_scope> *fu
             }
             else if (comandos[i][j].content.compare("end") == 0)
             {
-                cout << "end function" << endl;
-                cout << "return value: ";
+                //cout << "end function" << endl;
+                cout << "function (" << function.name << ") RETURN value: ";
 
                 for (auto v : value)
                 {
@@ -105,7 +103,6 @@ vector<string> executar_funcao(vector<var_scope> *st, vector<function_scope> *fu
 
                 return value;
             }
-            cout << comandos[i][j].content << " ";
         }
         cout << endl;
     }

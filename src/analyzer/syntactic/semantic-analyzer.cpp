@@ -20,7 +20,7 @@ void scope_type_semantic(vector<Token> tokens, vector<Scope> keywords, stack<Sco
                 int a = *i + 2;
                 while (tokens[a].content.compare(")") != 0)
                 {
-                    if (tokens[a].type.compare(IDENTIFIER) == 0)
+                    if (tokens[a].type.compare(IDENTIFIER) == 0 || tokens[a].type.compare(NUMBER) == 0)
                     {
                         qnt_parametros++;
                     }
@@ -64,7 +64,7 @@ void see_commands(vector<var_scope>* st, vector<vector<Token>> comandos, vector<
 
         else if (tokens[i].type.compare(IDENTIFIER) == 0)
         {
-            if (i + 1 < tokens.size() && tokens[i+1].type.compare(IDENTIFIER) == 0)
+            if (i + 1 < tokens.size() && (tokens[i+1].type.compare(IDENTIFIER) == 0 || tokens[i+1].type.compare(NUMBER) == 0))
             {
                 call_fn(tokens, comandos, functions, st, linha, &i, escopos->top());
             }
@@ -95,7 +95,7 @@ vector<vector<Token>> catch_lines(vector<Token> tokens)
 void semantic(vector<Token> tokens, vector<var_scope> tabela, vector<function_scope> functions) {
     vector<vector<Token>> comandos = catch_lines(tokens);
 
-    cout << "comandos" << endl;
+    /*cout << "comandos" << endl;
     for (int i = 0; i < comandos.size(); i++)
     {
         cout << "linha " << i << endl;
@@ -104,7 +104,7 @@ void semantic(vector<Token> tokens, vector<var_scope> tabela, vector<function_sc
             cout << c.content << " ";
         }
         cout << endl;
-    }
+    }*/
     
     stack<Scope> escopos;
     escopos.push({"padrao", "padrao"});

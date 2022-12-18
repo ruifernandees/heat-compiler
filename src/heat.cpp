@@ -19,13 +19,18 @@ int main(int argc, char *argv[]) {
     string filename = argv[1];
     vector<string> script = readFile(filename);
     vector<Token> tokens = lexicalAnalyzer(script);
+
+	ofstream lexicalFile("lexical.txt");
+
     for (Token token : tokens) {
         if (token.content.compare("\n") == 0) {
-            cout << "< " << "LB" << ", " << token.type << " >" << endl;
+            lexicalFile << "< " << "LB" << ", " << token.type << " >" << endl;
         } else {
-            cout << "< " << token.content << ", " << token.type << " >" << endl;
+            lexicalFile << "< " << token.content << ", " << token.type << " >" << endl;
         }
     }
+
+	lexicalFile.close();
     vector<var_scope> symbol_table = syntacticAnalyzer(tokens);
     //semanticAnalyzer(tokens, symbol_table);
 

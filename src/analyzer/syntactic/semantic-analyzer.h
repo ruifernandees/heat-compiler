@@ -17,4 +17,4 @@ int search_var(vector<var_scope> symbols_table, string var_name, string scope_na
 void call_fn(vector<Token> tokens, vector<vector<Token>> comandos, vector<function_scope> *functions, vector<var_scope> *st, int linha, int *current_token, Scope escopo_atual);
 bool existe(vector<function_scope> *functions, string name_function, int linha, Scope escopo_atual, int qnt_argumentos);
 int search_function(vector<function_scope> functions_table, string function_name, string scope_name, int qnt_argumentos);
-vector<string> executar_funcao(vector<var_scope> *st, vector<function_scope> *functions, function_scope function, vector<var_scope> parametros, vector<vector<Token>> comandos, int linha_funcao);
+vector<string> executar_funcao(vector<var_scope> *st, vector<function_scope> *functions, function_scope function, vector<vector<string>> valores_parametros, vector<vector<Token>> comandos, int linha_funcao);

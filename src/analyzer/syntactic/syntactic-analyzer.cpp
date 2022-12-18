@@ -4,6 +4,7 @@
 #include <cstring>
 #include <regex>
 #include <stack>
+#include <fstream>
 
 #include "syntactic-analyzer.h"
 
@@ -104,24 +105,27 @@ vector<var_scope> syntacticAnalyzer(vector<Token> tokens) {
 
     bool sem_erros = program(tokens, &currentToken);
     if (sem_erros) {
-        cout << "Análise sintática concluida com sucesso\n";
+        cout << " == Analise sintatica concluida com sucesso == \n";
 
         vector<function_scope> functions;
         vector<var_scope> tabela = tabela_de_simbolos(tokens, &functions);
-        cout << "TABELA DE SIMBOLOS: \n";
-        cout << "name"<< " | " << "value"<< " | " << "scope name"<< " [" << "scope type"<< "]\n";
+
+        ofstream syntacticFile("syntactic.txt");
+
+        syntacticFile << "TABELA DE SIMBOLOS: \n";
+        syntacticFile << "name"<< " | " << "value"<< " | " << "scope name"<< " [" << "scope type"<< "]\n";
         for (auto entry: tabela) {
-            cout << entry.name << " | ";
+            syntacticFile << entry.name << " | ";
             for (auto value : entry.value)
             {
-                cout << value << " ";
+                syntacticFile << value << " ";
             }
-            cout << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
+            syntacticFile << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
         }
 
-        cout << "FUNCTIONS" << endl;
+        syntacticFile << "FUNCTIONS" << endl;
         for (auto entry: functions) {
-            cout << entry.name << " | " << entry.qnt_argumentos << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
+            syntacticFile << entry.name << " | " << entry.qnt_argumentos << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
         }
 
         // semantic(tabela);
