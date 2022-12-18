@@ -57,13 +57,13 @@ vector<string> executar_funcao(vector<var_scope> *st, vector<function_scope> *fu
 
                     if (id == -1) {
                         cout << "variavel nao existente no retorno da funcao: " << comandos[i][j].content << endl;
-                        exit(0);
+                        return {};
                     } else {
                         // vetor vazio, nao aconteceu atribuicao
                         if (st->at(id).value.size() == 0)
                         {
                             cout << "variavel nao existente no retorno da funcao: " << comandos[i][j].content << endl;
-                            exit(0);
+                            return {};
                         }
 
                         string v = "";

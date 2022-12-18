@@ -114,19 +114,22 @@ void semantic(vector<Token> tokens, vector<var_scope> tabela, vector<function_sc
     }
     // atribuir(&tabela, tokens, &pos_token, pos_symbol_table);
     // cout << "🔌" << st->at(current_position_st).name << ", " << st->at(current_position_st).scope.name << ", " << st->at(current_position_st).value << endl;
-    cout << "TABELA DE SIMBOLOS - SEMANTICO: \n";
-    cout << "name"<< " | " << "value"<< " | " << "scope name"<< " [" << "scope type"<< "]\n";
+
+    ofstream semanticFile("semantic.txt");
+    semanticFile << "TABELA DE SIMBOLOS - SEMANTICO: \n";
+    semanticFile << "name"<< " | " << "value"<< " | " << "scope name"<< " [" << "scope type"<< "]\n";
     for (auto entry: tabela) {
-        cout << entry.name << " | ";
+        semanticFile << entry.name << " | ";
         for (auto value : entry.value)
         {
-            cout << value << " ";
+            semanticFile << value << " ";
         }
-        cout << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
+        semanticFile << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
     }
 
-    cout << "FUNCTIONS - SEMANTICO" << endl;
+    semanticFile << "FUNCTIONS - SEMANTICO" << endl;
     for (auto entry: functions) {
-        cout << "linha: " << entry.linha << " | " << entry.name << " | " << entry.qnt_argumentos << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
+        semanticFile << "linha: " << entry.linha << " | " << entry.name << " | " << entry.qnt_argumentos << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
     }
+    semanticFile.close();
 }

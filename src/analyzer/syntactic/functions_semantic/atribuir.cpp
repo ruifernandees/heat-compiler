@@ -27,13 +27,13 @@ void atribuir(vector<var_scope>* st, vector<Token> tokens, vector<vector<Token>>
 
             if (id == -1) {
                 cout << "erro atribuindo variavel nao existente" << endl;
-                exit(0);
+                return;
             } else {
                 // vetor vazio, nao aconteceu atribuicao
                 if (st->at(id).value.size() == 0)
                 {
                     cout << "erro atribuindo variavel nao existente" << endl;
-                    exit(0);
+                    return;
                 }
 
                 string v = "";

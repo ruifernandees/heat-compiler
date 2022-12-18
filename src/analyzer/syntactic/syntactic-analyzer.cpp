@@ -127,6 +127,7 @@ vector<var_scope> syntacticAnalyzer(vector<Token> tokens) {
         for (auto entry: functions) {
             syntacticFile << entry.name << " | " << entry.qnt_argumentos << " | " << entry.scope.name  << " [" << entry.scope.type << "]\n";
         }
+        syntacticFile.close();
 
         // semantic(tabela);
         semantic(tokens, tabela, functions);
