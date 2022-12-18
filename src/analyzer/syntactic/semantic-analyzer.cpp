@@ -114,14 +114,17 @@ bool existe(vector<function_scope> *functions, string name_function, int linha, 
     return functions->at(idf).linha != -1;
 }
 
-void executar_funcao(vector<var_scope> *st, function_scope function, vector<var_scope> parametros, vector<vector<Token>> comandos, vector<Token> tokens, int linha_funcao)
+vector<string> executar_funcao(vector<var_scope> *st, function_scope function, vector<var_scope> parametros, vector<vector<Token>> comandos, int linha_funcao)
 {
     Scope escopo_atual = {function.name, "function"};
     cout << "funcao: " << function.name << endl;
 
     // add parametros
-    bool parentesis = false;
+    bool parentesis = false, retorno = false;
     int parametro = 0;
+
+    vector<string> value = {};
+
     for (auto c : comandos[linha_funcao])
     {
         if (parentesis)
@@ -148,20 +151,67 @@ void executar_funcao(vector<var_scope> *st, function_scope function, vector<var_
     {
         for (int j = 0; j < comandos[i].size(); j++)
         {
+            if (retorno)
+            {
+                // TA FALTANDO CHAMADA DE FUNCAO IGUAL NO ATRIBUIR
+                if (comandos[i][j].type.compare(IDENTIFIER) == 0)
+                {
+                    int id = search_var(*st, comandos[i][j].content, escopo_atual.name);
+
+                    if (id == -1) {
+                        cout << "variavel nao existente no retorno da funcao" << endl;
+                        exit(0);
+                    } else {
+                        // vetor vazio, nao aconteceu atribuicao
+                        if (st->at(id).value.size() == 0)
+                        {
+                            cout << "variavel nao existente no retorno da funcao" << endl;
+                            exit(0);
+                        }
+
+                        string v = "";
+                        for (string c : st->at(id).value) {
+                            v += c;
+                        }
+                        value.push_back(v);
+                    }
+                }
+                else if (comandos[i][j].type.compare(OPERATOR) == 0 || comandos[i][j].type.compare(NUMBER) == 0) {
+                    value.push_back(comandos[i][j].content);
+                }
+                else
+                {
+                    retorno = false;
+                }
+            }
+
             if (comandos[i][j].content.compare("=") == 0)
             {
                 atribuir(st, comandos[i], escopo_atual, j);
             }
-
-            if (comandos[i][j].content.compare("end") == 0)
+            else if (comandos[i][j].content.compare("return") == 0)
+            {
+                retorno = true;
+            }
+            else if (comandos[i][j].content.compare("end") == 0)
             {
                 cout << "end function" << endl;
-                return;
+                cout << "return value: ";
+
+                for (auto v : value)
+                {
+                    cout << v << " ";
+                }
+                cout << endl;
+
+                return value;
             }
             cout << comandos[i][j].content << " ";
         }
         cout << endl;
     }
+
+    return value;
 }
 
 void call_fn(vector<Token> tokens, vector<vector<Token>> comandos, vector<function_scope> *functions, vector<var_scope> *st, int linha, int current_token, Scope escopo_atual)
@@ -190,7 +240,7 @@ void call_fn(vector<Token> tokens, vector<vector<Token>> comandos, vector<functi
         cout << "existe a funcao " << tokens[current_token].content << endl;
 
         int idf = search_function(*functions, tokens[current_token].content, escopo_atual.name, qnt_parametros);
-        executar_funcao(st, functions->at(idf), parametros, comandos, tokens, idf);
+        executar_funcao(st, functions->at(idf), parametros, comandos, idf);
     }
     else
     {
