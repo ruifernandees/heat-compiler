@@ -40,7 +40,30 @@ void atribuir(vector<var_scope>* st, vector<Token> tokens, stack<Scope> *escopos
     
     for (int j = i + 1; j < tokens.size(); j++)
     {
-        value.push_back(tokens[j].content);
+        if (tokens[j].type.compare(IDENTIFIER) == 0)
+        {
+            int id = search_var(*st, tokens[j].content, escopos->top().name);
+            if (id == -1) {
+                cout << "erro atribuindo variavel nao existente" << endl;
+                exit(0);
+            } else {
+                // vetor vazio, nao aconteceu atribuicao
+                if (st->at(id).value.size() == 0)
+                {
+                    cout << "erro atribuindo variavel nao existente" << endl;
+                    exit(0);
+                }
+
+                string v = "";
+                for (string c : st->at(id).value) {
+                    v += c;
+                }
+                value.push_back(v);
+            }
+        }
+        else {
+            value.push_back(tokens[j].content);
+        }
     }
 
 
