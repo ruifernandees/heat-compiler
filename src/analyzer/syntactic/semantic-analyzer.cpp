@@ -114,7 +114,7 @@ bool existe(vector<function_scope> *functions, string name_function, int linha, 
     return functions->at(idf).linha != -1;
 }
 
-void call_fn(vector<Token> tokens, vector<function_scope> *functions, int linha, int current_token, Scope escopo_atual)
+void call_fn(vector<Token> tokens, vector<function_scope> *functions, vector<var_scope> *st, int linha, int current_token, Scope escopo_atual)
 {
     int qnt_parametros = 0;
 
@@ -123,6 +123,11 @@ void call_fn(vector<Token> tokens, vector<function_scope> *functions, int linha,
     {
         if (tokens[i].type.compare(IDENTIFIER) == 0)
         {
+            int id = search_var(*st, tokens[i].content, escopo_atual.name);
+            if (id == -1) {
+                cout << "variavel " << tokens[i].content << " nao existente passada na funcao" << endl;
+                exit(0);
+            }
             qnt_parametros++;
         }
         i = i + 1;
@@ -161,7 +166,7 @@ void see_commands(vector<var_scope>* st, vector<Token> tokens, int linha, stack<
         {
             if (i + 1 < tokens.size() && tokens[i+1].type.compare(IDENTIFIER) == 0)
             {
-                call_fn(tokens, functions, linha, i, escopos->top());
+                call_fn(tokens, functions, st, linha, i, escopos->top());
             }
         }
     }

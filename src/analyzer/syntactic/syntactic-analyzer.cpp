@@ -78,11 +78,11 @@ vector<var_scope> tabela_de_simbolos(vector<Token> tokens, vector<function_scope
     for (int i = 0; i < tokens.size(); i++) {
         scope_type(tokens, functions, block_keys, &escopos, &i);
     
-        if (tokens[i].type.compare(IDENTIFIER) == 0) {
-            if (!findPositionInSymbolTableByContentAndSameScope(symbols_table, tokens[i].content, escopos.top()))
+        if (tokens[i].content.compare("=") == 0) {
+            if (!findPositionInSymbolTableByContentAndSameScope(symbols_table, tokens[i-1].content, escopos.top()))
             {
                 vector<string> p;
-                symbols_table.push_back({tokens[i].content, p, {escopos.top().name, escopos.top().type}});
+                symbols_table.push_back({tokens[i-1].content, p, {escopos.top().name, escopos.top().type}});
             }
         }   
         if (tokens[i].content.compare("end") == 0) {
